@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="static/css/bootstrap.min.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="static/css/style.css">
+<link rel="stylesheet" href="static/css/styleloader.css">
+<link rel="stylesheet" href="static/css/stylepopup.css">
+<title>Taller Custom</title>
+</head>
+<body>
+    <a href="" onclick="openPopUp(event,'popupmodelo_bg')" onmouseover="iluminar(guitarobj)" onmouseout="apagar(guitarobj)">Modelo</a>
+    <a href="" onclick="prueba(event,guitarobj,golpeadorobj,'static/modelos/tele2.STL');">BORRAR</a>
+    <a href="" onclick="prueba2(group);">Añadir</a>
+    <!-- PopUp MODELO-->
+    <div id="popupmodelo_bg" class="mypopup_bg">
+       <div id="popupmodelo_main_div" class="mypopup_main_div">
+           <p id="popupmodelo_title" class="mypopup_title">Escoge un modelo de guitarra</p>
+           <p id="popupmodelo_desc" class="mypopup_desc">//TODO Botones con imagenes de las distintas formas</p>
+           <a href="" onclick="cambiarModelo(event,guitarobj,'static/modelos/tele2.STL')"><img src="static/img/logo.png" alt="" height="200" width="200"></a>
+           <a href="" onclick="cambiarModelo(event,guitarobj,'static/modelos/CUERPO.STL')"><img src="static/img/sg-azul.jpg" alt="" height="200" width="200"></a>
+           <div id="closepopupmodelo" class="closemypopup" title="Cerrar" onclick="closePopUp(event,'popupmodelo_bg')">
+               <p id="closepopupmodelo_p" class="closemypopup_p">X</p>
+           </div>
+       </div>
+    </div>
+<!-- JS para Menu PopUp-->
+<script>
+    function openPopUp(event,popupid){
+        var mypopup = document.getElementById(popupid);
+        event.preventDefault();
+        mypopup.style.display = "block";
+    }
+    function closePopUp(event,popupid){
+        var mypopup = document.getElementById(popupid);
+        event.preventDefault();
+        mypopup.style.display = "none";
+    }
+</script>
+
+    <canvas id="mycanvas"></canvas>
+
+    <script src="static/js/THREEx.WindowResize.js"></script>
+    <script src="static/js/three.min.js"></script>
+    <script src="static/js/OrbitControls.js"></script>
+    <script src="static/js/STLLoader.js"></script>
+
+	<script>
+
+        var canvas = document.getElementById('mycanvas');
+        function resizeCanvas() {
+            canvas.width = window.innerWidth*0.815;
+            canvas.height = window.innerHeight*0.915;
+            return [canvas.width,canvas.height];
+        }
+        var renderer = new THREE.WebGLRenderer({canvas: canvas});
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera( 50, canvas.width/canvas.height, 0.01, 1000 );
+
+
+        document.body.appendChild( renderer.domElement );
+
+        camera.position.set( 0, 0, 40 );
+        camera.rotation.set( 0, 0, 0 );
+
+        window.addEventListener( 'resize', onWindowResize, false );
+        window.addEventListener( 'orientationchange', onWindowResize, false );
+
+        tamano=resizeCanvas();
+        canvas.width = tamano[0];
+        canvas.height = tamano[1];
+        renderer.setViewport(0, 0, canvas.width, canvas.height);
+        renderer.setSize( canvas.width, canvas.height );
+        camera.aspect = canvas.width / canvas.height;
+        camera.updateProjectionMatrix();
+
+
+        function onWindowResize(){
+            tamano=resizeCanvas();
+            canvas.width = tamano[0];
+            canvas.height = tamano[1];
+            renderer.setViewport(0, 0, canvas.width, canvas.height);
+            renderer.setSize( canvas.width, canvas.height );
+            camera.aspect = canvas.width / canvas.height;
+            camera.updateProjectionMatrix();
+
+        }
+        scene.background = new THREE.Color( 0x72645b );
+
+        //Añadir Luz
+
+        var light = new THREE.PointLight( 0xffffff, 0.85, 0 );
+        light.position.copy( camera.position );
+        light.castShadow = true;
+        scene.add( light );
+
+        //Set up shadow properties for the light
+        light.shadow.mapSize.width = 512;  // default
+        light.shadow.mapSize.height = 512; // default
+        light.shadow.camera.near = 0.5;       // default
+        light.shadow.camera.far = 500      // default
+
+        controls = new THREE.OrbitControls(camera,renderer.domElement);
+        controls.rotateSpeed = 0.5;
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = true;
+
+        //Luz que se fije con la camara, como si la luz seguiria siempre en donde la camara mira
+        controls.addEventListener( 'change', light_update );
+
+        function light_update()
+        {
+            light.position.copy( camera.position );
+        }
+
+        //Material del modelo 3D
+        var material1 = new THREE.MeshPhongMaterial( { color: 0xffaa00} );
+        var material2 = new THREE.MeshPhongMaterial( { color: 0x00ffaa} );
+        var material3 = new THREE.MeshPhongMaterial( { color: 0xff00aa} );
+        var material4 = new THREE.MeshPhongMaterial( { color: 0x0000aa} );
+
+
+
+        function Myguitarra(guitarobj,golpeadorobj,mastilobj){
+            this.obj=guitarobj;
+            this.golpeadorobj=golpeadorobj;
+            this.mastilobj=mastilobj;
+
+        }
+        Myguitarra.prototype.addguitarobj = function(myguitarobj){
+            Myguitarra.obj=myguitarobj;
+        };
+
+        miguitarra= new Myguitarra();
+
+        //scene.remove(miguitarra[0]);
+        group = new THREE.Group();
+        //group.add(miguitarra[0]);
+        //group.add(miguitarra[1]);
+        //group.add(miguitarra[2]);
+        //scene.add(group);
+        //group.rotation.x -= SPEED*2;
+        //console.log(group);
+
+        var guitarobj,golpeadorobj,mastilobj;
+        //Importar el modelo STL
+        var loader = new THREE.STLLoader();
+        loader.load( 'static/modelos/CUERPO.STL', function ( geometry ) {
+
+            var guit = new THREE.Mesh( geometry,material1 );
+            guit.scale.set(0.05, 0.05, 0.05);
+            guit.name='prueba';
+            //scene.add(guit);
+            group.add(guit);
+            guit.position.set( 5, 10, 0);
+            guit.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+
+            guit.callback = function(event){
+                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
+                openPopUp(event,'popupmodelo_bg');
+            }
+            guit.borrar = function (){
+                scene.remove(guit);
+            }
+
+            guitarobj=guit;
+            miguitarra.addguitarobj(guitarobj);
+        } );
+        loader.load( 'static/modelos/GOLPEADOR.STL', function ( geometry ) {
+
+            var golpeador = new THREE.Mesh( geometry,material2 );
+            golpeador.scale.set(0.05, 0.05, 0.05);
+            golpeador.name='golp';
+            //scene.add(golpeador);
+            group.add(golpeador);
+            golpeador.position.set( 5, 10, 0);
+            golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+
+            golpeador.callback = function(event){
+                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
+                openPopUp(event,'popupmodelo_bg');
+            }
+            golpeador.borrar = function (){
+                scene.remove(golpeador);
+            }
+
+            golpeadorobj=golpeador;
+        } );
+        loader.load( 'static/modelos/MASTIL.STL', function ( geometry ) {
+
+            var mastil = new THREE.Mesh( geometry,material3 );
+            mastil.scale.set(0.05, 0.05, 0.05);
+            mastil.name='mast';
+            //scene.add(mastil);
+            group.add(mastil);
+            mastil.position.set( 5, 10, 0);
+            mastil.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+
+            mastil.callback = function(event){
+                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
+                openPopUp(event,'popupmodelo_bg');
+            }
+            mastil.borrar = function (){
+                scene.remove(mastil);
+            }
+
+            mastilobj=mastil;
+        } );
+        console.log(group);
+
+        function prueba2(aaa) {
+            scene.add(aaa);
+        }
+        //scene.add(group);
+        //group.rotation.x -= 1.5;
+        //prueba(relacionados,relacionados.cuerpo2);
+        function prueba(event,antiguo,relacionado,nuevo) {
+            event.preventDefault();
+            //console.log(antiguo);
+            //var selectedObject = scene.getObjectByName(object.name);
+            antiguo.borrar();
+            relacionado.borrar();
+            loader.load( nuevo, function ( geometry ) {
+
+            var guit = new THREE.Mesh( geometry,material4 );
+            guit.scale.set(0.05, 0.05, 0.05);
+            guit.name='prueba2';
+            scene.add(guit);
+            guit.position.set( 5, 10, 0);
+            guit.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+
+            guit.callback = function(event){
+                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
+                openPopUp(event,'popupmodelo_bg');
+            }
+            guit.borrar = function (){
+                scene.remove(guit);
+            }
+
+            guitarobj=guit;
+        } );
+            //animate();
+        }
+
+        function iluminar(parte){
+            parte.currentHex = parte.material.emissive.getHex();
+           parte.material.emissive.setHex( 0x333333 );
+        }
+        function apagar(parte){
+            parte.material.emissive.setHex(parte.currentHex );
+        }
+
+        function cambiarModelo(event,antiguo,nuevo){
+            event.preventDefault();
+            antiguo.borrar();
+            //scene.remove(antiguo);
+            loader.load(nuevo,function( geometry ){
+                var cambio = new THREE.Mesh( geometry,material1 );
+                cambio.scale.set(0.05,0.05,0.05);
+                cambio.position.set(5,10,0);
+                cambio.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+                scene.add(cambio);
+                closePopUp(event,'popupmodelo_bg');
+
+                cambio.callback = function(event){
+                    //Muestra el desplegable para seleccionar distintas opciones de ese objeto
+                    openPopUp(event,'popupmodelo_bg');
+                }
+                cambio.borrar = function (){
+                    scene.remove(cambio);
+                }
+                guitarobj = cambio;
+            });
+
+        }
+        //Colorear el objeto que esta debajo del raton.
+        {
+        //Raycaster para seleccionar con el raton
+        var raycaster = new THREE.Raycaster();
+        var mouse = new THREE.Vector2();
+        var INTERSECTED,INTERSECTEDOUTLINE;
+
+        function onDoubleClick( event ) {
+            event.preventDefault();
+
+            mouse.x = ( event.offsetX/ canvas.clientWidth ) * 2 - 1;
+            mouse.y = - ( event.offsetY / canvas.clientHeight ) * 2 + 1;
+
+            raycaster.setFromCamera( mouse, camera );
+
+            var intersects = raycaster.intersectObjects( scene.children);
+
+            if ( intersects.length > 0 ) {
+
+                intersects[0].object.callback(event);
+
+            }
+
+        }
+
+        function onMouseMove( event ) {
+            // calculate mouse position in normalized device coordinates
+            // (-1 to +1) for both components
+            event.preventDefault();
+
+            mouse.x = ( event.offsetX / canvas.clientWidth) * 2 - 1;
+            mouse.y = - ( event.offsetY / canvas.clientHeight ) * 2 + 1;
+
+        }
+
+        function render() {
+            // update the picking ray with the camera and mouse position
+            raycaster.setFromCamera( mouse, camera );
+            // calculate objects intersecting the picking ray
+            var intersects = raycaster.intersectObjects( scene.children );
+
+            /*
+            //Si no hay objetos encontrados, se ultimo objeto se vuelve al color de antes
+            //Si hay alguno, el que mas cerca este [0], si es el mismo que antes no se hace nada
+            //Si no es el mismo que antes, se pone el objeto anterior con su color original.
+            // Despues se guarda el color del nuevo objeto encontrado. Y se pinta del color para ver que esta SELECCIONADO
+
+            //Esto cambia la opacidad de los objetos encontrados. Problema que para hacer el borde, creo otro objeto
+            //Asi que en la interseccion al elegir el segundo objeto encontrado no siempre coje el borde
+            if (intersects.length>0){
+                if(intersects[0]!=INTERSECTED){
+                    if (INTERSECTED){
+                        INTERSECTED.material.opacity = (0);
+                    }
+
+                    INTERSECTED=intersects[0].object;
+                    if (intersects.length>1){
+                        INTERSECTEDOUTLINE=intersects[1].object;
+                    }
+
+                    //scene.add(INTERSECTED.borde);
+
+                    INTERSECTEDOUTLINE.material.opacity = (1);
+                }
+            }else{
+                if(INTERSECTED){
+                    //scene.remove(INTERSECTED.borde);
+                    INTERSECTEDOUTLINE.material.opacity = (0);
+                }
+                INTERSECTED=null;
+            }*/
+
+            //Se ilumina el objeto Seleccionado
+            if ( intersects.length > 0 ) {
+                if ( INTERSECTED != intersects[ 0 ].object ) {
+                    if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+                    INTERSECTED = intersects[ 0 ].object;
+                    INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+                    INTERSECTED.material.emissive.setHex( 0x333333 );
+                }
+            } else {
+                if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+                INTERSECTED = null;
+            }
+            renderer.render( scene, camera );
+        }
+
+        window.addEventListener( 'mousemove', onMouseMove, false );
+        renderer.domElement.ondblclick=onDoubleClick;
+        window.requestAnimationFrame(render);
+
+        }
+
+
+
+        var animate = function () {
+            requestAnimationFrame( animate );
+            controls.update();
+
+            renderer.render(scene, camera);
+            render();
+        };
+
+        animate();
+    </script>
+
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+</body>
+</html>

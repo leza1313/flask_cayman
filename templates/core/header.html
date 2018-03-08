@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleloader.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylepopup.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='slick/slick.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='slick/slick-theme.css') }}"/>
+
+    <title>{{ mytitle }}</title>
+
+    <style>
+        nav{
+            z-index: 1;
+        }
+    </style>
+
+</head>
+    <body>
+        <nav id="mynav" class="navbar navbar-expand-lg navbar-dark bg-dark">
+         <!--<img src="img/logo.png" href="index.php" alt="logo" width="60" height="60">-->
+          <a class="navbar-brand" href="{{ url_for('index') }}">Cayman</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index') }}">Inicio <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="{{ url_for('productos') }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Productos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ url_for('guitarras') }}">Guitarras</a>
+                  <a class="dropdown-item" href="{{ url_for('bajos') }}">Bajos</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('editor.html') }}">Taller Custom</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Galeria</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Artistas</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto justify-content-end">
+                <li class="" id="boton-contacto">
+                    <a href="{{ url_for('contacto') }}" class="btn btn-info">Contacto</a>
+                </li>
+            </ul>
+          </div>
+        </nav>

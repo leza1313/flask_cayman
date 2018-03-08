@@ -1,0 +1,101 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+#editor{
+    color: black;
+}
+
+.sidenav {
+    height: 100%;
+    width: 20%;
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #1f1f1f;
+    overflow-x: hidden;
+    padding-top: 30vh;
+    text-align: center;
+}
+.sidenav a {
+    padding: 6px 8px 6px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-right: 320px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px){
+    .sidenav {padding-top: 150px;}
+    .sidenav a {font-size: 16px;}
+    #rotar {font-size: 12px;}
+    #vistaTrasera {font-size: 12px;}
+    #vistaEnfrente {font-size: 12px;}
+}
+@media screen and (max-width: 450px){
+    .sidenav {
+        padding-top: 10px;
+        padding-bottom: 5px;
+        right: unset;
+        top: unset;
+        bottom: 0%;
+        height: 15vh;
+        width: 100vw;
+        column-count: 2;
+    }
+    .sidenav a {
+        font-size: 12px;
+        padding: unset;
+    }
+    #rotar {
+        font-size: 12px;
+
+        left: 2vw !important;
+        bottom: 16vh !important;
+    }
+    #vistaTrasera {
+        font-size: 12px;
+        right: 38vw !important;
+        bottom: 16vh !important;
+    }
+    #vistaEnfrente {
+        font-size: 12px;
+        right: 2vw !important;
+        bottom: 16vh !important;
+    }
+}
+
+canvas {
+    margin: 0;
+    padding: 0;
+}
+#mycanvas {
+    border: 0px solid black;
+    margin: 0px;
+}
+
+#vistaEnfrente {
+    position: absolute;
+    bottom: 1vh;
+    right: 21vw;
+}
+#vistaTrasera {
+    position: absolute;
+    bottom: 1%;
+    right: 55%;
+}
+#rotar {
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+}

@@ -1,0 +1,128 @@
+/*style.css*/
+body{
+    background: white;
+    margin:0px;
+    padding:0px;
+    height:100%;
+}
+
+
+#quienes-somos{
+    background: url('../img/banco.jpeg') center center no-repeat;
+    color: white;
+}
+
+
+#cartas-inicio{
+    background: #222;
+}
+
+#cover{
+    background: #888;
+    color: white;
+    text-align: center;
+}
+#cover-admin{
+    background: #8bc3ff;
+    color: white;
+    text-align: center;
+}
+#adminav{
+    position: initial;
+}
+img{
+    max-width: 100%;
+}
+#bloque-carta{
+    background: #444;
+    margin: 0.5%;
+}
+#bloque-carta:hover{
+    -moz-box-shadow: 0px 0px 10px #222; 
+    -webkit-box-shadow: 0px 0px 10px #222; 
+    box-shadow: 0px 0px 10px #222;
+}
+
+#mycarousel-wrap {
+    width: 90vw;
+}
+#footer1 {
+    padding: 10px;
+    background: #222;
+    color: rgba(255,255,255,0.75);
+    width:100%;
+    
+}
+#footer-admin{
+    padding: 10px;
+    background: #003874;
+    color: rgba(255,255,255,0.75);
+    width:100%
+}
+#footer-admin a{
+    color: rgba(255,255,255,0.75);
+}
+#footer-admin a:hover{
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+}
+#footer1 a{
+    color: rgba(255,255,255,0.75);
+}
+#footer1 a:hover{
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+}
+#footer-header{
+    color: #17a2b8;
+    font-size: 18px;
+}
+
+#product-wrap {
+    background: #3b3a3a;
+    padding: 20px;
+}
+
+.foto-pal {
+    height: 400px;
+}
+
+.foto-min {
+    height: 200px;
+}
+.card-title{
+    font-family: "Lato", sans-serif;
+    font-size: 26px;
+    color: #49a9b9;
+}
+.enlaces{
+    color: rgba(255,255,255,0.4);
+    font-size: 18px;
+}
+.enlaces:hover{
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+}
+
+#contacto-form {
+    background: rgba(57, 57, 57, 0.69);
+    margin: 10px;
+    padding: 30px;
+}
+
+#cover-contacto {
+    background: url('../img/mapa-prueba.jpg') repeat;
+    color: white;
+}
+
+#sobre {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    font-size: 48px;
+}
+
+.product-nombre {
+    color: #17a2b8;
+    font-size: 300%;
+}
