@@ -3,6 +3,7 @@ from flask import render_template
 from pages import editor
 
 app = Flask(__name__)
+app.debug = True
 
 
 @app.route('/')
