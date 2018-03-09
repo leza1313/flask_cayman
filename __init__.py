@@ -1,5 +1,9 @@
 from flask import Flask
 from flask import render_template
+
+import sys
+sys.path.append('pages/')
+
 from pages import editor
 
 app = Flask(__name__)
