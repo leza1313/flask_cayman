@@ -34,7 +34,7 @@ def productos():
 
 @app.route('/guitarras')
 def guitarras():
-    cur = conn.execute('select * from usuarios ')
+    cur = cursor.execute('select * from usuarios ')
     entry = cur.fetchall()
     print(entry)
     return entry
