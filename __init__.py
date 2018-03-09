@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template
 
 import sys
-sys.path.append('pages/')
+sys.path.append('/var/www/flask_cayman/flask_cayman')
 
 from pages import editor
 

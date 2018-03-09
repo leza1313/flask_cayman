@@ -20,8 +20,8 @@ def html():
     """
     Si guardo todo esto en una BBDD (MySql), con hacer CRUD a esas tablas
     consigo que el administrador pueda gestionar este editor.
-    Añadiendo mas modelos STL de diferentes cuerpos de guitarras,
-    añadiendo mas texturas y tambien modificando el menu derecho del editor
+    Anadiendo mas modelos STL de diferentes cuerpos de guitarras,
+    anadiendo mas texturas y tambien modificando el menu derecho del editor
 
     Mirar el JS editor.js, para ver si se pueden cargar todos los modelos de un array.
     Asi simplifico el código reutilizandolo, y permitiendo al administrador que gestione 
