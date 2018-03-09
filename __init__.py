@@ -17,6 +17,8 @@ app.config.from_object('config.ProductionConfig')
 mysql = MySQL()
 
 mysql.init_app(app)
+conn = mysql.connect()
+cursor = conn.cursor()
 
 @app.route('/')
 def index():
@@ -32,7 +34,10 @@ def productos():
 
 @app.route('/guitarras')
 def guitarras():
-    pass
+    cur = conn.execute('select * from usuarios ')
+    entry = cur.fetchall()
+    print(entry)
+    return entry
 
 @app.route('/bajos')
 def bajos():
