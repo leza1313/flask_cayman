@@ -24,7 +24,7 @@ def html():
     anadiendo mas texturas y tambien modificando el menu derecho del editor
 
     Mirar el JS editor.js, para ver si se pueden cargar todos los modelos de un array.
-    Asi simplifico el código reutilizandolo, y permitiendo al administrador que gestione 
+    Asi simplifico el codigo reutilizandolo, y permitiendo al administrador que gestione 
     el editor 3D
     """
     opcionCuerpo1 = myOpciones('tele2.STL','firebird.png')
