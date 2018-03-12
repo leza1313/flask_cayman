@@ -5,8 +5,9 @@ sys.path.append('/var/www/flask_cayman/flask_cayman')
 from flask import Flask
 from flask import render_template
 from pages import editor
-from flaskext.mysql import MySQL
+from flask_sqlalchemy import SQLAlchemy
 
+from models import guitarras
 
 
 app = Flask(__name__)
@@ -14,11 +15,14 @@ app.debug = True
 
 app.config.from_object('config.ProductionConfig')
 
-mysql = MySQL()
-
+"""mysql = MySQL()
 mysql.init_app(app)
-conn = mysql.connect()
-cursor = conn.cursor()
+cursor = mysql.connect().cursor()
+"""
+
+db=SQLAlchemy(app)
+
+
 
 @app.route('/')
 def index():
@@ -27,17 +31,19 @@ def index():
 
 app.register_blueprint(editor.editor)
 
+@app.route('/prueba')
+def prueba():
+    return render_template('prueba.html')
 
 @app.route('/productos')
 def productos():
     return render_template('productos.html')
 
-@app.route('/guitarras')
-def guitarras():
-    cur = cursor.execute('select * from usuarios ')
-    entry = cur.fetchall()
-    print(entry)
-    return entry
+@app.route('/guitarras1')
+def guitarras1():
+    misguitarras=guitarras.query.all()
+    return render_template('guitarras1.html', guitarras=misguitarras)
+
 
 @app.route('/bajos')
 def bajos():

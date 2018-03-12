@@ -14,8 +14,8 @@
 </head>
 <body>
     <a href="" onclick="openPopUp(event,'popupmodelo_bg')" onmouseover="iluminar(guitarobj)" onmouseout="apagar(guitarobj)">Modelo</a>
-    <a href="" onclick="prueba(event,guitarobj,golpeadorobj,'static/modelos/tele2.STL');">BORRAR</a>
-    <a href="" onclick="prueba2(group);">Añadir</a>
+    <a href="" onclick="prueba(event,guitarobj,golpeadorobj,'static/modelos/telecaster/CUERPO.STL');">BORRAR</a>
+    <a href="" onclick="prueba2();">Añadir</a>
     <!-- PopUp MODELO-->
     <div id="popupmodelo_bg" class="mypopup_bg">
        <div id="popupmodelo_main_div" class="mypopup_main_div">
@@ -139,7 +139,6 @@
         miguitarra= new Myguitarra();
 
         //scene.remove(miguitarra[0]);
-        group = new THREE.Group();
         //group.add(miguitarra[0]);
         //group.add(miguitarra[1]);
         //group.add(miguitarra[2]);
@@ -150,13 +149,12 @@
         var guitarobj,golpeadorobj,mastilobj;
         //Importar el modelo STL
         var loader = new THREE.STLLoader();
-        loader.load( 'static/modelos/CUERPO.STL', function ( geometry ) {
+        loader.load( 'static/modelos/telecaster/CUERPO.STL', function ( geometry ) {
 
             var guit = new THREE.Mesh( geometry,material1 );
             guit.scale.set(0.05, 0.05, 0.05);
             guit.name='prueba';
-            //scene.add(guit);
-            group.add(guit);
+            scene.add(guit);
             guit.position.set( 5, 10, 0);
             guit.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
@@ -171,13 +169,12 @@
             guitarobj=guit;
             miguitarra.addguitarobj(guitarobj);
         } );
-        loader.load( 'static/modelos/GOLPEADOR.STL', function ( geometry ) {
+        loader.load( 'static/modelos/telecaster/GOLPEADOR.STL', function ( geometry ) {
 
             var golpeador = new THREE.Mesh( geometry,material2 );
             golpeador.scale.set(0.05, 0.05, 0.05);
             golpeador.name='golp';
-            //scene.add(golpeador);
-            group.add(golpeador);
+            scene.add(golpeador);
             golpeador.position.set( 5, 10, 0);
             golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
@@ -191,13 +188,12 @@
 
             golpeadorobj=golpeador;
         } );
-        loader.load( 'static/modelos/MASTIL.STL', function ( geometry ) {
+        loader.load( 'static/modelos/telecaster/MASTIL.STL', function ( geometry ) {
 
             var mastil = new THREE.Mesh( geometry,material3 );
             mastil.scale.set(0.05, 0.05, 0.05);
             mastil.name='mast';
-            //scene.add(mastil);
-            group.add(mastil);
+            scene.add(mastil);
             mastil.position.set( 5, 10, 0);
             mastil.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
@@ -211,7 +207,7 @@
 
             mastilobj=mastil;
         } );
-        console.log(group);
+        ;
 
         function prueba2(aaa) {
             scene.add(aaa);

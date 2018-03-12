@@ -1,0 +1,40 @@
+{% extends "core/base.html" %}
+{% block cover %}
+<section id="productos">
+    <div class="section-content">
+       <div class="container">
+           <h2>Guitarras a la venta</h2>
+           <p>Aqui un catalogo de guitarras que vendeis</p>
+
+
+       <div class="row">
+           <div class="col-sm-12">
+               <div class="card-group">
+
+                {% for guitarra in guitarras %}
+                    {% if (loop.index % 3==1) %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-group">
+                    {% endif %}
+                   <div id='bloque-carta' class="card rounded">
+                       <div class="card-block">
+                           <h4 id="{{ guitarra.nombre }}" class="card-title">{{ guitarra.nombre }}</h4>
+
+                           <a href="infoguitar.php?varname={{ guitarra.nombre }}"><img src="static{{ guitarra.foto }}" alt="teleca"></a>
+
+                       </div>
+                   </div>
+                {% endfor %}
+                   </div>
+               </div>
+           </div>
+       </div>
+       <br>
+       </div>
+    </div>
+</section>
+{% endblock %}
