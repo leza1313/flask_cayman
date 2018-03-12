@@ -11,8 +11,6 @@ function mobileCanvas() {
     return [canvas.width,canvas.height];
 }
 
-
-
 var renderer = new THREE.WebGLRenderer({canvas: canvas});
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 50, canvas.width/canvas.height, 0.01, 1000 );
@@ -111,11 +109,11 @@ function vistaTrasera(){
 
 isRotate=0;
 
-//declared once at the top of your code
-var axis = new THREE.Vector3(1,0,0);//tilted a bit on x and y - feel free to plug your different axis here
-
-
 function rotar(miobjeto){
+    enlaces=document.getElementsByClassName('editor-a');
+    for (i = 0; i < 4; i++){
+        enlaces[i].setAttribute('data-toggle','hola');
+    }
 
     for (var index in miobjeto){
         var pieza = miobjeto[index];
@@ -130,14 +128,15 @@ function rotar(miobjeto){
 }
 
 function parar(){
+    enlaces=document.getElementsByClassName('editor-a');
+    for (i = 0; i < 4; i++){
+        enlaces[i].setAttribute('data-toggle','modal');
+    }
     mirotation=group.rotation.y;
-    console.log();
     scene.remove(group);
     for (var index in miguitarra){
         var pieza = miguitarra[index];
         scene.add(pieza);
-
-
     }
     isRotate=0;
     document.getElementById( "rotar" ).setAttribute( "onClick", "rotar(miguitarra);" );
@@ -145,22 +144,15 @@ function parar(){
 }
 
 var SPEED = 0.01;
-rad =0;
 
 group = new THREE.Group();
-//Si hago un group, cuando hago scene.add(group), pierdo la opcion de raycast a cada objeto,
-//Añade un solo objeto que es el grupo
-//Pero entonces puedo hacer rotar al grupo entero
-//Si roto la camara es como si la guitarra me diera vueltas a la cabeza, no yo sobre la guitarra
+
 function rotateAll(migroup) {
-    rad =0.01;
     isRotate = 1;
     migroup.rotation.y -= SPEED*2;
 }
 
-//
-//
-//
+/*
 // Define a class like this
 function Person(name, gender){
 
@@ -179,10 +171,7 @@ var person = new Person("Bob", "M");
 
 // Invoke methods like this
 //person.speak(); // alerts "Howdy, my name is Bob"
-//
-//
-//
-
+//*/
 function myguitarrastl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
     this.cuerpo=cuerpo;
     this.golpeador=golpeador;
@@ -222,12 +211,19 @@ function mypositionstl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,
     this.per_tono2=per_tono2;
     this.per_volumen=per_volumen;
 }
-peri = new myperillas('static/modelos/TONO_1.STL','static/modelos/TONO_2.STL','static/modelos/VOLUMEN.STL');
-pasti = new mypastillas('static/modelos/PASTILLA_MASTIL.STL','static/modelos/PASTILLA_MEDIO.STL',
-    'static/modelos/PASTILLA_PUENTE.STL');
+peri = new myperillas('static/modelos/stratocaster/TONO_1.STL',
+    'static/modelos/stratocaster/TONO_2.STL',
+    'static/modelos/stratocaster/VOLUMEN.STL');
 
-guitarra = new myguitarrastl('static/modelos/CUERPO.STL','static/modelos/GOLPEADOR.STL',
-    'static/modelos/MASTIL.STL',pasti.mastil,pasti.medio,pasti.puente,'static/modelos/PUENTE.STL',
+pasti = new mypastillas('static/modelos/stratocaster/PASTILLA_MASTIL.STL',
+    'static/modelos/stratocaster/PASTILLA_MEDIO.STL',
+    'static/modelos/stratocaster/PASTILLA_PUENTE.STL');
+
+guitarra = new myguitarrastl('static/modelos/stratocaster/CUERPO.STL',
+    'static/modelos/stratocaster/GOLPEADOR.STL',
+    'static/modelos/stratocaster/MASTIL.STL',
+    pasti.mastil,pasti.medio,pasti.puente,
+    'static/modelos/stratocaster/PUENTE.STL',
     peri.tono,peri.tono2,peri.volumen);
 
 posicionstl= new mypositionstl( //Cuerpo
@@ -237,14 +233,41 @@ posicionstl= new mypositionstl( //Cuerpo
                                 //Mastil
                                 new myposition(30.8, 2.88, 2.09),
                                 //Pastillas
-                                new myposition(4.9,3.2, 2.65),new myposition(4.9,3.2, 2.65),new myposition(4.9,3.2, 2.65),
+                                new myposition(4.9,3.2, 2.65),
+                                new myposition(4.9,3.2, 2.65),
+                                new myposition(4.9,3.2, 2.65),
                                 //Puente
                                 new myposition(5,3.1, 0.97),
                                 //Perillas
-                                new myposition(4.943,-1.033, 3.067),new myposition(4.943,-1.033, 3.067),new myposition(4.943,-1.033, 3.067)
+                                new myposition(4.943,-1.033, 3.067),
+                                new myposition(4.943,-1.033, 3.067),
+                                new myposition(4.943,-1.033, 3.067)
 );
 
 miguitarra=[];
+function Miguitarra(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
+    this.cuerpo=cuerpo;
+    this.golpeador=golpeador;
+    this.mastil=mastil;
+    this.p_mastil=p_mastil;
+    this.p_medio=p_medio;
+    this.p_puente=p_puente
+    this.puente=puente;
+    this.per_tono=per_tono;
+    this.per_tono2=per_tono2;
+    this.per_volumen=per_volumen;
+}
+prueba = new Miguitarra();
+/*
+//Estos metodos no consiguen hacer que cargue/devuelva los objetos dentro del js.
+//Desde afuera (funciones llamadas desde html) es igual utilizar el set o get Cuerpo que prueba.cuerpo
+Miguitarra.prototype.setCuerpo = function(micuerpo){
+    this.cuerpo=micuerpo;
+};
+Miguitarra.prototype.getCuerpo = function(){
+    console.log(this.cuerpo);
+    return this.cuerpo;
+};*/
 
 materiales=[];
 materiales[0] = new THREE.MeshPhongMaterial( { color: 0xffaa00} );
@@ -277,7 +300,6 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName){
     loader.load( mystl, function ( geometry ) {
         var myObject = new THREE.Mesh( geometry, myMaterial);
         myObject.scale.set(0.05, 0.05, 0.05);
-        scene.add(myObject);
         myObject.position.set( position.x,position.y,position.z );
         myObject.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
@@ -289,8 +311,11 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName){
         }
         //Si intento mostrar el objeto desde JS fuera de la funcion no funciona
         //Sin embargo, al llamar a otras funciones de JS desde HTML si que reconoce el objeto.
+        scene.add(myObject);
         miguitarra[sufix]=myObject;
-
+        //Si de aqui guardo por cada iteracion la pieza correspondiente en el objeto de clase Miguitarra
+        // Desde afuera(el html) puedo llamar a funciones pasando como argumento el objeto.cuerpo (prueba.cuerpo)
+        //prueba.cuerpo=myObject;
     } );
 }
 var counter=0;
@@ -299,7 +324,6 @@ for(var index in guitarra) {
     cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);
     counter++;
 }
-
 
 function cambiarCuerpo(event,obj,nuevo,modalName){
     //hace falta poner el event.preventDefault()

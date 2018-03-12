@@ -28,7 +28,7 @@ def html():
     el editor 3D
     """
     opcionCuerpo1 = myOpciones('tele2.STL','firebird.png')
-    opcionCuerpo2 = myOpciones('CUERPO.STL','strato.png')
+    opcionCuerpo2 = myOpciones('stratocaster/CUERPO.STL','strato.png')
     opcionesCuerpo = [opcionCuerpo1,opcionCuerpo2]
     cuerpo = myModal('modalModelo','Escoge Modelo',opcionesCuerpo)
 
