@@ -1,0 +1,55 @@
+{% extends "core/base.html" %}
+{% block cover %}
+<section id="cover">
+    <br>
+    <div class="container">
+       <div class="row">
+           <div class="col-6">
+                <!-- Carousel, adaptar tamaño imagenes -->
+                <div class="container" id="myproduct-foto">
+                   <div class="foto-pal">
+                       <div><img src="static{{ miproducto.foto }}" alt="" height="300"></div>
+                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                       <div><img src="static{{ miproducto.foto }}" alt="" height="300"></div>
+                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                   </div>
+                   <div class="foto-min">
+                       <div><img src="static{{ miproducto.foto }}" alt=""></div>
+                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                       <div><img src="static{{ miproducto.foto }}" alt=""></div>
+                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                   </div>
+                </div>
+            </div>
+            <div class="col" id="product-wrap">
+                <h2 class="product-nombre">{{ miproducto.nombre }}</h2>
+                <hr>
+                <p class="product-descripcion">{{ miproducto.descripcion }}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Carousel, slick js, necesita jquery definido antes. -->
+    <script src="static/js/jquery-3.2.1.min.js"></script>
+    <script src="static/slick/slick.min.js"></script>
+    <script>
+        $('.foto-pal').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.foto-min',
+            adaptiveHeight: true
+        });
+        $('.foto-min').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.foto-pal',
+            arrows: false,
+            dots: false,
+            focusOnSelect: true
+        });
+    </script>
+</section>
+
+{% endblock %}

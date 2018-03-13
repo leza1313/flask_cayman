@@ -6,8 +6,11 @@ from flask import Flask
 from flask import render_template
 from pages import editor
 from flask_sqlalchemy import SQLAlchemy
+from flask import request
 
-from models import guitarras
+from models import Guitarras
+from models import Bajos
+
 
 
 app = Flask(__name__)
@@ -15,13 +18,7 @@ app.debug = True
 
 app.config.from_object('config.ProductionConfig')
 
-"""mysql = MySQL()
-mysql.init_app(app)
-cursor = mysql.connect().cursor()
-"""
-
 db=SQLAlchemy(app)
-
 
 
 @app.route('/')
@@ -39,18 +36,29 @@ def prueba():
 def productos():
     return render_template('productos.html')
 
-@app.route('/guitarras1')
-def guitarras1():
-    misguitarras=guitarras.query.all()
-    return render_template('guitarras1.html', guitarras=misguitarras)
+@app.route('/guitarras')
+def guitarras():
+    misguitarras=Guitarras.query.all()
+    return render_template('guitarras.html', guitarras=misguitarras)
 
+@app.route('/infoproducto')
+def infoproducto():
+    if request.args.get('bajo') is not None:
+        bajo = request.args.get('bajo')
+        producto = Bajos.query.filter_by(nombre=bajo).first()
+    if request.args.get('guitarra') is not None:
+        guitarra = request.args.get('guitarra')
+        producto = Guitarras.query.filter_by(nombre=guitarra).first()
+    return render_template('infoproducto.html', miproducto=producto)
 
 @app.route('/bajos')
 def bajos():
-    pass
+    misbajos=Bajos.query.all()
+    return render_template('bajos.html', bajos=misbajos)
 
 @app.route('/contacto')
 def contacto():
-    pass
+    return render_template('contacto.html')
+
 if __name__ == '__main__':
     app.run()

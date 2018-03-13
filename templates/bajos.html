@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% block cover %}
+<section id="productos">
+    <div class="section-content">
+       <div class="container">
+           <h2>Bajos a la venta</h2>
+           <p>Aqui un catalogo de bajos que vendeis</p>
+
+
+       <div class="row">
+           <div class="col-sm-12">
+               <div class="card-group">
+
+                {% for bajo in bajos %}
+                    {% if (loop.index % 3==1) %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-group">
+                    {% endif %}
+                   <div id='bloque-carta' class="card rounded">
+                       <div class="card-block">
+                           <h4 id="{{ bajo.nombre }}" class="card-title">{{ bajo.nombre }}</h4>
+
+                           <a href="infoproducto?bajo={{ bajo.nombre }}"><img src="static{{ bajo.foto }}" alt=""></a>
+
+                       </div>
+                   </div>
+                {% endfor %}
+                   </div>
+               </div>
+           </div>
+       </div>
+       <br>
+       </div>
+    </div>
+</section>
+
+{% endblock %}
