@@ -24,7 +24,7 @@ app.config.from_object('config.ProductionConfig')
 db=SQLAlchemy(app)
 api = Api(app)
 
-##Añade en esos endpoints los recursos a mostrar
+##Anade en esos endpoints los recursos a mostrar
 api.add_resource(Guitarras, '/api/guitarra/<string:name>')
 api.add_resource(GuitarrasList, '/api/guitarras/')
 api.add_resource(Bajos, '/api/bajo/<string:name>')
