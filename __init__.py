@@ -7,9 +7,12 @@ from flask import render_template
 from pages import editor
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
+from flask_restful import Api
 
-from models import Guitarras
-from models import Bajos
+from resources.guitarras import Guitarras, GuitarrasList
+from resources.bajos import Bajos, BajosList
+from models.guitarras import GuitarrasModel
+from models.bajos import BajosModel
 
 
 
@@ -19,7 +22,13 @@ app.debug = True
 app.config.from_object('config.ProductionConfig')
 
 db=SQLAlchemy(app)
+api = Api(app)
 
+##Añade en esos endpoints los recursos a mostrar
+api.add_resource(Guitarras, '/api/guitarra/<string:name>')
+api.add_resource(GuitarrasList, '/api/guitarras/')
+api.add_resource(Bajos, '/api/bajo/<string:name>')
+api.add_resource(BajosList, '/api/bajos/')
 
 @app.route('/')
 def index():
@@ -37,23 +46,23 @@ def productos():
     return render_template('productos.html')
 
 @app.route('/guitarras')
-def guitarras():
-    misguitarras=Guitarras.query.all()
+def guitarras_page():
+    misguitarras = GuitarrasModel.query.all()
     return render_template('guitarras.html', guitarras=misguitarras)
 
 @app.route('/infoproducto')
 def infoproducto():
     if request.args.get('bajo') is not None:
         bajo = request.args.get('bajo')
-        producto = Bajos.query.filter_by(nombre=bajo).first()
+        producto = BajosModel.query.filter_by(nombre=bajo).first()
     if request.args.get('guitarra') is not None:
         guitarra = request.args.get('guitarra')
-        producto = Guitarras.query.filter_by(nombre=guitarra).first()
+        producto = GuitarrasModel.query.filter_by(nombre=guitarra).first()
     return render_template('infoproducto.html', miproducto=producto)
 
 @app.route('/bajos')
-def bajos():
-    misbajos=Bajos.query.all()
+def bajos_page():
+    misbajos=BajosModel.query.all()
     return render_template('bajos.html', bajos=misbajos)
 
 @app.route('/contacto')

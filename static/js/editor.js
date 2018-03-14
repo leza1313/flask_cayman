@@ -125,6 +125,7 @@ function rotar(miobjeto){
     rotateAll(group);
     document.getElementById( "rotar" ).setAttribute( "onClick", "parar();" );
     document.getElementById( "rotar" ).innerHTML='Parar';
+    document.getElementById( "rotar" ).classList.add('btn-danger');
 }
 
 function parar(){
@@ -141,6 +142,7 @@ function parar(){
     isRotate=0;
     document.getElementById( "rotar" ).setAttribute( "onClick", "rotar(miguitarra);" );
     document.getElementById( "rotar" ).innerHTML='Rotar';
+    document.getElementById( "rotar" ).classList.remove('btn-danger');
 }
 
 var SPEED = 0.01;
