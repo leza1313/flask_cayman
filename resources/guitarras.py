@@ -7,6 +7,7 @@ class Guitarras(Resource):
         guitarra=GuitarrasModel.find_by_name(name)
         if guitarra:
             return guitarra.json()
+        return {'message':'Guitarra not found'}, 404
     def post(self):
         pass
 

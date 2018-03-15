@@ -7,6 +7,7 @@ class Bajos(Resource):
         bajo=BajosModel.find_by_name(name)
         if bajo:
             return bajo.json()
+        return {'message': 'Bajo not found'}, 404
     def post(self):
         pass
 
@@ -19,4 +20,4 @@ class Bajos(Resource):
 class BajosList(Resource):
 
     def get(self):
-        return {'Guitarras': [bajo.json() for bajo in BajosModel.query.all()]}
+        return {'Bajos': [bajo.json() for bajo in BajosModel.query.all()]}
