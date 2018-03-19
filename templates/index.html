@@ -11,13 +11,13 @@
     <!-- Carousel-->
     <div class="container" dir="ltr" id="mycarousel-wrap">
        <div class="mycarousel">
-           <div><img src="{{ url_for('static', filename='img/banco.jpeg') }}" alt=""></div>
+           <div><img src="{{ 'banco.jpeg'|resize('800x550',fill=1) }}" alt=""></div>
 
-           <div><img src="{{ url_for('static', filename='img/galeria-guitar.jpg') }}" alt=""></div>
+           <div><img src="{{ 'galeria-guitar.jpg'|resize('800x550',fill=1) }}" alt=""></div>
 
-           <div><img src="{{ url_for('static', filename='img/banco.jpeg') }}" alt=""></div>
+           <div><img src="{{ 'banco.jpeg'|resize('800x550',fill=1) }}" alt=""></div>
 
-           <div><img src="{{ url_for('static', filename='img/galeria-guitar.jpg') }}" alt=""></div>
+           <div><img src="{{ 'galeria-guitar.jpg'|resize('800x550',fill=1) }}" alt=""></div>
 
        </div>
     </div>
@@ -49,7 +49,7 @@
                        <div class="card-block">
                            <h4 class="card-title">Productos</h4>
                            <a href="{{ url_for('productos') }}">
-                               <img src="{{url_for('static', filename='img/guitar1.jpeg') }}" alt="guitarra1">
+                               <img src="{{ 'guitar1.jpeg'|resize('300x300',fill=1) }}" alt="guitarra1">
                            </a>
                            <div class="card-block">
                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut quam, tempore nostrum, distinctio recusandae tempora excepturi enim sequi incidunt veniam maiores quod.</p>
@@ -61,7 +61,8 @@
                    <div id='bloque-carta' class="card rounded">
                        <div class="card-block">
                            <h4 class="card-title">Taller</h4>
-                           <a href="{{ url_for('editor.html') }}"><img src="{{ url_for('static', filename='img/custom-guitar.jpg') }}" alt="guitarra1"></a>
+                           <a href="{{ url_for('editor.html') }}">
+                               <img src="{{ 'custom-guitar.jpg'|resize('300x300',fill=1) }}" alt="guitarra1"></a>
                            <div class="card-block">
                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur ea dolore blanditiis perspiciatis consequatur sed sunt quidem sequi fuga illum, laborum quo ipsa recusandae aspernatur id, maiores illo quos laudantium.</p>
                                <a href="{{ url_for('editor.html') }}" class="btn btn-primary">Ir al Taller Custom</a>
@@ -72,7 +73,8 @@
                    <div id='bloque-carta' class="card rounded">
                        <div class="card-block">
                            <h4 class="card-title">Galeria</h4>
-                           <a href=""><img src="{{ url_for('static', filename='img/galeria-guitar.jpg') }}" alt="guitarra1"></a>
+                           <a href="">
+                               <img src="{{ 'galeria-guitar.jpg'|resize('300x300',fill=1) }}" alt="guitarra1"></a>
                            <div class="card-block">
                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam nostrum, corporis saepe nobis deserunt impedit amet temporibus id.</p>
                                <a href="" class="btn btn-primary">Ir a la Galeria</a>

@@ -8,16 +8,25 @@ from pages import editor
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask_restful import Api
+from flask_resize import Resize
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
 from models.guitarras import GuitarrasModel
 from models.bajos import BajosModel
 
+import os
 
 
 app = Flask(__name__)
 app.debug = True
+
+
+app.config['RESIZE_URL'] = 'static/img'
+app.config['RESIZE_ROOT'] = os.path.join(app.root_path,'static/img')
+
+resize = Resize(app)
+
 
 app.config.from_object('config.ProductionConfig')
 

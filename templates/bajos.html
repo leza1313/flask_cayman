@@ -24,7 +24,9 @@
                        <div class="card-block">
                            <h4 id="{{ bajo.nombre }}" class="card-title">{{ bajo.nombre }}</h4>
 
-                           <a href="infoproducto?bajo={{ bajo.nombre }}"><img src="static{{ bajo.foto }}" alt=""></a>
+                           <a href="infoproducto?bajo={{ bajo.nombre }}">
+                               <img src="{{ bajo.foto|resize('300x300',fill=1) }}" alt="">
+                           </a>
 
                        </div>
                    </div>

@@ -8,16 +8,16 @@
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal">
-                       <div><img src="static{{ miproducto.foto }}" alt="" height="300"></div>
-                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
-                       <div><img src="static{{ miproducto.foto }}" alt="" height="300"></div>
-                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                       <div><img src="{{ miproducto.foto|resize('800x600',fill=1) }}" alt=""></div>
+                       <div><img src="{{ 'galeria-guitar.jpg'|resize('800x600',fill=1) }}" alt=""></div>
+                       <div><img src="{{ miproducto.foto|resize('800x600',fill=1) }}" alt=""></div>
+                       <div><img src="{{ 'galeria-guitar.jpg'|resize('800x600',fill=1) }}" alt=""></div>
                    </div>
                    <div class="foto-min">
-                       <div><img src="static{{ miproducto.foto }}" alt=""></div>
-                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
-                       <div><img src="static{{ miproducto.foto }}" alt=""></div>
-                       <div><img src="static/img/galeria-guitar.jpg" alt=""></div>
+                       <div><img src="{{ miproducto.foto|resize('300x200',fill=1) }}" alt=""></div>
+                       <div><img src="{{ 'galeria-guitar.jpg'|resize('300x200',fill=1) }}" alt=""></div>
+                       <div><img src="{{ miproducto.foto|resize('300x200',fill=1) }}" alt=""></div>
+                       <div><img src="{{ 'galeria-guitar.jpg'|resize('300x200',fill=1) }}" alt=""></div>
                    </div>
                 </div>
             </div>
