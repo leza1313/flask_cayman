@@ -5,10 +5,9 @@ sys.path.append('/var/www/flask_cayman/flask_cayman')
 from flask import Flask
 from flask import render_template
 from pages import editor
-from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from flask_restful import Api
-from flask_resize import Resize
+from models.connection import db
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -21,16 +20,14 @@ import os
 app = Flask(__name__)
 app.debug = True
 
-
-app.config['RESIZE_URL'] = 'static/img'
-app.config['RESIZE_ROOT'] = os.path.join(app.root_path,'static/img')
-
-resize = Resize(app)
-
-
 app.config.from_object('config.ProductionConfig')
 
-db=SQLAlchemy(app)
+db.init_app(app)
+@app.before_first_request
+def create_database():
+    db.create_all(app=app)
+    db.session.commit()
+
 api = Api(app)
 
 ##Anade en esos endpoints los recursos a mostrar
