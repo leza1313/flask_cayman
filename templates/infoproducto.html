@@ -7,26 +7,32 @@
            <div class="col-6">
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
-                   <div class="foto-pal">
-                       <div><img src="{{ miproducto.foto1 }}/-/resize/800x600/" alt=""></div>
-                       <div><img src="{{ miproducto.foto2 }}/-/resize/800x600/" alt=""></div>
-                       <div><img src="{{ miproducto.foto3 }}/-/resize/800x600/" alt=""></div>
-                       <div><img src="{{ miproducto.foto4 }}/-/resize/800x600/" alt=""></div>
+                   <div class="foto-pal" id="foto-pal">
+                       <div><a href="{{ miproducto.foto1 }}"><img src="{{ miproducto.foto1 }}-/resize/800x600/" alt=""></a></div>
+                       <div><a href="{{ miproducto.foto2 }}"><img src="{{ miproducto.foto2 }}-/resize/800x600/" alt=""></a></div>
+                       <div><a href="{{ miproducto.foto3 }}"><img src="{{ miproducto.foto3 }}-/resize/800x600/" alt=""></a></div>
+                       <div><a href="{{ miproducto.foto4 }}"><img src="{{ miproducto.foto4 }}-/resize/800x600/" alt=""></a></div>
                    </div>
                    <div class="foto-min">
-                       <div><img src="{{ miproducto.foto1 }}/-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto2 }}/-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto3 }}/-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto4 }}/-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ miproducto.foto1 }}-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ miproducto.foto2 }}-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ miproducto.foto3 }}-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ miproducto.foto4 }}-/resize/300x200/" alt=""></div>
                    </div>
                 </div>
-            </div>
-            <div class="col" id="product-wrap">
-                <h2 class="product-nombre">{{ miproducto.nombre }}</h2>
-                <hr>
-                <p class="product-descripcion">{{ miproducto.descripcion }}</p>
-            </div>
-        </div>
+           </div>
+           <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+           <script src="{{ url_for('static', filename='js/simpleLightbox.min.js') }}"></script>
+           <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/simpleLightbox.min.css') }}"/>
+           <script>
+               $('#foto-pal a').simpleLightbox();
+           </script>
+           <div class="col" id="product-wrap">
+               <h2 class="product-nombre">{{ miproducto.nombre }}</h2>
+               <hr>
+               <p class="product-descripcion">{{ miproducto.descripcion }}</p>
+           </div>
+       </div>
     </div>
     <br>
     <!-- Carousel, slick js, necesita jquery definido antes. -->

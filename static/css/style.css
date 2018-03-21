@@ -21,6 +21,7 @@ body{
     background: #888;
     color: white;
     text-align: center;
+    position: relative;
 }
 #cover-admin{
     background: #8bc3ff;
@@ -81,14 +82,14 @@ img{
 #product-wrap {
     background: #3b3a3a;
     padding: 20px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
-
-.foto-pal {
-    height: 400px;
+.foto-pal{
+    margin-bottom: 10px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
-
-.foto-min {
-    height: 200px;
+.foto-min{
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
 .card-title{
     font-family: "Lato", sans-serif;
@@ -125,4 +126,9 @@ img{
 .product-nombre {
     color: #17a2b8;
     font-size: 300%;
+}
+
+.myimage{
+    margin: 5px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }

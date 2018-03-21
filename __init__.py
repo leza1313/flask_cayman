@@ -23,10 +23,6 @@ app.debug = True
 app.config.from_object('config.ProductionConfig')
 
 db.init_app(app)
-@app.before_first_request
-def create_database():
-    db.create_all(app=app)
-    db.session.commit()
 
 api = Api(app)
 
