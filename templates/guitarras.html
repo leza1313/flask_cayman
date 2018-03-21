@@ -24,7 +24,7 @@
                        <div class="card-block">
                            <h4 id="{{ guitarra.nombre }}" class="card-title">{{ guitarra.nombre }}</h4>
 
-                           <a href="infoproducto?guitarra={{ guitarra.nombre }}">
+                           <a href="{{ url_for('infoproducto.html') }}?guitarra={{ guitarra.nombre }}">
                                <img src="{{ guitarra.foto1 }}/-/resize/300x300/" alt="teleca">
                            </a>
 

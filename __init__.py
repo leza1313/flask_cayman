@@ -4,17 +4,15 @@ sys.path.append('/var/www/flask_cayman/flask_cayman')
 
 from flask import Flask
 from flask import render_template
-from pages import editor
-from flask import request
 from flask_restful import Api
+
+from pages import editor
+from pages import guitarras
+from pages import bajos
+from pages import infoproducto
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
-
-from models.guitarras import GuitarrasModel
-from models.bajos import BajosModel
-import os
-
 
 app = Flask(__name__)
 app.debug = True
@@ -44,25 +42,11 @@ def prueba():
 def productos():
     return render_template('productos.html')
 
-@app.route('/guitarras')
-def guitarras_page():
-    misguitarras = GuitarrasModel.query.all()
-    return render_template('guitarras.html', guitarras=misguitarras)
+app.register_blueprint(guitarras.guitarras)
 
-@app.route('/infoproducto')
-def infoproducto():
-    if request.args.get('bajo') is not None:
-        bajo = request.args.get('bajo')
-        producto = BajosModel.query.filter_by(nombre=bajo).first()
-    if request.args.get('guitarra') is not None:
-        guitarra = request.args.get('guitarra')
-        producto = GuitarrasModel.query.filter_by(nombre=guitarra).first()
-    return render_template('infoproducto.html', miproducto=producto)
+app.register_blueprint(infoproducto.infoproducto)
 
-@app.route('/bajos')
-def bajos_page():
-    misbajos=BajosModel.query.all()
-    return render_template('bajos.html', bajos=misbajos)
+app.register_blueprint(bajos.bajos)
 
 @app.route('/contacto')
 def contacto():
