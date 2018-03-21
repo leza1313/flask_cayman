@@ -21,7 +21,6 @@ body{
     background: #888;
     color: white;
     text-align: center;
-    position: relative;
 }
 #cover-admin{
     background: #8bc3ff;
@@ -83,6 +82,28 @@ img{
     background: #3b3a3a;
     padding: 20px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+}
+@media screen and (max-width: 450px){
+    #product-wrap {
+        z-index: 5;
+        position: absolute;
+        width: 80vw;
+        right: 10%;
+        bottom: -50%;
+        background: #3b3a3a;
+        padding: 20px;
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+    }
+    .foto-pal{
+        width: 330px;
+    }
+    .foto-min{
+        margin-bottom: 400px;
+        width: 330px;
+    }
+}
+#prueba{
+    position: relative;
 }
 .foto-pal{
     margin-bottom: 10px;
