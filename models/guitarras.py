@@ -1,4 +1,4 @@
-from models.connection import db
+from connection import db
 
 class GuitarrasModel(db.Model):
     __tablename__ = 'guitarras'

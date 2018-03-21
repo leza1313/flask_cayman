@@ -1,4 +1,4 @@
-from models.connection import db
+from connection import db
 
 class BajosModel(db.Model):
     __tablename__ = 'bajos'

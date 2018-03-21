@@ -53,7 +53,7 @@ def contacto():
     return render_template('contacto.html')
 
 if __name__ == '__main__':
-    from models.connection import db
+    from connection import db
     db.init_app(app)
 
     app.run()
