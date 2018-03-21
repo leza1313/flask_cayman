@@ -83,13 +83,13 @@ img{
     padding: 20px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
-@media screen and (max-width: 600px){
+@media screen and (max-width: 450px){
     #product-wrap {
         z-index: 5;
         position: absolute;
         width: 80vw;
         right: 10%;
-        bottom: -60vw;
+        bottom: -60%;
         background: #3b3a3a;
         padding: 20px;
         box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
@@ -98,7 +98,26 @@ img{
         width: 80vw;
     }
     .foto-min{
-        margin-bottom: 100vw;
+        margin-bottom: 100vh;
+        width: 80vw;
+    }
+}
+@media screen and (max-width: 600px){
+    #product-wrap {
+        z-index: 5;
+        position: absolute;
+        width: 80vw;
+        right: 10%;
+        bottom: -40%;
+        background: #3b3a3a;
+        padding: 20px;
+        box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+    }
+    .foto-pal{
+        width: 80vw;
+    }
+    .foto-min{
+        margin-bottom: 70vh;
         width: 80vw;
     }
 }
