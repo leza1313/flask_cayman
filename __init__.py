@@ -7,13 +7,12 @@ from flask import render_template
 from pages import editor
 from flask import request
 from flask_restful import Api
-from models.connection import db
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
+
 from models.guitarras import GuitarrasModel
 from models.bajos import BajosModel
-
 import os
 
 
@@ -21,12 +20,6 @@ app = Flask(__name__)
 app.debug = True
 
 app.config.from_object('config.ProductionConfig')
-
-db.init_app(app)
-@app.before_first_request
-def create_database():
-    db.create_all(app=app)
-    db.session.commit()
 
 api = Api(app)
 
@@ -76,4 +69,7 @@ def contacto():
     return render_template('contacto.html')
 
 if __name__ == '__main__':
+    from models.connection import db
+    db.init_app(app)
+
     app.run()
