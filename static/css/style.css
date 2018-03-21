@@ -89,17 +89,17 @@ img{
         position: absolute;
         width: 80vw;
         right: 10%;
-        bottom: -50%;
+        bottom: -80%;
         background: #3b3a3a;
         padding: 20px;
         box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
     }
     .foto-pal{
-        width: 330px;
+        width: 80vw;
     }
     .foto-min{
-        margin-bottom: 400px;
-        width: 330px;
+        margin-bottom: 100vh;
+        width: 80vw;
     }
 }
 #prueba{
