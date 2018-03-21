@@ -6,10 +6,13 @@ from flask import Flask
 from flask import render_template
 from flask_restful import Api
 
+from connection import db
+
 from pages import editor
 from pages import guitarras
 from pages import bajos
 from pages import infoproducto
+from pages import galeria
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -18,6 +21,12 @@ app = Flask(__name__)
 app.debug = True
 
 app.config.from_object('config.ProductionConfig')
+
+db.init_app(app)
+@app.before_first_request
+def create_database():
+    db.create_all(app=app)
+    db.session.commit()
 
 api = Api(app)
 
@@ -48,12 +57,11 @@ app.register_blueprint(infoproducto.infoproducto)
 
 app.register_blueprint(bajos.bajos)
 
+app.register_blueprint(galeria.galeria)
+
 @app.route('/contacto')
 def contacto():
     return render_template('contacto.html')
 
 if __name__ == '__main__':
-    from connection import db
-    db.init_app(app)
-
     app.run()
