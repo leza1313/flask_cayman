@@ -83,6 +83,12 @@ img{
     padding: 20px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
+#artist-wrap {
+    background: #e4e4e4;
+    padding: 20px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+    color: #0c5460;
+}
 @media screen and (max-width: 600px){
     #product-wrap {
         z-index: 5;
@@ -172,4 +178,15 @@ img{
 .myimage{
     margin: 5px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+}
+.polaroid {
+    width: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
+    text-align: center;
+    margin: 0 auto;
+}
+.polaroid-text{
+    padding: 40px;
+    background: #f4f4f4;
+    color: #0c5460;
 }

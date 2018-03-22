@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+{% block cover %}
+<section id="artistas">
+    <div class="section-content">
+       <div class="container">
+           <br>
+           <h2>Artistas</h2>
+           <p>Aqui unas fotos aparentes y resultonas de artistas que usan vuestras guitarras</p>
+           <hr>
+           <div class="row">
+
+               {% for artista in myartistas %}
+                   {% if (loop.index % 3==1) %}
+                       </div>
+                       <div class="row">
+                   {% endif %}
+
+               <div class="col-sm-4">
+                   <div class="polaroid">
+                       <a href="{{ url_for('infoartista.html') }}?artista={{ artista.nombre }}">
+                           <img src="{{ artista.foto1 }}-/resize/300x300/" alt="">
+                       </a>
+                       <div class="polaroid-text">
+                          <a href="{{ url_for('infoartista.html') }}?artista={{ artista.nombre }}">
+                           <h5>{{ artista.nombre }}</h5>
+                          </a>
+                       </div>
+                   </div>
+               </div>
+            {% endfor %}
+           </div>
+           <br>
+        </div>
+    </div>
+</section>
+{% endblock %}

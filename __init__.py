@@ -13,6 +13,8 @@ from pages import guitarras
 from pages import bajos
 from pages import infoproducto
 from pages import galeria
+from pages import artistas
+from pages import infoartista
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -54,6 +56,10 @@ app.register_blueprint(infoproducto.infoproducto)
 app.register_blueprint(bajos.bajos)
 
 app.register_blueprint(galeria.galeria)
+
+app.register_blueprint(artistas.artistas)
+
+app.register_blueprint(infoartista.infoartista)
 
 @app.route('/contacto')
 def contacto():
