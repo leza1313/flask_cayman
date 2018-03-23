@@ -1,5 +1,5 @@
-from flask import Blueprint,render_template,redirect,url_for
-from flask import request
+from flask import Blueprint, render_template, redirect, url_for
+from flask import request, flash
 from models.user import UserModel
 
 from werkzeug.security import check_password_hash
@@ -22,6 +22,6 @@ def html():
                 login_user(user)
                 return redirect(url_for('index'))
 
-        return '<h1>Error al login</h1>'
-
+        error = 'Credenciales invalidas, prueba otra vez'
+        return render_template('login.html', error=error)
     return render_template('login.html')

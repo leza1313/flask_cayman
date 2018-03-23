@@ -7,12 +7,10 @@ from models.bajos import BajosModel
 
 infoproducto = Blueprint('infoproducto', __name__)
 
-@infoproducto.route('/infoproducto')
-def html():
-    if request.args.get('bajo') is not None:
-        bajo = request.args.get('bajo')
-        producto = BajosModel.query.filter_by(nombre=bajo).first()
-    if request.args.get('guitarra') is not None:
-        guitarra = request.args.get('guitarra')
-        producto = GuitarrasModel.query.filter_by(nombre=guitarra).first()
+@infoproducto.route('/infoproducto/<string:tipo>/<string:nombre>')
+def html(tipo,nombre):
+    if tipo=='bajo':
+        producto = BajosModel.query.filter_by(nombre=nombre).first()
+    if tipo =='guitarra':
+        producto = GuitarrasModel.query.filter_by(nombre=nombre).first()
     return render_template('infoproducto.html', miproducto=producto)

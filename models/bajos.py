@@ -11,8 +11,7 @@ class BajosModel(db.Model):
     foto4 = db.Column(db.String(150))
     descripcion = db.Column(db.String(500))
 
-    def __init__(self,id,nombre,foto1,foto2,foto3,foto4,descripcion):
-        self.id=id
+    def __init__(self,nombre,foto1,foto2,foto3,foto4,descripcion):
         self.nombre=nombre
         self.foto1=foto1
         self.foto2=foto2

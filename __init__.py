@@ -69,7 +69,6 @@ def prueba():
     return render_template('prueba.html')
 
 @app.route('/productos')
-@login_required
 def productos():
     return render_template('productos.html')
 

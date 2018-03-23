@@ -36,5 +36,10 @@
 
 </div>
 </footer>
+
+{% if current_user.is_authenticated %}
+<script src="{{ url_for('static',filename='js/nav-footer-admin.js')}}"></script>
+{% endif %}
+
 </body>
 </html>

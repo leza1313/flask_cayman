@@ -35,7 +35,6 @@ img{
 }
 #bloque-carta{
     background: #444;
-    margin: 10px;
 }
 #bloque-carta:hover{
     -moz-box-shadow: 0px 0px 10px #222; 
