@@ -173,6 +173,21 @@ img{
     color: #222222;
     font-size: 120%;
 }
-.mybutton{
+.mybutton {
     white-space: normal;
+}
+
+.enlaces-fotos{
+    color: rgb(235, 235, 235);
+    font-size: 200%;
+    position: relative;
+    left: -40px;
+    top: -75px;
+    z-index: 10;
+    text-shadow: 2px 2px 2px #1b1e21;
+}
+.enlaces-fotos:hover{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-shadow: 5px 5px 5px #000000;
 }

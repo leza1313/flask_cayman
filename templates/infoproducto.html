@@ -11,14 +11,14 @@
                 </button>
               </div>
               <div class="modal-body">
-                  <form id="prueba4" class="form" method="post" action="{{ url_for('infoproducto.editar',tipo=request.path.split('/')[2], nombre=miproducto.nombre) }}">
+                  <form class="form" method="post" action="{{ url_for('infoproducto.editar',tipo=request.path.split('/')[2], nombre=miproducto.nombre) }}">
                         <div class="form-group">
                             <label for="nombre" class="mymodal-label">Nombre</label>
                             <input type="text" name="nombre" class="form-control" value="{{ miproducto.nombre }}" required autofocus>
                         </div>
                         <div class="form-group">
                             <label for="descrip" class="mymodal-label">Descripcion</label>
-                            <textarea name="descrip" class="form-control" required form="prueba4">{{ miproducto.descripcion }}</textarea>
+                            <textarea name="descrip" class="form-control" required>{{ miproducto.descripcion }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="fot" class="mymodal-label">Foto</label>

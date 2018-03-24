@@ -1,5 +1,38 @@
 {% extends "core/base.html" %}
 {% block cover %}
+<!-- Modal -->
+        <div class="modal fade mymodal" id="mimodal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">Introduzca nuevos datos del Artista</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form class="form" method="post" action="{{ url_for('infoartista.editar', nombre=myartista.nombre) }}">
+                        <div class="form-group">
+                            <label for="nombre" class="mymodal-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" value="{{ myartista.nombre }}" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="descrip" class="mymodal-label">Descripcion</label>
+                            <textarea name="descrip" class="form-control" required>{{ myartista.descripcion }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fot" class="mymodal-label">Foto</label>
+                            <input type="text" name="fot" class="form-control" value="{{ myartista.foto1 }}" required>
+                        </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
 <section id="cover">
     <br>
     <div class="container">
@@ -28,7 +61,7 @@
                $('#foto-pal a').simpleLightbox();
            </script>
            <div class="col-md-6" id="artist-wrap">
-               <h2 class="product-nombre">{{ myartista.nombre }}</h2>
+               <h2 id="artist-nombre">{{ myartista.nombre }}</h2>
                <hr>
                <p class="artist-descripcion">{{ myartista.descripcion }}</p>
            </div>
@@ -55,6 +88,9 @@
             focusOnSelect: true
         });
     </script>
+{% if current_user.is_authenticated %}
+<script src="{{ url_for('static',filename='js/infoartista-admin.js')}}"></script>
+{% endif %}
 </section>
 
 {% endblock %}
