@@ -31,4 +31,4 @@ def nuevo():
         print(mibajo)
         mibajo.insert_to_db()
 
-    return render_template('nuevobajo.html', mytitle='Añadir Bajo')
+    return render_template('nuevobajo.html', mytitle='Anadir Bajo')

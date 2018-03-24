@@ -32,4 +32,4 @@ def nuevo():
         #print(mibajo)
         miartista.insert_to_db()
 
-    return render_template('nuevoartista.html', mytitle='Añadir Artista')
+    return render_template('nuevoartista.html', mytitle='Anadir Artista')

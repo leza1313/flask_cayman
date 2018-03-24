@@ -34,4 +34,4 @@ def nuevo():
         #print(miguitarra)
         miguitarra.insert_to_db()
 
-    return render_template('nuevaguitarra.html', mytitle='Añadir Guitarra')
+    return render_template('nuevaguitarra.html', mytitle='Anadir Guitarra')
