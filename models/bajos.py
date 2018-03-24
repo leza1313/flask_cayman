@@ -39,3 +39,6 @@ class BajosModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+
+    def actualizar(self):
+        db.session.commit()

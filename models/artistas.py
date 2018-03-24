@@ -18,3 +18,24 @@ class ArtistasModel(db.Model):
         self.foto3=foto3
         self.foto4=foto4
         self.descripcion=descripcion
+
+    def json(self):
+        return {'id': self.id,
+                'nombre': self.nombre,
+                'foto1': self.foto1,
+                'foto2': self.foto2,
+                'foto3': self.foto3,
+                'foto4': self.foto4,
+                'descripcion': self.descripcion}
+
+    @classmethod
+    def find_by_name(cls,name):
+        return cls.query.filter_by(nombre=name).first()
+
+    def insert_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
