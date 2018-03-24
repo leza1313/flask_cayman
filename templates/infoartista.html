@@ -4,7 +4,7 @@
     <br>
     <div class="container">
        <div class="row">
-           <div class="col-6" id="prueba">
+           <div class="col-md-6" id="prueba">
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal" id="foto-pal">
@@ -27,7 +27,7 @@
            <script>
                $('#foto-pal a').simpleLightbox();
            </script>
-           <div class="col" id="artist-wrap">
+           <div class="col-md-6" id="artist-wrap">
                <h2 class="product-nombre">{{ myartista.nombre }}</h2>
                <hr>
                <p class="artist-descripcion">{{ myartista.descripcion }}</p>
@@ -36,8 +36,7 @@
     </div>
     <br>
     <!-- Carousel, slick js, necesita jquery definido antes. -->
-    <script src="static/js/jquery-3.2.1.min.js"></script>
-    <script src="static/slick/slick.min.js"></script>
+    <script src="{{ url_for('static',filename='slick/slick.min.js')}}"></script>
     <script>
         $('.foto-pal').slick({
             slidesToShow: 1,

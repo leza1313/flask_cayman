@@ -15,7 +15,9 @@
                     {% endif %}
                    <div class="col-sm-4">
                        <div id="bloque-carta" class="polaroid">
-                           <h4 id="{{ bajo.nombre }}" class="card-title">{{ bajo.nombre }}</h4>
+                           <a class="card-link" href="{{ url_for('infoproducto.html', tipo='bajo', nombre=bajo.nombre) }}">
+                               <h4 id="{{ bajo.nombre }}" class="card-title">{{ bajo.nombre }}</h4>
+                           </a>
 
                            <a href="{{ url_for('infoproducto.html', tipo='bajo', nombre=bajo.nombre) }}">
                                <img class="card-img-bottom" src="{{ bajo.foto1 }}/-/resize/300x300/" alt="bajo1">

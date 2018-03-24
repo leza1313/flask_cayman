@@ -88,45 +88,6 @@ img{
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
     color: #0c5460;
 }
-@media screen and (max-width: 600px){
-    #product-wrap {
-        z-index: 5;
-        position: absolute;
-        width: 80vw;
-        right: 10%;
-        bottom: -10%;
-        background: #3b3a3a;
-        padding: 20px;
-        box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
-    }
-    .foto-pal{
-        width: 80vw;
-    }
-    .foto-min{
-        margin-bottom: 70vh;
-        width: 80vw;
-    }
-}
-@media screen and (max-width: 450px){
-    #product-wrap {
-        z-index: 5;
-        position: absolute;
-        width: 80vw;
-        right: 10%;
-        bottom: -60%;
-        background: #3b3a3a;
-        padding: 20px;
-        box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
-    }
-
-    .foto-pal{
-        width: 80vw;
-    }
-    .foto-min{
-        margin-bottom: 100vh;
-        width: 80vw;
-    }
-}
 #prueba{
     position: relative;
 }
@@ -136,6 +97,7 @@ img{
 }
 .foto-min{
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+    margin-bottom: 10px;
 }
 .card-title{
     font-family: "Lato", sans-serif;
@@ -149,6 +111,14 @@ img{
 }
 .enlaces:hover{
     color: rgba(255,255,255,0.6);
+    text-decoration: none;
+}
+.enlaces-oscuros{
+    color: rgba(10, 71, 81, 0.6);
+    font-size: 18px;
+}
+.enlaces-oscuros:hover{
+    color: rgba(10,71,81,0.8);
     text-decoration: none;
 }
 
@@ -180,7 +150,6 @@ img{
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
 }
 .polaroid {
-    width: 300px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
     text-align: center;
     margin: 10px auto;
@@ -195,4 +164,12 @@ img{
     margin: 20px auto;
     padding: 10px;
     color: #0a4751;
+}
+.mymodal{
+    color: #0c5460;
+    text-align: left;
+}
+.mymodal-label{
+    color: #222222;
+    font-size: 120%;
 }

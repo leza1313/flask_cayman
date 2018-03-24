@@ -1,10 +1,43 @@
 {% extends "core/base.html" %}
 {% block cover %}
-<section id="cover">
+<!-- Modal -->
+        <div class="modal fade mymodal" id="mimodal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">Introduzca nuevos datos del Producto</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form id="prueba4" class="form" method="post" action="{{ url_for('infoproducto.editar',tipo=request.path.split('/')[2], nombre=miproducto.nombre) }}">
+                        <div class="form-group">
+                            <label for="nombre" class="mymodal-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" value="{{ miproducto.nombre }}" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="descrip" class="mymodal-label">Descripcion</label>
+                            <textarea name="descrip" class="form-control" required form="prueba4">{{ miproducto.descripcion }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fot" class="mymodal-label">Foto</label>
+                            <input type="text" name="fot" class="form-control" value="{{ miproducto.foto1 }}" required>
+                        </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+<section id="productos">
     <br>
     <div class="container">
        <div class="row">
-           <div class="col-6" id="prueba">
+           <div class="col-md-6">
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal" id="foto-pal">
@@ -27,8 +60,8 @@
            <script>
                $('#foto-pal a').simpleLightbox();
            </script>
-           <div class="col" id="product-wrap">
-               <h2 class="product-nombre">{{ miproducto.nombre }}</h2>
+           <div class="col-md-6" id="product-wrap">
+               <h2 id="product-nombre">{{ miproducto.nombre }}</h2>
                <hr>
                <p class="product-descripcion">{{ miproducto.descripcion }}</p>
            </div>
@@ -55,6 +88,9 @@
             focusOnSelect: true
         });
     </script>
+{% if current_user.is_authenticated %}
+<script src="{{ url_for('static',filename='js/infoproducto-admin.js')}}"></script>
+{% endif %}
 </section>
 
 {% endblock %}

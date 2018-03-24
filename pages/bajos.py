@@ -9,7 +9,7 @@ bajos = Blueprint('bajos', __name__)
 @bajos.route('/bajos')
 def html():
     misbajos=BajosModel.query.all()
-    return render_template('bajos.html', bajos=misbajos)
+    return render_template('bajos.html', bajos=misbajos, mytitle='Bajos')
 
 @bajos.route('/borrarbajo/<string:nombre>')
 @login_required
@@ -31,4 +31,4 @@ def nuevo():
         print(mibajo)
         mibajo.insert_to_db()
 
-    return render_template('nuevobajo.html')
+    return render_template('nuevobajo.html', mytitle='Añadir Bajo')

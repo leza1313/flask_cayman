@@ -6,9 +6,7 @@ from models.artistas import ArtistasModel
 
 infoartista = Blueprint('infoartista', __name__)
 
-@infoartista.route('/infoartista')
-def html():
-    if request.args.get('artista') is not None:
-        myartista = request.args.get('artista')
-        artista = ArtistasModel.query.filter_by(nombre=myartista).first()
-    return render_template('infoartista.html', myartista=artista)
+@infoartista.route('/infoartista/<string:name>')
+def html(name):
+    artista = ArtistasModel.query.filter_by(nombre=name).first()
+    return render_template('infoartista.html', myartista=artista, mytitle='Info Artista')

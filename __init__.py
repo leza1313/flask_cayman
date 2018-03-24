@@ -70,7 +70,7 @@ def prueba():
 
 @app.route('/productos')
 def productos():
-    return render_template('productos.html')
+    return render_template('productos.html', mytitle='Productos')
 
 app.register_blueprint(guitarras.guitarras)
 
@@ -86,7 +86,7 @@ app.register_blueprint(infoartista.infoartista)
 
 @app.route('/contacto')
 def contacto():
-    return render_template('contacto.html')
+    return render_template('contacto.html',mytitle='Contacto')
 
 if __name__ == '__main__':
     app.run()

@@ -23,5 +23,5 @@ def html():
                 return redirect(url_for('index'))
 
         error = 'Credenciales invalidas, prueba otra vez'
-        return render_template('login.html', error=error)
-    return render_template('login.html')
+        return render_template('login.html', error=error, mytitle='Login')
+    return render_template('login.html', mytitle='Login')

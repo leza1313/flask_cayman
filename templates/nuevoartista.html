@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block cover %}
+<h1>Nuevo Artista</h1><br>
+    <div class="container mylogin card">
+        <form class="form" method="post" action="{{ url_for('artistas.nuevo') }}">
+            <h2>Introduzca datos del Artista</h2>
+            <div class="form-group">
+                <label for="nombre" class="sr-only">Nombre</label>
+                <input type="text" name="nombre" class="form-control" placeholder="Nombre del Artista" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="descripcion" class="sr-only">Descripcion</label>
+                <input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required>
+            </div>
+            <div class="form-group">
+                <label for="foto" class="sr-only">Foto</label>
+                <input type="text" name="foto" class="form-control" placeholder="url de la foto" required>
+            </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+    </div>
+    <br>
+
+{% endblock %}

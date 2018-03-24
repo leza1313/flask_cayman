@@ -11,7 +11,7 @@ guitarras = Blueprint('guitarras', __name__)
 @guitarras.route('/guitarras')
 def html():
     misguitarras = GuitarrasModel.query.all()
-    return render_template('guitarras.html', guitarras=misguitarras)
+    return render_template('guitarras.html', guitarras=misguitarras, mytitle='Guitarras')
 
 
 @guitarras.route('/borrarguitarra/<string:nombre>')
@@ -34,4 +34,4 @@ def nuevo():
         #print(miguitarra)
         miguitarra.insert_to_db()
 
-    return render_template('nuevaguitarra.html')
+    return render_template('nuevaguitarra.html', mytitle='Añadir Guitarra')
