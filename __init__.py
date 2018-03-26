@@ -28,10 +28,10 @@ app.debug = True
 app.config.from_object('config.ProductionConfig')
 
 db.init_app(app)
-"""@app.before_first_request
+@app.before_first_request
 def create_db():
     db.create_all()
-    db.session.commit()"""
+    db.session.commit()
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login.html'

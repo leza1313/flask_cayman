@@ -25,6 +25,10 @@ def nuevo():
     if request.method == 'POST':
         url = request.form['myfoto']
         alt = request.form['alt']
+        #Check if url is filled or not,
+        # To DO, send message to alert the admin he need to fill the image
+        if url is '':
+            return redirect(url_for('galeria.html'))
         mifoto = GaleriaModel.find_by_name(url)
         if mifoto is None:
             mifoto = GaleriaModel(url,alt)
