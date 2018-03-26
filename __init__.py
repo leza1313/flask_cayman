@@ -9,6 +9,8 @@ from flask_login import LoginManager, login_required, logout_user
 
 from connection import db
 from models.user import UserModel
+from models.fotosbajos import FotosBajosModel
+from models.fotosguitarras import FotosGuitarrasModel
 
 from pages import editor
 from pages import guitarras

@@ -41,16 +41,17 @@
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal" id="foto-pal">
-                       <div><a href="{{ miproducto.foto1 }}"><img src="{{ miproducto.foto1 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ miproducto.foto2 }}"><img src="{{ miproducto.foto2 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ miproducto.foto3 }}"><img src="{{ miproducto.foto3 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ miproducto.foto4 }}"><img src="{{ miproducto.foto4 }}-/resize/800x600/" alt=""></a></div>
+                       <div><a href="{{ miproducto.fotopal }}"><img src="{{ miproducto.fotopal }}-/resize/800x600/" alt=""></a></div>
+                        {% for foto in miproducto.fotos %}
+                       <div><a href="{{ foto.url }}"><img src="{{ foto.url }}-/resize/800x600/" alt="{{ foto.nombre }}"></a></div>
+                        {% endfor %}
+
                    </div>
                    <div class="foto-min">
-                       <div><img src="{{ miproducto.foto1 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto2 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto3 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ miproducto.foto4 }}-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ miproducto.fotopal }}-/resize/300x200/" alt=""></div>
+                       {% for foto in miproducto.fotos %}
+                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></a></div>
+                        {% endfor %}
                    </div>
                 </div>
            </div>

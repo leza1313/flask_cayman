@@ -114,7 +114,7 @@ img{
     text-decoration: none;
 }
 .enlaces-oscuros{
-    color: rgba(10, 71, 81, 0.6);
+    color: rgba(10, 71, 81, 0.5);
     font-size: 18px;
 }
 .enlaces-oscuros:hover{
@@ -164,6 +164,11 @@ img{
     margin: 20px auto;
     padding: 10px;
     color: #0a4751;
+}
+@media screen and (max-width: 600px){
+    .mylogin{
+        width: 64vw;
+    }
 }
 .mymodal{
     color: #0c5460;

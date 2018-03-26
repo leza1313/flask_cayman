@@ -5,28 +5,20 @@ class BajosModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(24))
-    foto1 = db.Column(db.String(150))
-    foto2 = db.Column(db.String(150))
-    foto3 = db.Column(db.String(150))
-    foto4 = db.Column(db.String(150))
     descripcion = db.Column(db.String(500))
+    fotopal = db.Column(db.String(500))
+    fotos=db.relationship("FotosBajosModel")
 
-    def __init__(self,nombre,foto1,foto2,foto3,foto4,descripcion):
+    def __init__(self,nombre,descripcion,fotopal):
         self.nombre=nombre
-        self.foto1=foto1
-        self.foto2=foto2
-        self.foto3=foto3
-        self.foto4=foto4
         self.descripcion=descripcion
+        self.fotopal=fotopal
 
     def json(self):
         return {'id': self.id,
                 'nombre': self.nombre,
-                'foto1': self.foto1,
-                'foto2': self.foto2,
-                'foto3': self.foto3,
-                'foto4': self.foto4,
-                'descripcion': self.descripcion}
+                'descripcion': self.descripcion,
+                'fotopal': self.fotopal}
 
     @classmethod
     def find_by_name(cls,name):
@@ -37,6 +29,7 @@ class BajosModel(db.Model):
         db.session.commit()
 
     def delete_from_db(self):
+        [item.delete_from_db() for item in self.fotos]
         db.session.delete(self)
         db.session.commit()
 
