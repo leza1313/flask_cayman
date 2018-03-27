@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, redirect, url_for
+from flask import Blueprint,render_template, redirect, url_for, flash
 from flask_login import login_required
 from flask import current_app as app
 from flask import request
@@ -31,8 +31,12 @@ def editar(tipo,nombre):
         id = BajosModel.find_by_name(nombre).id
         fotos = int((len(request.form)-2)/2)
         for index in range(1, fotos+1):
+            if request.form['myfoto'+index.__str__()] is '':
+                flash('Error: Es necesario seleccionar una imagen')
+                return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
             mifoto = FotosBajosModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
             mifoto.insert_to_db()
+        flash('Exito: Se ha actualizado el bajo correctamente')
         return redirect(url_for('infoproducto.html', tipo='bajo', nombre=producto.nombre))
     if tipo =='guitarra':
         producto = GuitarrasModel.query.filter_by(nombre=nombre).first()
@@ -43,9 +47,13 @@ def editar(tipo,nombre):
         id = GuitarrasModel.find_by_name(nombre).id
         fotos = int((len(request.form)-2)/2)
         for index in range(1, fotos+1):
+            if request.form['myfoto'+index.__str__()] is '':
+                flash('Error: Es necesario seleccionar una imagen')
+                return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
             mifoto = FotosGuitarrasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
             mifoto.insert_to_db()
         producto.actualizar()
+        flash('Exito: Se ha actualizado la guitarra correctamente')
         return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
     return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
 
@@ -59,6 +67,7 @@ def borrar(tipo, nombre, id):
         mifoto = FotosGuitarrasModel.find_by_name(url)
     if mifoto:
         mifoto.delete_from_db()
+        flash('Exito: Se ha borrado la foto del articulo correctamente')
     return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
 
 

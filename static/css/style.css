@@ -227,6 +227,7 @@ img{
     position: absolute;
     right: 30%;
     top: 10%;
+    z-index: 1500;
 }
 @media screen and (max-width: 600px){
     .mylogin{

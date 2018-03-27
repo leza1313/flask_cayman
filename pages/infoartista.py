@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, request, redirect, url_for
+from flask import Blueprint,render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from flask import current_app as app
 from flask import request
@@ -27,5 +27,5 @@ def editar(nombre):
     for index in range(1, fotos+1):
         mifoto = FotosArtistasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
         mifoto.insert_to_db()
-
+    flash('Exito: Se ha actualizado el artista correctamente')
     return redirect(url_for('infoartista.html', nombre=nombre))

@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, request, redirect, url_for
+from flask import Blueprint,render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from models.promociones import PromocionesModel
 
@@ -12,6 +12,9 @@ def borrar(id):
     mifoto = PromocionesModel.find_by_name(url)
     if mifoto:
         mifoto.delete_from_db()
+        flash('Exito: Se ha eliminado correctamente la foto de promocion')
+        return redirect(url_for('index'))
+    flash('Error: No se ha conseguido eliminar la foto de promocion')
     return redirect(url_for('index'))
 
 @promociones.route('/nuevapromocionesfoto', methods=['POST'])
@@ -23,10 +26,12 @@ def nuevo():
         url = request.form['myfoto'+index.__str__()]
         alt = request.form['alt'+index.__str__()]
         if url is '':
+            flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('index'))
         mifoto = PromocionesModel.find_by_name(url)
-        if mifoto is None:
-            mifoto = PromocionesModel(url,alt)
-            mifoto.insert_to_db()
-
+        if mifoto:
+            flash('Error: La foto ya esta en promociones')
+        mifoto = PromocionesModel(url,alt)
+        mifoto.insert_to_db()
+        flash('Exito: Se ha añadido correctamente la promocion')
     return redirect(url_for('index'))
