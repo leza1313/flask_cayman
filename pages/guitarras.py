@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, request, redirect, url_for
+from flask import Blueprint,render_template, request, redirect, url_for, flash
 from flask import current_app as app
 from flask_login import login_required
 
@@ -18,6 +18,9 @@ def borrar(nombre):
     miguitarra = GuitarrasModel.find_by_name(nombre)
     if miguitarra:
         miguitarra.delete_from_db()
+        flash('Exito: Se ha eliminado correctamente la guitarra')
+        return redirect(url_for('guitarras.html'))
+    flash('Error: No se ha conseguido eliminar la guitarra')
     return redirect(url_for('guitarras.html'))
 
 @guitarras.route('/nuevaguitarra', methods=['GET','POST'])
@@ -28,7 +31,8 @@ def nuevo():
         descripcion = request.form['descrip']
         foto = request.form['myfoto']
         if foto is '':
-            return redirect(url_for('nuevaguitarra.html', mytitle='Anadir Guitarra'))
+            flash('Error: Es necesario seleccionar una imagen')
+            return redirect(url_for('guitarras.nuevo'))
 
         miguitarra = GuitarrasModel(nombre, descripcion, foto)
         miguitarra.insert_to_db()
@@ -38,8 +42,7 @@ def nuevo():
         for index in range(1, fotos+1):
             mifoto = FotosGuitarrasModel(request.form['alt'+index.__str__()],request.form['myfoto'+index.__str__()], id)
             mifoto.insert_to_db()
+        flash('Exito: Se ha añadido correctamente la nueva guitarra')
         return redirect(url_for('guitarras.html'))
-
-
 
     return render_template('nuevaguitarra.html', mytitle='Anadir Guitarra')

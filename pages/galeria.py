@@ -30,7 +30,7 @@ def nuevo():
         alt = request.form['alt']
         if url is '':
             flash('Error: Es necesario seleccionar una imagen')
-            return redirect(url_for('galeria.html'))
+            return redirect(url_for('galeria.nuevo'))
         mifoto = GaleriaModel.find_by_name(url)
         if mifoto is None:
             mifoto = GaleriaModel(url,alt)

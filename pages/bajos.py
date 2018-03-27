@@ -32,7 +32,7 @@ def nuevo():
         foto = request.form['myfoto']
         if foto is '':
             flash('Error: Es necesario seleccionar una imagen')
-            return redirect(url_for('bajos.html'))
+            return redirect(url_for('bajos.nuevo'))
 
         mibajo = BajosModel(nombre, descripcion, foto)
         mibajo.insert_to_db()
