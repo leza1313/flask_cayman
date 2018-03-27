@@ -1,5 +1,44 @@
 {% extends "core/base.html" %}
 {% block cover %}
+{% if current_user.is_authenticated %}
+<script>
+  UPLOADCARE_LOCALE = "es";
+  UPLOADCARE_TABS = "file facebook dropbox instagram";
+  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
+</script>
+<script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
+<script src="{{ url_for('static',filename='js/addFotoWidget.js') }}"></script>
+<!-- Modal -->
+        <div class="modal fade mymodal" id="mimodal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">Actualizar Promociones</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form class="form" method="post" action="{{ url_for('promociones.nuevo') }}">
+                        <div class="form-group">
+                            {% for fotos in mispromociones %}
+                                <img class="mifoto" src="{{ fotos.url }}-/resize/200x200/" alt="">
+                            {% endfor %}
+                        </div>
+                      <hr>
+                      <h5>Añadir Fotos</h5>
+                      <hr>
+                      <a id="anadirfoto" onclick="addFotoWidget()" class="enlaces-oscuros" style="font-size: 250%; position: relative; left: 48%;">+</a>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endif %}
     <!-- Add your site or application content here -->
     <section>
         <br>
@@ -10,11 +49,10 @@
     </section>
     <!-- Carousel-->
     <div class="container" dir="ltr" id="mycarousel-wrap">
-       <div class="mycarousel">
-           <div><img src="https://ucarecdn.com/56612b9f-5c6a-45fe-88f3-c849a47fe320/-/resize/800x550/" alt=""></div>
-           <div><img src="https://ucarecdn.com/7d2f3de4-20ba-4127-bea4-0c77a3badda0/-/resize/800x550/" alt=""></div>
-           <div><img src="https://ucarecdn.com/56612b9f-5c6a-45fe-88f3-c849a47fe320/-/resize/800x550/" alt=""></div>
-           <div><img src="https://ucarecdn.com/7d2f3de4-20ba-4127-bea4-0c77a3badda0/-/resize/800x550/" alt=""></div>
+       <div id="mycarousel">
+           {% for foto in mispromociones %}
+               <div><img src="{{ foto.url }}-/resize/800x550/" alt="{{ foto.alt }}"></div>
+           {% endfor %}
 
        </div>
     </div>
@@ -22,7 +60,7 @@
     <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='slick/slick.min.js') }}"></script>
     <script>
-        $(".mycarousel").slick({
+        $("#mycarousel").slick({
             rtl:false,
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -35,6 +73,10 @@
             dots: true
         });
     </script>
+    {% if current_user.is_authenticated %}
+    <script src="{{ url_for('static',filename='js/index-admin.js') }}"></script>
+    <button class="btn btn-dark" data-toggle="modal" data-target="#mimodal">Editar Promociones</button>
+    {% endif %}
     <br>
     <!-- Cartas-->
     <div class="container">

@@ -11,6 +11,7 @@ from connection import db
 from models.user import UserModel
 from models.fotosbajos import FotosBajosModel
 from models.fotosguitarras import FotosGuitarrasModel
+from models.promociones import PromocionesModel
 
 from pages import editor
 from pages import guitarras
@@ -20,6 +21,7 @@ from pages import galeria
 from pages import artistas
 from pages import infoartista
 from pages import login
+from pages import promociones
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -61,10 +63,12 @@ def logout():
 
 @app.route('/')
 def index():
-    title='Inicio'
-    return render_template('index.html', mytitle=title)
+    mispromociones=PromocionesModel.query.all()
+    return render_template('index.html', mytitle='Inicio', mispromociones=mispromociones)
 
 app.register_blueprint(editor.editor)
+
+app.register_blueprint(promociones.promociones)
 
 @app.route('/prueba')
 def prueba():
