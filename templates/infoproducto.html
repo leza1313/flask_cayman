@@ -1,5 +1,13 @@
 {% extends "core/base.html" %}
 {% block cover %}
+{% if current_user.is_authenticated %}
+<script>
+  UPLOADCARE_LOCALE = "es";
+  UPLOADCARE_TABS = "file facebook dropbox instagram";
+  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
+</script>
+<script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
+<script src="{{ url_for('static',filename='js/addFotoWidget.js') }}"></script>
 <!-- Modal -->
         <div class="modal fade mymodal" id="mimodal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
@@ -21,9 +29,22 @@
                             <textarea name="descrip" class="form-control" required>{{ miproducto.descripcion }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="fot" class="mymodal-label">Foto</label>
-                            <input type="text" name="fot" class="form-control" value="{{ miproducto.foto1 }}" required>
+                            <label for="myfoto" class="">Foto Principal: </label>
+                            <input type="hidden" role="uploadcare-uploader" name="myfoto"
+                                                  data-crop="disabled"
+                                                  data-preview-step="true"
+                                                  data-images-only="true" required/>
                         </div>
+                        <div class="form-group">
+                            {% for fotos in miproducto.fotos %}
+                                <img class="mifoto" src="{{ fotos.url }}-/resize/200x200/" alt="">
+                            {% endfor %}
+
+                        </div>
+                      <hr>
+                      <h5>Añadir Fotos</h5>
+                      <hr>
+                      <a id="anadirfoto" onclick="addFotoWidget()" class="enlaces-oscuros" style="font-size: 250%; position: relative; left: 48%;">+</a>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
                   </form>
               </div>
@@ -33,6 +54,7 @@
             </div>
           </div>
         </div>
+{% endif %}
 <section id="productos">
     <br>
     <div class="container">
@@ -50,7 +72,7 @@
                    <div class="foto-min">
                        <div><img src="{{ miproducto.fotopal }}-/resize/300x200/" alt=""></div>
                        {% for foto in miproducto.fotos %}
-                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></a></div>
+                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></div>
                         {% endfor %}
                    </div>
                 </div>
@@ -64,7 +86,7 @@
            <div class="col-md-6" id="product-wrap">
                <h2 id="product-nombre">{{ miproducto.nombre }}</h2>
                <hr>
-               <p class="product-descripcion">{{ miproducto.descripcion }}</p>
+               <pre id="product-descripcion">{{ miproducto.descripcion }}</pre>
            </div>
        </div>
     </div>

@@ -59,11 +59,11 @@
               </li>
             </ul>
             <ul class="nav navbar-nav ml-auto justify-content-end">
-                <li class="" id="boton-contacto">
+                <li class="boton-nav-right">
                     <a href="{{ url_for('contacto') }}" class="btn btn-info">Contacto</a>
                 </li>
                 {% if current_user.is_authenticated %}
-                <li class="" id="boton-contacto" style="margin-left: 5px;">
+                <li class="boton-nav-right">
                     <a href="{{ url_for('logout') }}" class="btn btn-danger">LogOut</a>
                 </li>
                 {% endif %}

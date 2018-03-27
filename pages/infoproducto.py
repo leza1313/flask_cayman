@@ -5,6 +5,8 @@ from flask import request
 
 from models.guitarras import GuitarrasModel
 from models.bajos import BajosModel
+from models.fotosbajos import FotosBajosModel
+from models.fotosguitarras import FotosGuitarrasModel
 
 infoproducto = Blueprint('infoproducto', __name__)
 
@@ -23,16 +25,40 @@ def editar(tipo,nombre):
         producto = BajosModel.query.filter_by(nombre=nombre).first()
         producto.nombre=request.form['nombre']
         producto.descripcion=request.form['descrip']
-        producto.foto1=request.form['fot']
+        if request.form['myfoto'] is not '':
+            producto.fotopal=request.form['myfoto']
         producto.actualizar()
+        id = BajosModel.find_by_name(nombre).id
+        fotos = int((len(request.form)-2)/2)
+        for index in range(1, fotos+1):
+            mifoto = FotosBajosModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
+            mifoto.insert_to_db()
         return redirect(url_for('infoproducto.html', tipo='bajo', nombre=producto.nombre))
     if tipo =='guitarra':
         producto = GuitarrasModel.query.filter_by(nombre=nombre).first()
         producto.nombre = request.form['nombre']
         producto.descripcion = request.form['descrip']
-        producto.foto1 = request.form['fot']
+        if request.form['myfoto'] is not '':
+            producto.fotopal=request.form['myfoto']
+        id = GuitarrasModel.find_by_name(nombre).id
+        fotos = int((len(request.form)-2)/2)
+        for index in range(1, fotos+1):
+            mifoto = FotosGuitarrasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
+            mifoto.insert_to_db()
         producto.actualizar()
         return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
+    return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
+
+@infoproducto.route('/borrarinfoproductofoto/<string:tipo>/<string:nombre>/<string:id>')
+@login_required
+def borrar(tipo, nombre, id):
+    url = 'https://ucarecdn.com/'+id+'/'
+    if tipo=='bajo':
+        mifoto = FotosBajosModel.find_by_name(url)
+    if tipo=='guitarra':
+        mifoto = FotosGuitarrasModel.find_by_name(url)
+    if mifoto:
+        mifoto.delete_from_db()
     return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
 
 

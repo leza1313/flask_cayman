@@ -5,7 +5,7 @@ class BajosModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(24))
-    descripcion = db.Column(db.String(500))
+    descripcion = db.Column(db.Text)
     fotopal = db.Column(db.String(500))
     fotos=db.relationship("FotosBajosModel")
 

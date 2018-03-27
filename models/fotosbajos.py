@@ -14,6 +14,10 @@ class FotosBajosModel(db.Model):
         self.url=url
         self.bajo=bajo
 
+    @classmethod
+    def find_by_name(cls, url):
+        return cls.query.filter_by(url=url).first()
+
     def insert_to_db(self):
         db.session.add(self)
         db.session.commit()

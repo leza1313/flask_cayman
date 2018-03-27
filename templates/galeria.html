@@ -1,10 +1,5 @@
 {% extends "core/base.html" %}
 {% block cover %}
-<script>
-  UPLOADCARE_LOCALE = "es";
-  UPLOADCARE_TABS = "file facebook dropbox instagram";
-  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
-</script>
 <script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
 <section id="galeria">
     <div class="section-content">
@@ -13,6 +8,11 @@
            <h2>Galeria</h2>
            <p>Aqui unas fotos aparentes y resultonas de lo que haceis</p>
            {% if current_user.is_authenticated %}
+               <script>
+                  UPLOADCARE_LOCALE = "es";
+                  UPLOADCARE_TABS = "file facebook dropbox instagram";
+                  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
+                </script>
             <div class="modal fade mymodal" id="anadirfoto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -42,10 +42,6 @@
                 </div>
               </div>
             </div>
-
-
-
-
                <button class="btn btn-dark" data-toggle="modal" data-target="#anadirfoto">Añadir</button>
            {% endif %}
            <hr>

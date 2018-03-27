@@ -25,7 +25,7 @@ def borrar(nombre):
 def nuevo():
     if request.method == 'POST':
         nombre = request.form['nombre']
-        descripcion = request.form['descripcion']
+        descripcion = request.form['descrip']
         foto = request.form['myfoto']
         if foto is '':
             return redirect(url_for('bajos.html'))
