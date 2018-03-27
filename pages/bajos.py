@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, redirect, url_for, request
+from flask import Blueprint,render_template, redirect, url_for, request, flash
 from flask import current_app as app
 from flask_login import login_required
 
@@ -18,6 +18,9 @@ def borrar(nombre):
     mibajo = BajosModel.find_by_name(nombre)
     if mibajo:
         mibajo.delete_from_db()
+        flash('Exito: Se ha eliminado correctamente el bajo')
+        return redirect(url_for('bajos.html'))
+    flash('Error: No se ha conseguido eliminar el bajo')
     return redirect(url_for('bajos.html'))
 
 @bajos.route('/nuevobajo', methods=['GET','POST'])
@@ -28,6 +31,7 @@ def nuevo():
         descripcion = request.form['descrip']
         foto = request.form['myfoto']
         if foto is '':
+            flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('bajos.html'))
 
         mibajo = BajosModel(nombre, descripcion, foto)
@@ -38,6 +42,7 @@ def nuevo():
         for index in range(1, fotos+1):
             mifoto = FotosBajosModel(request.form['alt'+index.__str__()],request.form['myfoto'+index.__str__()], id)
             mifoto.insert_to_db()
+        flash('Exito: Se ha añadido correctamente el nuevo bajo')
         return redirect(url_for('bajos.html'))
 
 
