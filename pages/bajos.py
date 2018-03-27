@@ -45,6 +45,4 @@ def nuevo():
         flash('Exito: Se ha añadido correctamente el nuevo bajo')
         return redirect(url_for('bajos.html'))
 
-
-
     return render_template('nuevobajo.html', mytitle='Anadir Bajo')

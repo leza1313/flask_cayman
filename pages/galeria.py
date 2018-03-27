@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, request, redirect, url_for
+from flask import Blueprint,render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from models.galeria import GaleriaModel
 
@@ -17,7 +17,10 @@ def borrar(id):
     mifoto = GaleriaModel.find_by_name(url)
     if mifoto:
         mifoto.delete_from_db()
-    return redirect(url_for('galeria.html'))
+        flash('Exito: Se ha eliminado correctamente la foto de la galeria')
+        return redirect(url_for('bajos.html'))
+    flash('Error: No se ha conseguido eliminar la foto de la galeria')
+    return redirect(url_for('bajos.html'))
 
 @galeria.route('/nuevafoto', methods=['GET','POST'])
 @login_required
@@ -25,14 +28,12 @@ def nuevo():
     if request.method == 'POST':
         url = request.form['myfoto']
         alt = request.form['alt']
-        #Check if url is filled or not,
-        # To DO, send message to alert the admin he need to fill the image
         if url is '':
+            flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('galeria.html'))
         mifoto = GaleriaModel.find_by_name(url)
         if mifoto is None:
             mifoto = GaleriaModel(url,alt)
-            #print(mibajo)name
             mifoto.insert_to_db()
-
+        flash('Exito: Se ha añadido correctamente el nuevo bajo')
     return redirect(url_for('galeria.html'))
