@@ -43,6 +43,6 @@ def nuevo():
         for index in range(1, fotos+1):
             mifoto = FotosArtistasModel(request.form['alt'+index.__str__()],request.form['myfoto'+index.__str__()], id)
             mifoto.insert_to_db()
-        flash('Exito: Se ha añadido correctamente el nuevo artista')
+        flash('Exito: Se ha anadido correctamente el nuevo artista')
         return redirect(url_for('artistas.html'))
     return render_template('nuevoartista.html', mytitle='Anadir Artista')

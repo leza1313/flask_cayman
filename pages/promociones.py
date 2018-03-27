@@ -33,5 +33,5 @@ def nuevo():
             flash('Error: La foto ya esta en promociones')
         mifoto = PromocionesModel(url,alt)
         mifoto.insert_to_db()
-        flash('Exito: Se ha añadido correctamente la promocion')
+        flash('Exito: Se ha anadido correctamente la promocion')
     return redirect(url_for('index'))

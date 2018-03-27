@@ -35,5 +35,5 @@ def nuevo():
         if mifoto is None:
             mifoto = GaleriaModel(url,alt)
             mifoto.insert_to_db()
-        flash('Exito: Se ha añadido correctamente el nuevo bajo')
+        flash('Exito: Se ha anadido correctamente el nuevo bajo')
     return redirect(url_for('galeria.html'))
