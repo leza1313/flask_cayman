@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template, redirect, url_for, request
+from flask import Blueprint,render_template, redirect, url_for, request,flash
 from flask_login import login_required
 from flask import current_app as app
 
@@ -19,6 +19,9 @@ def borrar(nombre):
     miartista = ArtistasModel.find_by_name(nombre)
     if miartista:
         miartista.delete_from_db()
+        flash('Exito: Se ha eliminado correctamente el artista')
+        return redirect(url_for('artistas.html'))
+    flash('Error: No se ha conseguido eliminar el artista')
     return redirect(url_for('artistas.html'))
 
 @artistas.route('/nuevoartista', methods=['GET','POST'])
@@ -29,7 +32,8 @@ def nuevo():
         descripcion = request.form['descrip']
         foto = request.form['myfoto']
         if foto is '':
-            return redirect(url_for('artistas.html'))
+            flash('Error: Es necesario seleccionar una imagen')
+            return redirect(url_for('artistas.nuevo'))
 
         miartista = ArtistasModel(nombre, descripcion, foto)
         miartista.insert_to_db()
@@ -39,6 +43,6 @@ def nuevo():
         for index in range(1, fotos+1):
             mifoto = FotosArtistasModel(request.form['alt'+index.__str__()],request.form['myfoto'+index.__str__()], id)
             mifoto.insert_to_db()
-
+        flash('Exito: Se ha añadido correctamente el nuevo artista')
         return redirect(url_for('artistas.html'))
     return render_template('nuevoartista.html', mytitle='Anadir Artista')

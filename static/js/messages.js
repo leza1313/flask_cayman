@@ -1,1 +1,1 @@
-$("#mymessage").delay(1500).fadeOut(1500);
+$("#mymessage").delay(2500).fadeOut(1500);

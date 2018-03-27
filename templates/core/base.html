@@ -1,5 +1,18 @@
 {% include "core/header.html" %}
             <section id="cover">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div id="mymessage">
+                {% for message in messages %}
+                    {% if message.split(':')[0]=='Exito' %}
+                        <p class="alert alert-success container"><strong>Exito:</strong> {{ message.split(':')[1] }}</p>
+                    {% elif message.split(':')[0]=='Error' %}
+                        <p class="alert alert-danger container"><strong>Error:</strong> {{ message.split(':')[1] }}</p>
+                    {% endif %}
+                {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
                 {% block cover %}{% endblock %}
             </section>
 {% include "core/footer.html" %}

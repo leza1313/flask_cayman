@@ -2,11 +2,6 @@
 {% block cover %}
     <br>
 <h1>Acceso de Administrador</h1><br>
-    {% if error %}
-        <div id="mymessage">
-            <p class="alert alert-danger container" style="width: 40vw"><strong>Error:</strong> {{ error }}
-        </div>
-    {% endif %}
     <div class="container mylogin card">
         <form class="form" method="post" action="/login">
             <h2>Por favor, introduzca sus credenciales</h2>

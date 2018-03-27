@@ -3,7 +3,7 @@ sys.path.append('/var/www/flask_cayman/flask_cayman')
 
 
 from flask import Flask
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask_restful import Api
 from flask_login import LoginManager, login_required, logout_user
 

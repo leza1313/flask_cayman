@@ -222,6 +222,12 @@ img{
 .boton-nav-right{
     margin-left: 5px;
 }
+#mymessage{
+    width: 40vw;
+    position: absolute;
+    right: 30%;
+    top: 10%;
+}
 @media screen and (max-width: 600px){
     .mylogin{
         width: 64vw;
@@ -229,5 +235,8 @@ img{
     .boton-nav-right{
         margin-left: 0px;
         margin-bottom: 5px;
+    }
+    #mymessage{
+        top: 20%;
     }
 }

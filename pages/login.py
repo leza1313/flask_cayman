@@ -20,8 +20,9 @@ def html():
         if user:
             if check_password_hash(user.password,password_candidate):
                 login_user(user)
+                flash('Exito: Bienvenido Administrador '+username)
                 return redirect(url_for('index'))
 
-        error = 'Credenciales invalidas, prueba otra vez'
-        return render_template('login.html', error=error, mytitle='Login')
+        flash('Error: Credenciales invalidas, prueba otra vez')
+        return render_template('login.html', mytitle='Login')
     return render_template('login.html', mytitle='Login')
