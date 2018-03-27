@@ -1,5 +1,13 @@
 {% extends "core/base.html" %}
 {% block cover %}
+{% if current_user.is_authenticated %}
+<script>
+  UPLOADCARE_LOCALE = "es";
+  UPLOADCARE_TABS = "file facebook dropbox instagram";
+  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
+</script>
+<script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
+<script src="{{ url_for('static',filename='js/addFotoWidget.js') }}"></script>
 <!-- Modal -->
         <div class="modal fade mymodal" id="mimodal" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
@@ -21,9 +29,22 @@
                             <textarea name="descrip" class="form-control" required>{{ myartista.descripcion }}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="fot" class="mymodal-label">Foto</label>
-                            <input type="text" name="fot" class="form-control" value="{{ myartista.foto1 }}" required>
+                            <label for="myfoto" class="">Foto Principal: </label>
+                            <input type="hidden" role="uploadcare-uploader" name="myfoto"
+                                                  data-crop="disabled"
+                                                  data-preview-step="true"
+                                                  data-images-only="true" required/>
                         </div>
+                        <div class="form-group">
+                            {% for fotos in myartista.fotos %}
+                                <img class="mifoto" src="{{ fotos.url }}-/resize/200x200/" alt="">
+                            {% endfor %}
+
+                        </div>
+                      <hr>
+                      <h5>Añadir Fotos</h5>
+                      <hr>
+                      <a id="anadirfoto" onclick="addFotoWidget()" class="enlaces-oscuros" style="font-size: 250%; position: relative; left: 48%;">+</a>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
                   </form>
               </div>
@@ -33,7 +54,8 @@
             </div>
           </div>
         </div>
-<section id="cover">
+{% endif %}
+<section id="artista">
     <br>
     <div class="container">
        <div class="row">
@@ -41,16 +63,16 @@
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal" id="foto-pal">
-                       <div><a href="{{ myartista.foto1 }}"><img src="{{ myartista.foto1 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ myartista.foto2 }}"><img src="{{ myartista.foto2 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ myartista.foto3 }}"><img src="{{ myartista.foto3 }}-/resize/800x600/" alt=""></a></div>
-                       <div><a href="{{ myartista.foto4 }}"><img src="{{ myartista.foto4 }}-/resize/800x600/" alt=""></a></div>
+                       <div><a href="{{ myartista.fotopal }}"><img src="{{ myartista.fotopal }}-/resize/800x600/" alt=""></a></div>
+                       {% for foto in myartista.fotos %}
+                       <div><a href="{{ foto.url }}"><img src="{{ foto.url }}-/resize/800x600/" alt="{{ foto.nombre }}"></a></div>
+                        {% endfor %}
                    </div>
                    <div class="foto-min">
-                       <div><img src="{{ myartista.foto1 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ myartista.foto2 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ myartista.foto3 }}-/resize/300x200/" alt=""></div>
-                       <div><img src="{{ myartista.foto4 }}-/resize/300x200/" alt=""></div>
+                       <div><img src="{{ myartista.fotopal }}-/resize/300x200/" alt=""></div>
+                       {% for foto in myartista.fotos %}
+                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></div>
+                        {% endfor %}
                    </div>
                 </div>
            </div>
@@ -63,7 +85,7 @@
            <div class="col-md-6" id="artist-wrap">
                <h2 id="artist-nombre">{{ myartista.nombre }}</h2>
                <hr>
-               <p class="artist-descripcion">{{ myartista.descripcion }}</p>
+               <pre id="artist-descripcion">{{ myartista.descripcion }}</pre>
            </div>
        </div>
     </div>

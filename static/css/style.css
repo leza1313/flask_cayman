@@ -89,6 +89,13 @@ img{
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+#artist-descripcion{
+    font-family: "Lato", sans-serif;
+    font-size: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: rgba(12, 84, 96, 0.77);
+}
 #artist-wrap {
     background: #e4e4e4;
     padding: 20px;

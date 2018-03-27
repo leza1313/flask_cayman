@@ -3,6 +3,7 @@ from flask_login import login_required
 from flask import current_app as app
 
 from models.artistas import ArtistasModel
+from models.fotosartistas import FotosArtistasModel
 
 artistas = Blueprint('artistas', __name__)
 
@@ -25,11 +26,19 @@ def borrar(nombre):
 def nuevo():
     if request.method == 'POST':
         nombre = request.form['nombre']
-        descripcion = request.form['descripcion']
-        foto = request.form['foto']
+        descripcion = request.form['descrip']
+        foto = request.form['myfoto']
+        if foto is '':
+            return redirect(url_for('artistas.html'))
 
-        miartista = ArtistasModel(nombre,foto,foto,foto,foto,descripcion)
-        #print(mibajo)
+        miartista = ArtistasModel(nombre, descripcion, foto)
         miartista.insert_to_db()
+        id = ArtistasModel.find_by_name(nombre).id
+        fotos = int((len(request.form) - 3) / 2)
 
+        for index in range(1, fotos+1):
+            mifoto = FotosArtistasModel(request.form['alt'+index.__str__()],request.form['myfoto'+index.__str__()], id)
+            mifoto.insert_to_db()
+
+        return redirect(url_for('artistas.html'))
     return render_template('nuevoartista.html', mytitle='Anadir Artista')

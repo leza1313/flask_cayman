@@ -1,5 +1,13 @@
 {% extends 'core/base.html' %}
 {% block cover %}
+<script>
+  UPLOADCARE_LOCALE = "es";
+  UPLOADCARE_TABS = "file facebook dropbox instagram";
+  UPLOADCARE_PUBLIC_KEY = "838f65d3e576732d177a";
+</script>
+<script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
+<script src="{{ url_for('static',filename='js/addFotoWidget.js') }}"></script>
+
 <h1>Nuevo Artista</h1><br>
     <div class="container mylogin card">
         <form class="form" method="post" action="{{ url_for('artistas.nuevo') }}">
@@ -9,13 +17,17 @@
                 <input type="text" name="nombre" class="form-control" placeholder="Nombre del Artista" required autofocus>
             </div>
             <div class="form-group">
-                <label for="descripcion" class="sr-only">Descripcion</label>
-                <input type="text" name="descripcion" class="form-control" placeholder="Descripcion" required>
+                <label for="descrip" class="sr-only">Descripcion</label>
+                <textarea name="descrip" class="form-control" placeholder="Descripcion con parrafos" required></textarea>
             </div>
             <div class="form-group">
-                <label for="foto" class="sr-only">Foto</label>
-                <input type="text" name="foto" class="form-control" placeholder="url de la foto" required>
+                <label for="myfoto" class="">Foto Principal: </label>
+                <input type="hidden" role="uploadcare-uploader" name="myfoto"
+                                      data-crop="disabled"
+                                      data-preview-step="true"
+                                      data-images-only="true" required/>
             </div>
+            <a id="anadirfoto" onclick="addFotoWidget()" class="enlaces-oscuros" style="font-size: 250%">+</a>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
     </div>
