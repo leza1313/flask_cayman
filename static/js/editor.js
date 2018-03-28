@@ -1,4 +1,5 @@
 document.getElementById("cover").style.textAlign = "left";
+screen.orientation.lock('landscape');
 var canvas = document.getElementById('mycanvas');
 function resizeCanvas() {
     canvas.width = window.innerWidth*0.815;
