@@ -3,6 +3,7 @@ body {
 }
 #editor{
     color: black;
+    text-align: left !important;
 }
 
 .sidenav {

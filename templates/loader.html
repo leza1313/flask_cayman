@@ -40,27 +40,6 @@
 
         {% endfor %}
 
-
-
-
-
-
-
-<!-- JS para Menu PopUp-->
-<script>
-    function openPopUp(event,popupid){
-        // TODO codigo del data-toggle con js
-        var mypopup = document.getElementById(popupid);
-        event.preventDefault();
-        mypopup.style.display = "block";
-    }
-    function closePopUp(event,popupid){
-        var mypopup = document.getElementById(popupid);
-        event.preventDefault();
-        mypopup.style.display = "none";
-    }
-</script>
-
     <canvas id="mycanvas"></canvas>
 
     <script src="{{ url_for('static',filename='js/THREEx.WindowResize.js')}}"></script>
