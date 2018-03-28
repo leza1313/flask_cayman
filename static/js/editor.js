@@ -1,4 +1,4 @@
-
+document.getElementById("cover").style.textAlign = "left";
 var canvas = document.getElementById('mycanvas');
 function resizeCanvas() {
     canvas.width = window.innerWidth*0.815;
