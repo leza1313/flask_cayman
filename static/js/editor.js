@@ -1,5 +1,23 @@
 document.getElementById("cover").style.textAlign = "left";
-screen.orientation.lock('landscape');
+
+screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+screen.lockOrientationUniversal('landscape');
+
+var show = function() {
+ console.log("Orientation type is " + screen.orientation.type);
+ console.log("Orientation angle is " + screen.orientation.angle);
+ if (screen.orientation.type == 'portrait'){
+     alert('Gira el movil, porfavor');
+ }
+ if (screen.orientation.type == 'portrait-primary'){
+     alert('Gira el movil, porfavor');
+ }
+ if (screen.orientation.type == 'portrait-secondary'){
+     alert('Gira el movil, porfavor');
+ }
+}
+  screen.orientation.addEventListener("change", show);
+  window.onload = show;
 var canvas = document.getElementById('mycanvas');
 function resizeCanvas() {
     canvas.width = window.innerWidth*0.815;

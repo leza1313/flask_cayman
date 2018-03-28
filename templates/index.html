@@ -138,37 +138,4 @@
            </div>
        </div>
     <br>
-    <div id="orientationdiv">
-
-    </div>
-    </div>
-<br>
-<script>
-  var show = function() {
-     console.log("Orientation type is " + screen.orientation.type);
-     console.log("Orientation angle is " + screen.orientation.angle);
-     if (screen.orientation.type == 'portrait'){
-         alert('Gira el movil, porfavor');
-     }
-     if (screen.orientation.type == 'portrait-primary'){
-         alert('Gira el movil, porfavor');
-     }
-     if (screen.orientation.type == 'portrait-secondary'){
-         alert('Gira el movil, porfavor');
-     }
-  }
-
-  screen.orientation.addEventListener("change", show);
-  window.onload = show;
-</script>
-
-<button onclick='screen.orientation.unlock()'>
-  Unlock
-</button>
-<button onclick="screen.orientation.lock('portrait')">
-  Lock to portrait
-</button>
-<button onclick="screen.orientation.lock('landscape')">
-  Lock to landscape
-</button>
 {% endblock %}
