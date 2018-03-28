@@ -1,7 +1,11 @@
 document.getElementById("cover").style.textAlign = "left";
 
 screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-screen.lockOrientationUniversal('landscape');
+if (screen.lockOrientationUniversal('landscape')){
+    alert('Pantalla girada con exito, supuestamente');
+}else{
+    alert('No se puede girar la pantalla');
+}
 
 var show = function() {
  console.log("Orientation type is " + screen.orientation.type);
