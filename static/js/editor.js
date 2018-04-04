@@ -4,13 +4,13 @@ turn = document.getElementById("turn");
 var show = function() {
  if (screen.orientation.type == 'portrait'){
      turn.style.display = 'block';
-     alert('Gira el movil, porfavor');
+     //alert('Gira el movil, porfavor');
  }else if (screen.orientation.type == 'portrait-primary'){
      turn.style.display = 'block';
-     alert('Gira el movil, porfavor');
+     //alert('Gira el movil, porfavor');
  }else if (screen.orientation.type == 'portrait-secondary'){
      turn.style.display = 'block';
-     alert('Gira el movil, porfavor');
+     //alert('Gira el movil, porfavor');
  }else{
      turn.style.display = 'none';
  }
