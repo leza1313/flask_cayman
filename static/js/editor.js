@@ -1,27 +1,22 @@
 document.getElementById("cover").style.textAlign = "left";
+var start = function() {
+    screen.orientation.lock('landscape-primary').then(
+      startInternal,
+      function() {
+        alert('To start, rotate your screen to landscape.');
 
-screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-if (screen.lockOrientationUniversal('landscape')){
-    alert('Pantalla girada con exito, supuestamente');
-}else{
-    alert('No se puede girar la pantalla');
-}
+        var orientationChangeHandler = function() {
+          if (!screen.orientation.type.startsWith('landscape')) {
+            return;
+          }
+          screen.orientation.removeEventListener('change', orientationChangeHandler);
+          startInternal();
+        }
 
-var show = function() {
- console.log("Orientation type is " + screen.orientation.type);
- console.log("Orientation angle is " + screen.orientation.angle);
- if (screen.orientation.type == 'portrait'){
-     alert('Gira el movil, porfavor');
- }
- if (screen.orientation.type == 'portrait-primary'){
-     alert('Gira el movil, porfavor');
- }
- if (screen.orientation.type == 'portrait-secondary'){
-     alert('Gira el movil, porfavor');
- }
-}
-  screen.orientation.addEventListener("change", show);
-  window.onload = show;
+        screen.orientation.addEventListener('change', orientationChangeHandler);
+      });
+  }
+window.onload = start;
 var canvas = document.getElementById('mycanvas');
 function resizeCanvas() {
     canvas.width = window.innerWidth*0.815;
