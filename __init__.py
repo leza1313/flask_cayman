@@ -25,6 +25,7 @@ from pages import promociones
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
+from resources.artistas import Artistas, ArtistasList
 
 app = Flask(__name__)
 app.debug = True
@@ -51,6 +52,8 @@ api.add_resource(Guitarras, '/api/guitarra/<string:name>')
 api.add_resource(GuitarrasList, '/api/guitarras/')
 api.add_resource(Bajos, '/api/bajo/<string:name>')
 api.add_resource(BajosList, '/api/bajos/')
+api.add_resource(Artistas, '/api/artista/<string:name>')
+api.add_resource(ArtistasList, '/api/artistas/')
 
 
 app.register_blueprint(login.login)
