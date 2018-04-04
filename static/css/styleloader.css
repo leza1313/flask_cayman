@@ -100,3 +100,17 @@ canvas {
     bottom: 1%;
     left: 1%;
 }
+#turn{
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0px;
+    left:0px;
+    text-align: center;
+    background-color:white;
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-image:url('../img/rotate-device.png');
+    background-size: cover;
+    display:none;
+}

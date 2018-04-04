@@ -1,22 +1,22 @@
 document.getElementById("cover").style.textAlign = "left";
-var start = function() {
-    screen.orientation.lock('landscape-primary').then(
-      startInternal,
-      function() {
-        alert('To start, rotate your screen to landscape.');
+turn = document.getElementById("turn");
 
-        var orientationChangeHandler = function() {
-          if (!screen.orientation.type.startsWith('landscape')) {
-            return;
-          }
-          screen.orientation.removeEventListener('change', orientationChangeHandler);
-          startInternal();
-        }
-
-        screen.orientation.addEventListener('change', orientationChangeHandler);
-      });
-  }
-window.onload = start;
+var show = function() {
+ if (screen.orientation.type == 'portrait'){
+     turn.style.display = 'block';
+     alert('Gira el movil, porfavor');
+ }else if (screen.orientation.type == 'portrait-primary'){
+     turn.style.display = 'block';
+     alert('Gira el movil, porfavor');
+ }else if (screen.orientation.type == 'portrait-secondary'){
+     turn.style.display = 'block';
+     alert('Gira el movil, porfavor');
+ }else{
+     turn.style.display = 'none';
+ }
+}
+screen.orientation.addEventListener("change", show);
+window.onload = show;
 var canvas = document.getElementById('mycanvas');
 function resizeCanvas() {
     canvas.width = window.innerWidth*0.815;
