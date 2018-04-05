@@ -11,9 +11,18 @@ for (i = 0; i < tarjeta.length; i++) {
     aTag3.setAttribute('class','enlaces');
     aTag3.innerHTML = 'Borrar Bajo ';
     aTag3.setAttribute('href','borrarbajo/'+nombre[i].childNodes[0].textContent);
+    aTag3.setAttribute('data-toggle','confirmation');
     tarjeta[i].appendChild(aTag3);
 
 }
+$('[data-toggle=confirmation]').confirmation({
+    rootSelector: '[data-toggle=confirmation]',
+    popout: true,
+    singleton: true,
+    title: '¿Estas seguro?',
+    btnOkLabel: 'Si',
+});
+
 
 //Añadido enlace a añadir bajos. Este solo se pone una vez, independientemente del numero de bajos que haya
 var seccion = document.getElementById('productos');

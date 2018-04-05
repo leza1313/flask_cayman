@@ -10,6 +10,10 @@
 <link rel="stylesheet" href="static/css/style.css">
 <link rel="stylesheet" href="static/css/styleloader.css">
 <link rel="stylesheet" href="static/css/stylepopup.css">
+<script src="static/js/jquery-3.2.1.min.js"></script>
+<script src="{{ url_for('static',filename='js/popper.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap-confirmation.min.js') }}"></script>
 <title>Taller Custom</title>
 </head>
 <body>
@@ -28,6 +32,15 @@
            </div>
        </div>
     </div>
+    <br><br><br>
+        <button class="btn btn-default" data-toggle="confirmation">Confirmation</button>
+
+    <script>
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            // other options
+        });
+    </script>
 <!-- JS para Menu PopUp-->
 <script>
     function openPopUp(event,popupid){
@@ -41,16 +54,16 @@
         mypopup.style.display = "none";
     }
 </script>
-
+<!--
     <canvas id="mycanvas"></canvas>
 
     <script src="static/js/THREEx.WindowResize.js"></script>
     <script src="static/js/three.min.js"></script>
     <script src="static/js/OrbitControls.js"></script>
     <script src="static/js/STLLoader.js"></script>
-
+-->
 	<script>
-
+/*
         var canvas = document.getElementById('mycanvas');
         function resizeCanvas() {
             canvas.width = window.innerWidth*0.815;
@@ -345,7 +358,7 @@
                 }
                 INTERSECTED=null;
             }*/
-
+/*
             //Se ilumina el objeto Seleccionado
             if ( intersects.length > 0 ) {
                 if ( INTERSECTED != intersects[ 0 ].object ) {
@@ -377,10 +390,7 @@
             render();
         };
 
-        animate();
+        animate();*/
     </script>
-
-    <script src="static/js/jquery-3.2.1.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
 </body>
 </html>

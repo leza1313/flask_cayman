@@ -28,6 +28,15 @@ for (i = 0; i < foto.length; i++) {
     aTag3.setAttribute('class','enlaces-fotos-info');
     aTag3.innerHTML = 'x';
     aTag3.setAttribute('href','/borrarinfoproductofoto/'+tipo+'/'+nombre+'/'+id);
+    aTag3.setAttribute('data-toggle','confirmation');
     //Añade el elemento aTag3 despues de tarjeta[i]
     foto[i].parentNode.insertBefore(aTag3, foto[i].nextSibling);
 }
+$('[data-toggle=confirmation]').confirmation({
+    rootSelector: '[data-toggle=confirmation]',
+    popout: true,
+    singleton: true,
+    title: '¿Estas seguro?',
+    btnOkLabel: 'Si',
+});
+
