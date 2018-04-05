@@ -1,6 +1,5 @@
 {% extends "core/base.html" %}
 {% block cover %}
-<script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
 <section id="galeria">
     <div class="section-content">
        <div class="container">
@@ -8,6 +7,7 @@
            <h2>Galeria</h2>
            <p>Aqui unas fotos aparentes y resultonas de lo que haceis</p>
            {% if current_user.is_authenticated %}
+               <script charset="utf-8" src="//ucarecdn.com/libs/widget/3.2.3/uploadcare.full.min.js"></script>
                <script>
                   UPLOADCARE_LOCALE = "es";
                   UPLOADCARE_TABS = "file facebook dropbox instagram";
