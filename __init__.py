@@ -6,6 +6,9 @@ from flask import Flask
 from flask import render_template, redirect, url_for, flash
 from flask_restful import Api
 from flask_login import LoginManager, login_required, logout_user
+from flask_jwt import JWT, jwt_required
+
+from security import authenticate, identity
 
 from connection import db
 from models.user import UserModel
@@ -37,6 +40,7 @@ db.init_app(app)
 def create_db():
     db.create_all()
     db.session.commit()
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login.html'
@@ -46,6 +50,8 @@ def load_user(user_id):
     return UserModel.query.get(int(user_id))
 
 api = Api(app)
+
+jwt = JWT(app, authenticate, identity)
 
 ##Anade en esos endpoints los recursos a mostrar
 api.add_resource(Guitarras, '/api/guitarra/<string:name>')

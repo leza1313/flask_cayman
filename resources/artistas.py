@@ -1,8 +1,12 @@
 from flask_restful import Resource
 from models.artistas import ArtistasModel
 
+from flask_jwt import JWT, jwt_required
+
+
 class Artistas(Resource):
 
+    @jwt_required()
     def get(self,name):
         artista=ArtistasModel.find_by_name(name)
         if artista:
