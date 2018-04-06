@@ -3,7 +3,7 @@ sys.path.append('/var/www/flask_cayman/flask_cayman')
 
 
 from flask import Flask
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_restful import Api
 from flask_login import LoginManager, login_required, logout_user
 from flask_jwt import JWT, jwt_required
@@ -70,6 +70,18 @@ def logout():
     logout_user()
     return redirect(url_for('login.html'))
 
+import logging
+from logging.handlers import RotatingFileHandler
+
+@app.route('/prueba', methods=['POST'])
+def prueba1():
+    headers = request.headers
+    params = request.json
+    app.logger.warning(headers)
+    app.logger.warning(params)
+    return ('Peticion recibida')
+
+
 @app.route('/')
 def index():
     mispromociones=PromocionesModel.query.all()
@@ -104,4 +116,7 @@ def contacto():
     return render_template('contacto.html',mytitle='Contacto')
 
 if __name__ == '__main__':
+    handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
     app.run()
