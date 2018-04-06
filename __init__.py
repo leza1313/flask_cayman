@@ -72,16 +72,20 @@ def logout():
 
 import logging
 from logging.handlers import RotatingFileHandler
-handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
+
+formatter = logging.Formatter(
+        "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - \n%(message)s\n-------------------------\n")
+handler = RotatingFileHandler('/home/david/Escritorio/foo.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
+handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 
-@app.route('/prueba', methods=['POST'])
+
+@app.route('/log')
 def prueba1():
     headers = request.headers
     params = request.json
-    app.logger.warning(headers)
-    app.logger.warning(params)
+    app.logger.warning("{}{}".format(headers,params))
     return ('Peticion recibida')
 
 
