@@ -72,6 +72,9 @@ def logout():
 
 import logging
 from logging.handlers import RotatingFileHandler
+handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+app.logger.addHandler(handler)
 
 @app.route('/prueba', methods=['POST'])
 def prueba1():
@@ -116,7 +119,4 @@ def contacto():
     return render_template('contacto.html',mytitle='Contacto')
 
 if __name__ == '__main__':
-    handler = RotatingFileHandler('foo.log', maxBytes=10000, backupCount=1)
-    handler.setLevel(logging.INFO)
-    app.logger.addHandler(handler)
     app.run()
