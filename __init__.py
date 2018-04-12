@@ -71,13 +71,23 @@ app.register_blueprint(login.login)
 def logout():
     logout_user()
     return redirect(url_for('login.html'))
-from logger import mylogger
+
+import logging
+from logging.handlers import RotatingFileHandler
+
+formatter = logging.Formatter(
+        "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - \n%(message)s\n-------------------------\n")
+handler = RotatingFileHandler('/home/david/Escritorio/foo.log', maxBytes=10000, backupCount=1)
+handler.setLevel(logging.INFO)
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+
 
 @app.route('/log')
 def prueba1():
     headers = request.headers
     params = request.json
-    mylogger.warning("{}{}".format(headers,params))
+    app.logger.warning("{}{}".format(headers,params))
     return ('Peticion recibida')
 
 
