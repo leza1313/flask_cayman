@@ -9,21 +9,19 @@ paypal_ipn = Blueprint('paypal_ipn', __name__)
 
 @paypal_ipn.route("/paypal_ipn", methods=['POST'])
 def paypal_ipn2():
-    try:
-        arg = ''
-        request.parameter_storage_class = ImmutableOrderedMultiDict
-        values = request.form
-        for x, y in values.iteritems():
-            arg += "&{x}={y}".format(x=x, y=y)
+    arg = ''
+    request.parameter_storage_class = ImmutableOrderedMultiDict
+    values = request.form
 
-        validate_url = 'https://www.sandbox.paypal.com' \
-                       '/cgi-bin/webscr?cmd=_notify-validate{arg}' \
-            .format(arg=arg)
-        r = requests.get(validate_url)
-        if r.text == 'VERIFIED':
-            app.logger.warning("VERIFIED")
-        else:
-            app.logger.warning("INVALID")
-        return r.text
-    except Exception as e:
-        return str(e)
+    app.logger.warning("{}".format(request))
+    for x, y in values.items():
+        arg += "&{x}={y}".format(x=x, y=y.encode('ascii',errors='ignore'))
+    validate_url = 'https://www.sandbox.paypal.com' \
+                   '/cgi-bin/webscr?cmd=_notify-validate{arg}' \
+        .format(arg=arg)
+    r = requests.get(validate_url)
+    if r.text == 'VERIFIED':
+        app.logger.warning("VERIFIED")
+    else:
+        app.logger.warning("INVALID")
+    return r.text
