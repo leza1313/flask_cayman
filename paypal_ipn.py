@@ -13,9 +13,9 @@ def paypal_ipn2():
     request.parameter_storage_class = ImmutableOrderedMultiDict
     values = request.form
 
-    app.logger.warning("{}".format(request))
+    app.logger.warning("{}".format(request.form))
     for x, y in values.items():
-        arg += "&{x}={y}".format(x=x, y=y.encode('ascii',errors='ignore'))
+        arg += "&{x}={y}".format(x=x, y=y)
     validate_url = 'https://www.sandbox.paypal.com' \
                    '/cgi-bin/webscr?cmd=_notify-validate{arg}' \
         .format(arg=arg)
