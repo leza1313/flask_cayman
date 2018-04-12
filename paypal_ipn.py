@@ -51,7 +51,7 @@ def paypal_ipn2():
         mes=list(calendar.month_abbr).index(fechaux[1])
         dia= fechaux[2]
         ano = fechaux[3]
-        fecha = ano+'-'+mes+'-'+dia+' '+fechaux[0]
+        fecha = ano+'-'+mes.__str__()+'-'+dia+' '+fechaux[0]
 
         #TODO
         observaciones="Campo para rellenar con observaciones"
