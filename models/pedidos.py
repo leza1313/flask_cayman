@@ -14,7 +14,7 @@ class PedidosModel(db.Model):
     clavijero = db.Column(db.String(24))
 
     nombre = db.Column(db.String(24))
-    direccion = db.Column(db.String(24))
+    direccion = db.Column(db.String(500))
     telefono = db.Column(db.String(24))
     email = db.Column(db.String(24))
 
