@@ -2,9 +2,7 @@ from flask import Blueprint, request
 from werkzeug.datastructures import ImmutableOrderedMultiDict
 
 '''This module processes PayPal Instant Payment Notification messages (IPNs).'''
-
-import sys
-import urllib.parse
+from logger import mylogger
 import requests
 
 paypal_ipn = Blueprint('paypal_ipn', __name__)
@@ -26,6 +24,10 @@ def paypal_ipn2():
         valid PayPal responds with 'VERIFIED' if not it returns 'INVALID'.
         Requires: flask, requests
     """
+    headers = request.headers
+    params = request.form
+    mylogger.warning("{}{}".format(headers,params))
+
     arg = ''
     #: We use an ImmutableOrderedMultiDict item because it retains the order.
     request.parameter_storage_class = ImmutableOrderedMultiDict()
