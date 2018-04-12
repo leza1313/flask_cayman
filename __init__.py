@@ -12,8 +12,8 @@ from security import authenticate, identity
 
 from connection import db
 from models.user import UserModel
-from models.fotosbajos import FotosBajosModel
-from models.fotosguitarras import FotosGuitarrasModel
+#from models.fotosbajos import FotosBajosModel
+#from models.fotosguitarras import FotosGuitarrasModel
 from models.promociones import PromocionesModel
 
 from pages import editor
@@ -25,6 +25,8 @@ from pages import artistas
 from pages import infoartista
 from pages import login
 from pages import promociones
+
+import paypal_ipn
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -102,6 +104,17 @@ app.register_blueprint(promociones.promociones)
 def prueba():
     return render_template('prueba.html')
 
+@app.route('/pagocancelado')
+def pagocancelado():
+    return render_template('errorpago.html')
+
+@app.route('/pagocorrecto')
+def pagocorrecto():
+    return render_template('pagocorrecto.html')
+
+
+
+
 @app.route('/productos')
 def productos():
     return render_template('productos.html', mytitle='Productos')
@@ -117,6 +130,9 @@ app.register_blueprint(galeria.galeria)
 app.register_blueprint(artistas.artistas)
 
 app.register_blueprint(infoartista.infoartista)
+
+##PAYPAL_IPN
+app.register_blueprint(paypal_ipn.paypal_ipn)
 
 @app.route('/contacto')
 def contacto():
