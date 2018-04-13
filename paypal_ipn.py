@@ -98,10 +98,19 @@ def paypal_ipn2():
             telefono="000000000"
         email=values['payer_email']
 
+
         precio_neto=float(values['mc_gross'])
-        impuesto=float(values['tax'])
-        comision_paypal=float(values['mc_fee'])
-        envio=float(values['shipping'])
+        if 'tax' in values:
+            impuesto=float(values['tax'])
+        else:
+            impuesto=0.00
+
+        if 'shipping' in values:
+            envio = float(values['shipping'])
+        else:
+            envio=0.00
+        comision_paypal = float(values['mc_fee'])
+
         precio=(precio_neto-comision_paypal-envio-impuesto).__str__()
 
         fecha = datetime.datetime.now().__str__()
