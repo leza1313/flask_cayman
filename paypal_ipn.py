@@ -62,12 +62,13 @@ def paypal_ipn2():
             numero_serie = newMonth+newYear+newNum
         #Couldn't find the last order, so we don't have anything to compare to
         else:
-            numero_serie= "000000"
+            numero_serie= "0110001"
 
         #se pueden pasar valores extra en el form del boton del paypal
-        producto = values['producto']
+        custom = values['custom']
 
-        modelo = values['modelo']
+        producto=custom.split('&')[0].split('=')[1]
+        modelo = custom.split('&')[1].split('=')[1]
 
         if producto=="bajo":
             mymodelo = BajosModel.find_by_name(modelo)
@@ -91,32 +92,32 @@ def paypal_ipn2():
         direccion= (values['address_street']+', '+values['address_city']+', '+values['address_zip']+', '
                     +values['address_state']+', '+values['address_country'])
 
-        if values['contact_phone']:
+        if 'contact_phone' in values:
             telefono=values['contact_phone']
         else:
-            telefono=000000
+            telefono="000000000"
         email=values['payer_email']
 
-        precio=values['mc_gross']
-        fechaux=values['payment_date'].split(' ')
+        precio_neto=float(values['mc_gross'])
+        impuesto=float(values['tax'])
+        comision_paypal=float(values['mc_fee'])
+        envio=float(values['shipping'])
+        precio=(precio_neto-comision_paypal-envio-impuesto).__str__()
 
-        mes=list(calendar.month_abbr).index(fechaux[1])
-        dia= fechaux[2]
-        ano = fechaux[3]
-        fecha = ano+'-'+mes.__str__()+'-'+dia+' '+fechaux[0]
+        fecha = datetime.datetime.now().__str__()
 
         #TODO maybe add a new table in the db with reparations and/or notes
         observaciones="Campo para rellenar con observaciones"
 
         pago_id=values['txn_id']
 
-        if values['payer_satatus']=='verified':
-            if values['invoice']:
+        if values['payer_status']=='verified':
+            if 'invoice' in values:
                 factura=values['invoice']
             else:
                 factura="0000"
         else:
-            if values['receipt_id']:
+            if 'receipt_id' in values:
                 factura=values['receipt_id']
             else:
                 factura = "0000"

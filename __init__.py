@@ -12,8 +12,8 @@ from security import authenticate, identity
 
 from connection import db
 from models.user import UserModel
-#from models.fotosbajos import FotosBajosModel
-#from models.fotosguitarras import FotosGuitarrasModel
+from models.fotosbajos import FotosBajosModel
+from models.fotosguitarras import FotosGuitarrasModel
 from models.promociones import PromocionesModel
 
 from pages import editor
