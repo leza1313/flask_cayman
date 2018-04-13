@@ -6,18 +6,35 @@ class BajosModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(24))
     descripcion = db.Column(db.Text)
-    fotopal = db.Column(db.String(500))
-    fotos=db.relationship("FotosBajosModel")
 
-    def __init__(self,nombre,descripcion,fotopal):
-        self.nombre=nombre
-        self.descripcion=descripcion
-        self.fotopal=fotopal
+    acabado = db.Column(db.String(24))
+    pastillas = db.Column(db.String(24))
+    puente = db.Column(db.String(24))
+    electronica = db.Column(db.String(24))
+    clavijero = db.Column(db.String(24))
+
+    fotopal = db.Column(db.String(150))
+    fotos = db.relationship('FotosBajosModel')
+
+    def __init__(self, nombre, descripcion, acabado, pastillas, puente, electronica, clavijero, fotopal):
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.acabado = acabado
+        self.pastillas = pastillas
+        self.puente = puente
+        self.electronica = electronica
+        self.clavijero = clavijero
+        self.fotopal = fotopal
 
     def json(self):
         return {'id': self.id,
                 'nombre': self.nombre,
                 'descripcion': self.descripcion,
+                'acabado': self.acabado,
+                'pastillas': self.pastillas,
+                'puente': self.puente,
+                'electronica': self.electronica,
+                'clavijero': self.clavijero,
                 'fotopal': self.fotopal}
 
     @classmethod

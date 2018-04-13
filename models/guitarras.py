@@ -6,18 +6,35 @@ class GuitarrasModel(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(24))
     descripcion = db.Column(db.Text)
+
+    acabado = db.Column(db.String(24))
+    pastillas = db.Column(db.String(24))
+    puente = db.Column(db.String(24))
+    electronica = db.Column(db.String(24))
+    clavijero = db.Column(db.String(24))
+
     fotopal = db.Column(db.String(150))
     fotos = db.relationship('FotosGuitarrasModel')
 
-    def __init__(self,nombre,descripcion,fotopal):
+    def __init__(self,nombre,descripcion,acabado,pastillas,puente,electronica,clavijero,fotopal):
         self.nombre=nombre
         self.descripcion=descripcion
+        self.acabado=acabado
+        self.pastillas=pastillas
+        self.puente=puente
+        self.electronica=electronica
+        self.clavijero=clavijero
         self.fotopal=fotopal
 
     def json(self):
         return {'id': self.id,
                 'nombre': self.nombre,
                 'descripcion': self.descripcion,
+                'acabado': self.acabado,
+                'pastillas': self.pastillas,
+                'puente': self.puente,
+                'electronica': self.electronica,
+                'clavijero': self.clavijero,
                 'fotopal': self.fotopal}
 
     @classmethod
@@ -29,6 +46,7 @@ class GuitarrasModel(db.Model):
         db.session.commit()
 
     def delete_from_db(self):
+        [item.delete_from_db() for item in self.fotos]
         db.session.delete(self)
         db.session.commit()
 

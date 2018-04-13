@@ -4,8 +4,10 @@ class PedidosModel(db.Model):
     __tablename__ = 'pedidos'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pago_id = db.Column(db.String(50), unique=True)
+    factura = db.Column(db.String(50))
 
-    numero_serie = db.Column(db.String(24))
+    numero_serie = db.Column(db.String(24), unique=True)
     modelo = db.Column(db.String(24))
     acabado = db.Column(db.String(24))
     pastillas = db.Column(db.String(24))
@@ -13,18 +15,20 @@ class PedidosModel(db.Model):
     electronica = db.Column(db.String(24))
     clavijero = db.Column(db.String(24))
 
-    nombre = db.Column(db.String(24))
-    direccion = db.Column(db.String(500))
-    telefono = db.Column(db.String(24))
-    email = db.Column(db.String(24))
+    nombre = db.Column(db.String(128))
+    direccion = db.Column(db.String(370))
+    telefono = db.Column(db.String(20))
+    email = db.Column(db.String(128))
 
     precio = db.Column(db.String(24))
     fecha = db.Column(db.DateTime)
     observaciones = db.Column(db.Text)
 
-    def __init__(self,numero_serie,modelo,acabado,pastillas,puente,electronica,clavijero
+    def __init__(self,pago_id,factura,numero_serie,modelo,acabado,pastillas,puente,electronica,clavijero
                  , nombre,direccion,telefono,email
                  , precio,fecha,observaciones):
+        self.pago_id=pago_id
+        self.factura=factura
         self.numero_serie=numero_serie
         self.modelo=modelo
         self.acabado=acabado
@@ -47,8 +51,12 @@ class PedidosModel(db.Model):
         pass
 
     @classmethod
-    def find_by_name(cls,name):
-        return cls.query.filter_by(nombre=name).first()
+    def find_by_serial(cls,serial):
+        return cls.query.filter_by(numero_serie=serial).first()
+
+    @classmethod
+    def find_last(cls):
+        return cls.query.order_by(cls.id.desc()).first()
 
     def insert_to_db(self):
         db.session.add(self)
