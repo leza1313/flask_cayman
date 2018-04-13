@@ -25,9 +25,17 @@ def editar(tipo,nombre):
         producto = BajosModel.query.filter_by(nombre=nombre).first()
         producto.nombre=request.form['nombre']
         producto.descripcion=request.form['descrip']
+        producto.acabado = request.form['acabado']
+        producto.pastillas = request.form['pastillas']
+        producto.puente = request.form['puente']
+        producto.electronica = request.form['electronica']
+        producto.clavijero = request.form['clavijero']
         if request.form['myfoto'] is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
+        if 'alt1' not in request.args:
+            flash('Exito: Se ha actualizado el bajo correctamente')
+            return redirect(url_for('infoproducto.html', tipo='bajo', nombre=producto.nombre))
         id = BajosModel.find_by_name(nombre).id
         fotos = int((len(request.form)-2)/2)
         for index in range(1, fotos+1):
@@ -42,8 +50,17 @@ def editar(tipo,nombre):
         producto = GuitarrasModel.query.filter_by(nombre=nombre).first()
         producto.nombre = request.form['nombre']
         producto.descripcion = request.form['descrip']
+        producto.acabado = request.form['acabado']
+        producto.pastillas = request.form['pastillas']
+        producto.puente = request.form['puente']
+        producto.electronica = request.form['electronica']
+        producto.clavijero = request.form['clavijero']
         if request.form['myfoto'] is not '':
             producto.fotopal=request.form['myfoto']
+        producto.actualizar()
+        if 'alt1' not in request.args:
+            flash('Exito: Se ha actualizado la guitarra correctamente')
+            return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
         id = GuitarrasModel.find_by_name(nombre).id
         fotos = int((len(request.form)-2)/2)
         for index in range(1, fotos+1):
@@ -52,7 +69,7 @@ def editar(tipo,nombre):
                 return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
             mifoto = FotosGuitarrasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
             mifoto.insert_to_db()
-        producto.actualizar()
+
         flash('Exito: Se ha actualizado la guitarra correctamente')
         return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
     return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))

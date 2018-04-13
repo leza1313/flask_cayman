@@ -29,11 +29,31 @@
                             <textarea name="descrip" class="form-control" required>{{ miproducto.descripcion }}</textarea>
                         </div>
                         <div class="form-group">
+                            <label for="acabado" class="sr-only">Acabado</label>
+                            <input name="acabado" class="form-control" placeholder="Acabado" >
+                        </div>
+                        <div class="form-group">
+                            <label for="pastillas" class="sr-only">Pastillas</label>
+                            <input name="pastillas" class="form-control" placeholder="Pastillas" >
+                        </div>
+                        <div class="form-group">
+                            <label for="puente" class="sr-only">Puente</label>
+                            <input name="puente" class="form-control" placeholder="Puente" >
+                        </div>
+                        <div class="form-group">
+                            <label for="electronica" class="sr-only">Electronica</label>
+                            <input name="electronica" class="form-control" placeholder="Electronica" >
+                        </div>
+                        <div class="form-group">
+                            <label for="clavijero" class="sr-only">Clavijero</label>
+                            <input name="clavijero" class="form-control" placeholder="Clavijero" >
+                        </div>
+                        <div class="form-group">
                             <label for="myfoto" class="">Foto Principal: </label>
                             <input type="hidden" role="uploadcare-uploader" name="myfoto"
                                                   data-crop="disabled"
                                                   data-preview-step="true"
-                                                  data-images-only="true" required/>
+                                                  data-images-only="true" />
                         </div>
                         <div class="form-group">
                             {% for fotos in miproducto.fotos %}
