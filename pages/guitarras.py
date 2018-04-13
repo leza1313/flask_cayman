@@ -29,13 +29,23 @@ def nuevo():
     if request.method == 'POST':
         nombre = request.form['nombre']
         descripcion = request.form['descrip']
+        acabado = request.form['acabado']
+        pastillas = request.form['pastillas']
+        puente = request.form['puente']
+        electronica = request.form['electronica']
+        clavijero = request.form['clavijero']
         foto = request.form['myfoto']
         if foto is '':
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('guitarras.nuevo'))
 
-        miguitarra = GuitarrasModel(nombre, descripcion, foto)
+        miguitarra = GuitarrasModel(nombre, descripcion,acabado,pastillas,puente,electronica,clavijero,foto)
         miguitarra.insert_to_db()
+
+        if 'alt1' not in request.args:
+            flash('Exito: Se ha anadido correctamente la nueva guitarra')
+            return redirect(url_for('guitarras.html'))
+
         id = GuitarrasModel.find_by_name(nombre).id
         fotos = int((len(request.form) - 3) / 2)
 
