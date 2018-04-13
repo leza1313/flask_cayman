@@ -238,6 +238,19 @@ img{
     top: 10%;
     z-index: 1500;
 }
+.mytable{
+    color: #1b1e21;
+    font-size: 80%;
+}
+.myicon{
+    color: #575757;
+}
+.myicon:hover{
+    color: #363636;
+    text-decoration: none;
+    text-shadow: 1px 1px 1px #000000;
+
+}
 @media screen and (max-width: 600px){
     .mylogin{
         width: 64vw;

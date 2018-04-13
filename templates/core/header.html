@@ -66,6 +66,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('artistas.html') }}">Artistas</a>
               </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('pedidos.html') }}">Pedidos</a>
+                </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav ml-auto justify-content-end">
                 <li class="boton-nav-right">

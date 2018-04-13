@@ -25,6 +25,7 @@ from pages import artistas
 from pages import infoartista
 from pages import login
 from pages import promociones
+from pages import pedidos
 
 import paypal_ipn
 
@@ -133,6 +134,8 @@ app.register_blueprint(infoartista.infoartista)
 
 ##PAYPAL_IPN
 app.register_blueprint(paypal_ipn.paypal_ipn)
+
+app.register_blueprint(pedidos.pedidos)
 
 @app.route('/contacto')
 def contacto():
