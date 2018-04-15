@@ -28,6 +28,7 @@ from pages import promociones
 from pages import pedidos
 
 import paypal_ipn
+import pruebaipn
 
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
@@ -134,6 +135,7 @@ app.register_blueprint(infoartista.infoartista)
 
 ##PAYPAL_IPN
 app.register_blueprint(paypal_ipn.paypal_ipn)
+app.register_blueprint(pruebaipn.pruebaipn)
 
 app.register_blueprint(pedidos.pedidos)
 
