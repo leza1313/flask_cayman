@@ -35,7 +35,7 @@ def nuevo():
         electronica = request.form['electronica']
         clavijero = request.form['clavijero']
         foto = request.form['myfoto']
-        if foto is '':
+        if foto.__str__() is '':
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('guitarras.nuevo'))
 

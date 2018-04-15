@@ -18,7 +18,7 @@ def paypal_ipn2():
 
     app.logger.warning("{}".format(request.form))
     for x, y in values.items():
-        arg += "&{x}={y}".format(x=x, y=y)
+        arg += "&{x}={y}".format(x=x.__str__(), y=y.__str__())
     validate_url = 'https://www.sandbox.paypal.com' \
                    '/cgi-bin/webscr?cmd=_notify-validate{arg}' \
         .format(arg=arg)

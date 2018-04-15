@@ -31,7 +31,7 @@ def nuevo():
         nombre = request.form['nombre']
         descripcion = request.form['descrip']
         foto = request.form['myfoto']
-        if foto is '':
+        if foto.__str__() is '':
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('artistas.nuevo'))
 

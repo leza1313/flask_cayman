@@ -19,7 +19,7 @@ def editar(nombre):
     producto = ArtistasModel.query.filter_by(nombre=nombre).first()
     producto.nombre=request.form['nombre']
     producto.descripcion=request.form['descrip']
-    if request.form['myfoto'] is not '':
+    if request.form['myfoto'].__str__() is not '':
         producto.fotopal=request.form['myfoto']
     producto.actualizar()
     id = ArtistasModel.find_by_name(nombre).id

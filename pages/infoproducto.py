@@ -30,7 +30,7 @@ def editar(tipo,nombre):
         producto.puente = request.form['puente']
         producto.electronica = request.form['electronica']
         producto.clavijero = request.form['clavijero']
-        if request.form['myfoto'] is not '':
+        if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
         if 'alt1' not in request.args:
@@ -55,7 +55,7 @@ def editar(tipo,nombre):
         producto.puente = request.form['puente']
         producto.electronica = request.form['electronica']
         producto.clavijero = request.form['clavijero']
-        if request.form['myfoto'] is not '':
+        if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
         if 'alt1' not in request.args:

@@ -25,7 +25,7 @@ def nuevo():
     for index in range(1, numfotos+1):
         url = request.form['myfoto'+index.__str__()]
         alt = request.form['alt'+index.__str__()]
-        if url is '':
+        if url.__str__() is '':
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('index'))
         mifoto = PromocionesModel.find_by_name(url)
