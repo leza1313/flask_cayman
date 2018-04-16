@@ -18,10 +18,10 @@ def paypal_ipn2():
 
     app.logger.warning("{}".format(request.form))
     for x, y in values.items():
-        arg += "&{x}={y}".format(x=x.__str__(), y=y.__str__())
+        arg += "&{x}={y}".format(x=x, y=y)
     validate_url = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate{arg}' \
         .format(arg=arg)
-    r = requests.get(validate_url)
+    r = requests.post(validate_url)
 
     if r.text == 'VERIFIED':
         app.logger.warning("VERIFIED")
