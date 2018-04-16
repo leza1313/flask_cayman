@@ -37,7 +37,12 @@ def nuevo():
 
         miartista = ArtistasModel(nombre, descripcion, foto)
         miartista.insert_to_db()
+        if 'alt1' not in request.form:
+            flash('Exito: Se ha anadido correctamente el nuevo artista')
+            return redirect(url_for('artistas.html'))
         id = ArtistasModel.find_by_name(nombre).id
+        #request.form - (number of parameters of the form that aren't photos)
+        #3 = nombre,descripcion,fotopal
         fotos = int((len(request.form) - 3) / 2)
 
         for index in range(1, fotos+1):

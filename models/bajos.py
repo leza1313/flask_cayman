@@ -13,12 +13,17 @@ class BajosModel(db.Model):
     electronica = db.Column(db.String(24))
     clavijero = db.Column(db.String(24))
 
+    boton = db.Column(db.Text)
+    precio = db.Column(db.Integer)
+
     fotopal = db.Column(db.String(150))
     fotos = db.relationship('FotosBajosModel')
 
-    def __init__(self, nombre, descripcion, acabado, pastillas, puente, electronica, clavijero, fotopal):
+    def __init__(self, nombre, descripcion, acabado, pastillas, puente, electronica, clavijero, boton,precio, fotopal):
         self.nombre = nombre
         self.descripcion = descripcion
+        self.boton=boton
+        self.precio=precio
         self.acabado = acabado
         self.pastillas = pastillas
         self.puente = puente
