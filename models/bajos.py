@@ -17,9 +17,10 @@ class BajosModel(db.Model):
     precio = db.Column(db.Integer)
 
     fotopal = db.Column(db.String(150))
+    fotopalalt = db.Column(db.String(150))
     fotos = db.relationship('FotosBajosModel')
 
-    def __init__(self, nombre, descripcion, acabado, pastillas, puente, electronica, clavijero, boton,precio, fotopal):
+    def __init__(self, nombre, descripcion, acabado, pastillas, puente, electronica, clavijero, boton,precio, fotopal,fotopalalt):
         self.nombre = nombre
         self.descripcion = descripcion
         self.boton=boton
@@ -30,6 +31,7 @@ class BajosModel(db.Model):
         self.electronica = electronica
         self.clavijero = clavijero
         self.fotopal = fotopal
+        self.fotopalalt = fotopalalt
 
     def json(self):
         return {'id': self.id,

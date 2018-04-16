@@ -31,11 +31,12 @@ def nuevo():
         nombre = request.form['nombre']
         descripcion = request.form['descrip']
         foto = request.form['myfoto']
+        fotoalt = request.form['myfotoalt']
         if foto.__str__() is '':
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('artistas.nuevo'))
 
-        miartista = ArtistasModel(nombre, descripcion, foto)
+        miartista = ArtistasModel(nombre, descripcion, foto,fotoalt)
         miartista.insert_to_db()
         if 'alt1' not in request.form:
             flash('Exito: Se ha anadido correctamente el nuevo artista')

@@ -37,6 +37,7 @@ def nuevo():
         electronica = request.form['electronica']
         clavijero = request.form['clavijero']
         foto = request.form['myfoto']
+        fotoalt = request.form['myfotoalt']
         if precio.__str__() is '':
             flash('Error: Es necesario introducir el precio')
             return redirect(url_for('bajos.nuevo'))
@@ -49,7 +50,7 @@ def nuevo():
             flash('Error: Es necesario seleccionar una imagen')
             return redirect(url_for('bajos.nuevo'))
 
-        mibajo = BajosModel(nombre, descripcion,acabado,pastillas,puente,electronica,clavijero,boton,precio,foto)
+        mibajo = BajosModel(nombre, descripcion,acabado,pastillas,puente,electronica,clavijero,boton,precio,foto,fotoalt)
         mibajo.insert_to_db()
 
         if 'alt1' not in request.form:

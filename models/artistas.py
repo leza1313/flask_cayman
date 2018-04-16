@@ -7,12 +7,14 @@ class ArtistasModel(db.Model):
     nombre = db.Column(db.String(24))
     descripcion = db.Column(db.Text)
     fotopal = db.Column(db.String(150))
+    fotopalalt = db.Column(db.String(150))
     fotos = db.relationship('FotosArtistasModel')
 
-    def __init__(self,nombre,descripcion,fotopal):
+    def __init__(self,nombre,descripcion,fotopal,fotopalalt):
         self.nombre=nombre
         self.descripcion=descripcion
         self.fotopal=fotopal
+        self.fotopalalt=fotopalalt
 
     def json(self):
         return {'id': self.id,
