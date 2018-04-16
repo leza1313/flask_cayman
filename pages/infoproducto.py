@@ -23,13 +23,17 @@ def html(tipo,nombre):
 def editar(tipo,nombre):
     if tipo=='bajo':
         producto = BajosModel.query.filter_by(nombre=nombre).first()
-        producto.nombre=request.form['nombre']
-        producto.descripcion=request.form['descrip']
+        producto.nombre = request.form['nombre']
+        producto.descripcion = request.form['descrip']
+        producto.boton = request.form['boton']
+        producto.precio = request.form['precio']
         producto.acabado = request.form['acabado']
         producto.pastillas = request.form['pastillas']
         producto.puente = request.form['puente']
         producto.electronica = request.form['electronica']
         producto.clavijero = request.form['clavijero']
+        producto.foto = request.form['myfoto']
+        producto.fotoalt = request.form['myfotoalt']
         if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
@@ -50,11 +54,15 @@ def editar(tipo,nombre):
         producto = GuitarrasModel.query.filter_by(nombre=nombre).first()
         producto.nombre = request.form['nombre']
         producto.descripcion = request.form['descrip']
+        producto.boton = request.form['boton']
+        producto.precio = request.form['precio']
         producto.acabado = request.form['acabado']
         producto.pastillas = request.form['pastillas']
         producto.puente = request.form['puente']
         producto.electronica = request.form['electronica']
         producto.clavijero = request.form['clavijero']
+        producto.foto = request.form['myfoto']
+        producto.fotoalt = request.form['myfotoalt']
         if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()

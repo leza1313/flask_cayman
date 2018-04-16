@@ -251,6 +251,11 @@ img{
     text-shadow: 1px 1px 1px #000000;
 
 }
+.mypaybutton{
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+}
 @media screen and (max-width: 600px){
     .mylogin{
         width: 64vw;
@@ -265,6 +270,9 @@ img{
     footer{
         position: static;
         text-align: center;
+    }
+    .mypaybutton{
+        left: 15%;
     }
 }
 .popover-header{
