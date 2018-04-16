@@ -7,6 +7,7 @@ from models.bajos import BajosModel
 '''This module processes PayPal Instant Payment Notification messages (IPNs).'''
 from flask import current_app as app
 import requests, calendar, datetime
+import urllib.parse
 
 paypal_ipn = Blueprint('paypal_ipn', __name__)
 
@@ -16,17 +17,18 @@ def paypal_ipn2():
     request.parameter_storage_class = ImmutableOrderedMultiDict
     values = request.form
 
-    app.logger.warning("{}".format(request.form))
+    headers = {'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'Python-IPN-Verification-Script'}
     for x, y in values.items():
-        arg += "&{x}={y}".format(x=x, y=y)
+        aux = {x: y}
+        arg += '&' + urllib.parse.urlencode(aux)
     validate_url = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr?cmd=_notify-validate{arg}' \
         .format(arg=arg)
-    r = requests.post(validate_url)
+    r = requests.post(validate_url, headers=headers)
 
     if r.text == 'VERIFIED':
         app.logger.warning("VERIFIED")
         #Serial number generator. 0418001-> 04 (Aprl)/ 18 (Year)/ 001 (Number of guitar made that month)
-        """lastPedido = PedidosModel.find_last()
+        lastPedido = PedidosModel.find_last()
         if lastPedido:
             serial = lastPedido.numero_serie
             month = int(serial[0]+serial[1])
@@ -133,7 +135,7 @@ def paypal_ipn2():
         mypedido = PedidosModel(pago_id,factura,numero_serie,modelo,acabado,pastillas,puente,electronica,clavijero,
                                 nombre,direccion,telefono,email,
                                 precio,fecha,observaciones)
-        mypedido.insert_to_db()"""
+        mypedido.insert_to_db()
 
     else:
         app.logger.warning("INVALID")
