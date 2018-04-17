@@ -58,6 +58,10 @@ class PedidosModel(db.Model):
     def find_last(cls):
         return cls.query.order_by(cls.id.desc()).first()
 
+    @classmethod
+    def find_by_id(cls,id):
+        return cls.query.filter_by(id=id).first()
+
     def insert_to_db(self):
         db.session.add(self)
         db.session.commit()

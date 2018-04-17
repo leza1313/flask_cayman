@@ -1,5 +1,88 @@
 {% extends "core/base.html" %}
 {% block cover %}
+    {% for mypedido in mypedidos %}
+    <div class="modal fade mymodal" id="mimodal{{ mypedido.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Introduzca nuevos datos del Pedido: {{ mypedido.id }}</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form class="form" method="post" action="{{ url_for('pedidos.editar', id=mypedido.id) }}">
+                  <div class="form-group">
+                      <label for="factura" class="mymodal-label">Factura</label>
+                      <input type="text" name="factura" class="form-control" value="{{ mypedido.factura }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="numero_serie" class="mymodal-label">Numero Serie</label>
+                      <input name="numero_serie" class="form-control" value="{{ mypedido.numero_serie }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="modelo" class="mymodal-label">Modelo</label>
+                      <input name="modelo" class="form-control" value="{{ mypedido.modelo }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="acabado" class="mymodal-label">Acabado</label>
+                      <input name="acabado" class="form-control" value="{{ mypedido.acabado }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="pastillas" class="mymodal-label">Pastillas</label>
+                      <input name="pastillas" class="form-control" value="{{ mypedido.pastillas }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="puente" class="mymodal-label">Puente</label>
+                      <input name="puente" class="form-control" value="{{ mypedido.puente }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="electronica" class="mymodal-label">Electronica</label>
+                      <input name="electronica" class="form-control" value="{{ mypedido.electronica }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="clavijero" class="mymodal-label">Clavijero</label>
+                      <input name="clavijero" class="form-control" value="{{ mypedido.clavijero }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="nombre" class="mymodal-label">Nombre</label>
+                      <input name="nombre" class="form-control" value="{{ mypedido.nombre }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="direccion" class="mymodal-label">Direccion</label>
+                      <input name="direccion" class="form-control" value="{{ mypedido.direccion }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="telefono" class="mymodal-label">Telefono</label>
+                      <input name="telefono" class="form-control" value="{{ mypedido.telefono }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="email" class="mymodal-label">Email</label>
+                      <input name="email" class="form-control" value="{{ mypedido.email }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="precio" class="mymodal-label">Precio</label>
+                      <input name="precio" class="form-control" value="{{ mypedido.precio }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="fecha" class="mymodal-label">Fecha</label>
+                      <input name="fecha" class="form-control" value="{{ mypedido.fecha }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="obser" class="mymodal-label">Observaciones</label>
+                      <textarea name="obser" class="form-control">{{ mypedido.observaciones }}</textarea>
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Actualizar</button>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
     <div class="section-content">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
        <div class="">
@@ -7,6 +90,9 @@
            <h2>Pedidos</h2>
            <p>Aqui los pedidos realizados</p>
            <hr>
+           <a class="btn btn-dark" href="{{ url_for('pedidos.nuevo') }}">Nuevo pedido</a>
+           <br>
+           <br>
             <div class="mytable table-responsive-xl">
                 <table class="table table-sm table-hover">
                     <thead>
@@ -51,10 +137,10 @@
                             <td>{{ pedido.precio }}</td>
                             <td>{{ pedido.fecha }}</td>
                             <td>
-                                <a href="">
+                                <a data-toggle="confirmation" href="{{ url_for('pedidos.borrar',id=pedido.id) }}">
                                     <i class="material-icons myicon">clear</i>
                                 </a>
-                                <a href="">
+                                <a href="" data-toggle="modal" data-target="#mimodal{{ pedido.id }}">
                                     <i class="material-icons myicon">create</i>
                                 </a>
                             </td>
@@ -67,4 +153,13 @@
            <br>
         </div>
         </div>
+    <script>
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            popout: true,
+            singleton: true,
+            title: '¿Estas seguro?',
+            btnOkLabel: 'Si',
+        });
+    </script>
 {% endblock %}

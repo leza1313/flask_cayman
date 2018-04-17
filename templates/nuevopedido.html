@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+{% block cover %}
+<h1>Nuevo Pedido</h1><br>
+<div class="container card">
+    <form class="form" method="post" action="{{ url_for('pedidos.nuevo') }}">
+        <h2 class="mymodal-label" style="font-size: 200%;margin: 20px;">Introduzca datos del pedido</h2>
+        <div class="form-group">
+          <label for="factura" class="mymodal-label">Factura</label>
+          <input type="text" name="factura" class="form-control" placeholder="Nº de factura" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="numero_serie" class="mymodal-label">Numero Serie</label>
+          <input name="numero_serie" class="form-control" placeholder="Ultimo numero de serie {{ lastSerial }}" required>
+        </div>
+        <div class="form-group">
+          <label for="modelo" class="mymodal-label">Modelo</label>
+          <input name="modelo" class="form-control" placeholder="Nombre del producto vendido" required>
+        </div>
+        <div class="form-group">
+          <label for="acabado" class="mymodal-label">Acabado</label>
+          <input name="acabado" class="form-control" placeholder="Acabado del producto" required>
+        </div>
+        <div class="form-group">
+          <label for="pastillas" class="mymodal-label">Pastillas</label>
+          <input name="pastillas" class="form-control" placeholder="Pastillas del producto" required>
+        </div>
+        <div class="form-group">
+          <label for="puente" class="mymodal-label">Puente</label>
+          <input name="puente" class="form-control" placeholder="Puente del producto" required>
+        </div>
+        <div class="form-group">
+          <label for="electronica" class="mymodal-label">Electronica</label>
+          <input name="electronica" class="form-control" placeholder="Electronica del producto" required>
+        </div>
+        <div class="form-group">
+          <label for="clavijero" class="mymodal-label">Clavijero</label>
+          <input name="clavijero" class="form-control" placeholder="Clavijero del producto" required>
+        </div>
+        <div class="form-group">
+          <label for="nombre" class="mymodal-label">Nombre</label>
+          <input name="nombre" class="form-control" placeholder="Nombre de la persona que realiza el pedido" required>
+        </div>
+        <div class="form-group">
+          <label for="direccion" class="mymodal-label">Direccion</label>
+          <input name="direccion" class="form-control" placeholder="Direccion del comprador" required>
+        </div>
+        <div class="form-group">
+          <label for="telefono" class="mymodal-label">Telefono</label>
+          <input name="telefono" class="form-control" placeholder="Telefono de contacto del comprador" required>
+        </div>
+        <div class="form-group">
+          <label for="email" class="mymodal-label">Email</label>
+          <input name="email" class="form-control" placeholder="Correo de contacto del comprador" required>
+        </div>
+        <div class="form-group">
+          <label for="precio" class="mymodal-label">Precio</label>
+          <input name="precio" class="form-control" placeholder="Precio de la venta" required>
+        </div>
+        <div class="form-group">
+          <label for="fecha" class="mymodal-label">Fecha</label>
+          <input name="fecha" class="form-control" placeholder="YYYY-MM-DD HH:mm:ss" required>
+        </div>
+        <div class="form-group">
+          <label for="obser" class="mymodal-label">Observaciones</label>
+          <textarea name="obser" class="form-control" placeholder="Observaciones"></textarea>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Aceptar</button>
+        <br>
+    </form>
+</div>
+<br>
+{% endblock %}
