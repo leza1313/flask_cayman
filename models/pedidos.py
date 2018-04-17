@@ -1,3 +1,6 @@
+from sqlalchemy import func, extract
+import datetime
+
 from connection import db
 
 class PedidosModel(db.Model):
@@ -47,8 +50,23 @@ class PedidosModel(db.Model):
         self.observaciones=observaciones
 
     def json(self):
-        #TODO
-        pass
+        return {'id':self.id,
+                'pago_id':self.pago_id,
+                'factura':self.factura,
+                'numero_serie':self.numero_serie,
+                'modelo':self.modelo,
+                'acabado':self.acabado,
+                'pastillas':self.pastillas,
+                'puente':self.puente,
+                'electronica':self.electronica,
+                'clavijero':self.clavijero,
+                'nombre':self.nombre,
+                'direccion':self.direccion,
+                'telefono':self.telefono,
+                'email':self.email,
+                'precio':self.precio,
+                'fecha':self.fecha.__str__(),
+                'observaciones':self.observaciones}
 
     @classmethod
     def find_by_serial(cls,serial):
@@ -57,6 +75,18 @@ class PedidosModel(db.Model):
     @classmethod
     def find_last(cls):
         return cls.query.order_by(cls.id.desc()).first()
+
+    @classmethod
+    def countModelo(cls):
+        return db.session.query(PedidosModel.modelo,func.count(PedidosModel.modelo)).group_by(PedidosModel.modelo).order_by(func.count(PedidosModel.modelo).desc()).all()
+
+    @classmethod
+    def countEsteMes(cls):
+        today = datetime.datetime.today()
+        month = today.month
+        year = today.year
+        result=db.session.execute('SELECT count(*) FROM pedidos WHERE extract(MONTH FROM fecha)= :val and EXTRACT(YEAR FROM fecha)= :val2',{'val':month,'val2':year}).fetchall()
+        return result
 
     @classmethod
     def find_by_id(cls,id):

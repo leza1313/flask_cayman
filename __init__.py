@@ -32,6 +32,7 @@ import paypal_ipn
 from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
 from resources.artistas import Artistas, ArtistasList
+from resources.pedidos import Pedidos, PedidosList, TopModelo, CountEsteMes
 
 app = Flask(__name__)
 app.debug = True
@@ -63,6 +64,10 @@ api.add_resource(Bajos, '/api/bajo/<string:name>')
 api.add_resource(BajosList, '/api/bajos/')
 api.add_resource(Artistas, '/api/artista/<string:name>')
 api.add_resource(ArtistasList, '/api/artistas/')
+api.add_resource(Pedidos, '/api/pedido/<string:num>')
+api.add_resource(PedidosList, '/api/pedidos/')
+api.add_resource(TopModelo, '/api/top/modelo/')
+api.add_resource(CountEsteMes, '/api/countestemes/')
 
 
 app.register_blueprint(login.login)
