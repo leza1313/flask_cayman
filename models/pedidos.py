@@ -1,3 +1,4 @@
+from flask_restful import reqparse
 from sqlalchemy import func, extract
 import datetime
 
@@ -102,3 +103,49 @@ class PedidosModel(db.Model):
 
     def actualizar(self):
         db.session.commit()
+
+
+class PedidosParser():
+    parser = reqparse.RequestParser()
+
+    def post(self):
+        PedidosParser.parser.add_argument('pago_id')
+        PedidosParser.parser.add_argument('factura')
+        PedidosParser.parser.add_argument('numero_serie', required=True)
+        PedidosParser.parser.add_argument('modelo', required=True)
+        PedidosParser.parser.add_argument('acabado')
+        PedidosParser.parser.add_argument('pastillas')
+        PedidosParser.parser.add_argument('puente')
+        PedidosParser.parser.add_argument('electronica')
+        PedidosParser.parser.add_argument('clavijero')
+
+        PedidosParser.parser.add_argument('nombre', required=True)
+        PedidosParser.parser.add_argument('direccion', required=True)
+        PedidosParser.parser.add_argument('telefono', required=True)
+        PedidosParser.parser.add_argument('email', required=True)
+
+        PedidosParser.parser.add_argument('precio', required=True)
+        PedidosParser.parser.add_argument('fecha', required=True)
+        PedidosParser.parser.add_argument('observaciones')
+        return PedidosParser.parser
+
+    def put(self):
+        PedidosParser.parser.add_argument('pago_id')
+        PedidosParser.parser.add_argument('factura')
+        PedidosParser.parser.add_argument('numero_serie')
+        PedidosParser.parser.add_argument('modelo')
+        PedidosParser.parser.add_argument('acabado')
+        PedidosParser.parser.add_argument('pastillas')
+        PedidosParser.parser.add_argument('puente')
+        PedidosParser.parser.add_argument('electronica')
+        PedidosParser.parser.add_argument('clavijero')
+
+        PedidosParser.parser.add_argument('nombre')
+        PedidosParser.parser.add_argument('direccion')
+        PedidosParser.parser.add_argument('telefono')
+        PedidosParser.parser.add_argument('email')
+
+        PedidosParser.parser.add_argument('precio')
+        PedidosParser.parser.add_argument('fecha')
+        PedidosParser.parser.add_argument('observaciones')
+        return PedidosParser.parser
