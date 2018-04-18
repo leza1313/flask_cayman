@@ -1,8 +1,11 @@
 import sys
+
+import os
+
 sys.path.append('/var/www/flask_cayman/flask_cayman')
 
 
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import render_template, redirect, url_for, flash, request
 from flask_restful import Api
 from flask_login import LoginManager, login_required, logout_user
@@ -142,9 +145,17 @@ app.register_blueprint(paypal_ipn.paypal_ipn)
 
 app.register_blueprint(pedidos.pedidos)
 
+
 @app.route('/contacto')
 def contacto():
     return render_template('contacto.html',mytitle='Contacto')
+
+@app.route('/android', methods=['GET'])
+@login_required
+def download():
+    uploads = os.path.join(app.root_path, "app")
+    print(uploads)
+    return send_from_directory(uploads, "cayman.apk")
 
 if __name__ == '__main__':
     app.run()
