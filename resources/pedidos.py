@@ -20,7 +20,7 @@ class Pedidos(Resource):
         pass
 
 class PedidosList(Resource):
-
+    @jwt_required
     def get(self):
         return {'Pedidos': [pedido.json() for pedido in PedidosModel.query.all()]}
 
