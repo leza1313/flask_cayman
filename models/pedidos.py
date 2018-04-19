@@ -69,7 +69,7 @@ class PedidosModel(db.Model):
                 'precio':self.precio,
                 'fecha':self.fecha.__str__(),
                 'observaciones':self.observaciones,
-                'fecha_salida':self.fecha_salida}
+                'fecha_salida':self.fecha_salida.__str__()}
 
     @classmethod
     def find_by_serial(cls,serial):

@@ -155,7 +155,7 @@ def contacto():
 def download():
     uploads = os.path.join(app.root_path, "app")
     print(uploads)
-    return send_from_directory(uploads, "cayman.apk")
+    return send_from_directory(uploads, "app-debug.apk")
 
 if __name__ == '__main__':
     app.run()
