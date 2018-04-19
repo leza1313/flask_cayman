@@ -65,13 +65,15 @@ class Pedidos(Resource):
                 pedido.fecha = data['fecha']
             if data['observaciones']:
                 pedido.observaciones = data['observaciones']
+            if data['fecha_salida']:
+                pedido.fecha_salida = data['fecha_salida']
             pedido.actualizar()
             return pedido.json(), 200
         return {'message':'Pedido not found'}, 404
 
     @jwt_required()
     def delete(self,num):
-        pedido = PedidosModel.find_by_name(num)
+        pedido = PedidosModel.find_by_serial(num)
         if pedido:
             pedido.delete_from_db()
             return pedido.json(), 204
@@ -80,7 +82,7 @@ class Pedidos(Resource):
 class PedidosList(Resource):
     @jwt_required()
     def get(self):
-        return {'Pedidos': [pedido.json() for pedido in PedidosModel.query.all()]}
+        return {'Pedidos': [pedido.json() for pedido in PedidosModel.query.order_by(PedidosModel.fecha.desc()).all()]}
 
 class TopModelo(Resource):
     def get(self):

@@ -69,6 +69,10 @@
                       <input name="fecha" class="form-control" value="{{ mypedido.fecha }}">
                   </div>
                   <div class="form-group">
+                      <label for="fecha_salida" class="mymodal-label">Fecha Salida</label>
+                      <input name="fecha_salida" class="form-control" placeholder="Fecha de entrega o envio al comprador">
+                  </div>
+                  <div class="form-group">
                       <label for="obser" class="mymodal-label">Observaciones</label>
                       <textarea name="obser" class="form-control">{{ mypedido.observaciones }}</textarea>
                   </div>
@@ -119,7 +123,11 @@
                     </thead>
                     <tbody>
                     {% for pedido in mypedidos %}
+                        {% if pedido.fecha_salida %}
+                        <tr class="bg-success">
+                        {% else %}
                         <tr>
+                        {% endif %}
                             <td>{{ pedido.id }}</td>
                             <!--<td>{{ pedido.pago_id }}</td>-->
                             <td>{{ pedido.factura }}</td>

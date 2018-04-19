@@ -26,6 +26,7 @@ class PedidosModel(db.Model):
 
     precio = db.Column(db.String(24))
     fecha = db.Column(db.DateTime)
+    fecha_salida = db.Column(db.DateTime)
     observaciones = db.Column(db.Text)
 
     def __init__(self,pago_id,factura,numero_serie,modelo,acabado,pastillas,puente,electronica,clavijero
@@ -148,4 +149,5 @@ class PedidosParser():
         PedidosParser.parser.add_argument('precio')
         PedidosParser.parser.add_argument('fecha')
         PedidosParser.parser.add_argument('observaciones')
+        PedidosParser.parser.add_argument('fecha_salida')
         return PedidosParser.parser
