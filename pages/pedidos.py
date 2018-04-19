@@ -26,7 +26,10 @@ def borrar(id):
 @login_required
 def nuevo():
     if request.method == 'POST':
-        factura = request.form['factura']
+        if request.form['factura']=='':
+            factura = None
+        else:
+            factura = request.form['factura']
         numero_serie = request.form['numero_serie']
         modelo = request.form['modelo']
         acabado = request.form['acabado']
