@@ -32,38 +32,15 @@
            </div>
        </div>
     </div>
-    <br><br><br>
-        <button class="btn btn-default" data-toggle="confirmation">Confirmation</button>
-
-    <script>
-        $('[data-toggle=confirmation]').confirmation({
-            rootSelector: '[data-toggle=confirmation]',
-            // other options
-        });
-    </script>
-<!-- JS para Menu PopUp-->
-<script>
-    function openPopUp(event,popupid){
-        var mypopup = document.getElementById(popupid);
-        event.preventDefault();
-        mypopup.style.display = "block";
-    }
-    function closePopUp(event,popupid){
-        var mypopup = document.getElementById(popupid);
-        event.preventDefault();
-        mypopup.style.display = "none";
-    }
-</script>
-<!--
     <canvas id="mycanvas"></canvas>
 
     <script src="static/js/THREEx.WindowResize.js"></script>
     <script src="static/js/three.min.js"></script>
     <script src="static/js/OrbitControls.js"></script>
     <script src="static/js/STLLoader.js"></script>
--->
+
 	<script>
-/*
+
         var canvas = document.getElementById('mycanvas');
         function resizeCanvas() {
             canvas.width = window.innerWidth*0.815;
@@ -106,10 +83,12 @@
 
         //Añadir Luz
 
-        var light = new THREE.PointLight( 0xffffff, 0.85, 0 );
+        var amlight = new THREE.AmbientLight( 0xffffff, 0.6);
+        var light = new THREE.PointLight( 0xffffff, 0.3, 100 );
         light.position.copy( camera.position );
         light.castShadow = true;
         scene.add( light );
+        scene.add( amlight );
 
         //Set up shadow properties for the light
         light.shadow.mapSize.width = 512;  // default
@@ -161,35 +140,47 @@
 
         var guitarobj,golpeadorobj,mastilobj;
         //Importar el modelo STL
-        var loader = new THREE.STLLoader();
-        loader.load( 'static/modelos/telecaster/CUERPO.STL', function ( geometry ) {
+        var loader = new THREE.JSONLoader();
+        loader.load( 'static/modelos/prueba/strat cuerpo.json',
 
-            var guit = new THREE.Mesh( geometry,material1 );
-            guit.scale.set(0.05, 0.05, 0.05);
-            guit.name='prueba';
-            scene.add(guit);
-            guit.position.set( 5, 10, 0);
-            guit.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+            // onLoad callback
+            // Here the loaded data is assumed to be an object
+            function onLoad( geometry, materials ) {
+                var material = new THREE.MeshPhongMaterial({ transparent: false,
+                    map: THREE.ImageUtils.loadTexture('static/modelos/prueba/Sin título-2.jpg'),
+                    shininess: 100,//con esto parece que refleja, pero como que ciega un poco
+                    specular: 0x444444,//con esto parece que refleja
+                    //color: 0xffffff,
+                    //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
+                    //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
+                });
+                var object = new THREE.Mesh( geometry, material );
+                object.name='mast';
+                object.position.set( 15, 10, -20);
+                object.rotation.set( THREE.Math.degToRad(-180),THREE.Math.degToRad(0), THREE.Math.degToRad(90));
+                scene.add( object );
+            },
 
-            guit.callback = function(event){
-                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
-                openPopUp(event,'popupmodelo_bg');
-            }
-            guit.borrar = function (){
-                scene.remove(guit);
-            }
+            // onProgress callback
+            function onProgress( xhr ) {
+                console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            },
 
-            guitarobj=guit;
-            miguitarra.addguitarobj(guitarobj);
-        } );
-        loader.load( 'static/modelos/telecaster/GOLPEADOR.STL', function ( geometry ) {
+            // onError callback
+            function onError( err ) {
+                console.error( 'An error happened' );
+        });
+
+
+        /*loader.load( 'static/modelos/telecaster/golpeador.STL', function ( geometry ) {
 
             var golpeador = new THREE.Mesh( geometry,material2 );
             golpeador.scale.set(0.05, 0.05, 0.05);
             golpeador.name='golp';
             scene.add(golpeador);
-            golpeador.position.set( 5, 10, 0);
             golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+            golpeador.position.set( 0.81, 0, 0.79);
+            //golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
             golpeador.callback = function(event){
                 //Muestra el desplegable para seleccionar distintas opciones de ese objeto
@@ -201,13 +192,12 @@
 
             golpeadorobj=golpeador;
         } );
-        loader.load( 'static/modelos/telecaster/MASTIL.STL', function ( geometry ) {
-
+        loader.load( 'static/modelos/telecaster/cuerpo.STL', function ( geometry ) {
             var mastil = new THREE.Mesh( geometry,material3 );
             mastil.scale.set(0.05, 0.05, 0.05);
             mastil.name='mast';
             scene.add(mastil);
-            mastil.position.set( 5, 10, 0);
+            mastil.position.set( 0, 0, 0);
             mastil.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
             mastil.callback = function(event){
@@ -224,7 +214,7 @@
 
         function prueba2(aaa) {
             scene.add(aaa);
-        }
+        }*/
         //scene.add(group);
         //group.rotation.x -= 1.5;
         //prueba(relacionados,relacionados.cuerpo2);
@@ -358,7 +348,7 @@
                 }
                 INTERSECTED=null;
             }*/
-/*
+
             //Se ilumina el objeto Seleccionado
             if ( intersects.length > 0 ) {
                 if ( INTERSECTED != intersects[ 0 ].object ) {
@@ -390,7 +380,7 @@
             render();
         };
 
-        animate();*/
+        animate();
     </script>
 </body>
 </html>
