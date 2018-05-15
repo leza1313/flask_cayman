@@ -171,50 +171,6 @@
                 console.error( 'An error happened' );
         });
 
-
-        /*loader.load( 'static/modelos/telecaster/golpeador.STL', function ( geometry ) {
-
-            var golpeador = new THREE.Mesh( geometry,material2 );
-            golpeador.scale.set(0.05, 0.05, 0.05);
-            golpeador.name='golp';
-            scene.add(golpeador);
-            golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
-            golpeador.position.set( 0.81, 0, 0.79);
-            //golpeador.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
-
-            golpeador.callback = function(event){
-                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
-                openPopUp(event,'popupmodelo_bg');
-            }
-            golpeador.borrar = function (){
-                scene.remove(golpeador);
-            }
-
-            golpeadorobj=golpeador;
-        } );
-        loader.load( 'static/modelos/telecaster/cuerpo.STL', function ( geometry ) {
-            var mastil = new THREE.Mesh( geometry,material3 );
-            mastil.scale.set(0.05, 0.05, 0.05);
-            mastil.name='mast';
-            scene.add(mastil);
-            mastil.position.set( 0, 0, 0);
-            mastil.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
-
-            mastil.callback = function(event){
-                //Muestra el desplegable para seleccionar distintas opciones de ese objeto
-                openPopUp(event,'popupmodelo_bg');
-            }
-            mastil.borrar = function (){
-                scene.remove(mastil);
-            }
-
-            mastilobj=mastil;
-        } );
-        ;
-
-        function prueba2(aaa) {
-            scene.add(aaa);
-        }*/
         //scene.add(group);
         //group.rotation.x -= 1.5;
         //prueba(relacionados,relacionados.cuerpo2);

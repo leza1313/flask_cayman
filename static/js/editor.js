@@ -90,10 +90,12 @@ scene.background = new THREE.Color( 0x72645b );
 
 //Añadir Luz
 
-var light = new THREE.PointLight( 0xffffff, 0.85, 0 );
+var amlight = new THREE.AmbientLight( 0xffffff, 0.4);
+var light = new THREE.PointLight( 0xffffff, 0.5, 0 );
 light.position.copy( camera.position );
 light.castShadow = true;
 scene.add( light );
+scene.add( amlight );
 
 //Set up shadow properties for the light
 light.shadow.mapSize.width = 512;  // default
@@ -238,7 +240,8 @@ peri = new myperillas('static/modelos/stratocaster/TONO_1.STL',
 pasti = new mypastillas('static/modelos/stratocaster/PASTILLA_MASTIL.STL',
     'static/modelos/stratocaster/PASTILLA_MEDIO.STL',
     'static/modelos/stratocaster/PASTILLA_PUENTE.STL');
-
+//telecaster/CUERPO TELECASTER
+//stratocaster/CUERPO
 guitarra = new myguitarrastl('static/modelos/stratocaster/CUERPO.STL',
     'static/modelos/stratocaster/GOLPEADOR.STL',
     'static/modelos/stratocaster/MASTIL.STL',
@@ -247,7 +250,7 @@ guitarra = new myguitarrastl('static/modelos/stratocaster/CUERPO.STL',
     peri.tono,peri.tono2,peri.volumen);
 
 posicionstl= new mypositionstl( //Cuerpo
-                                new myposition(5,10,0),
+                                new myposition(5, 10, -20.75),
                                 //Golpeador
                                 new myposition(4.95, 4.778, 3),
                                 //Mastil
@@ -314,36 +317,81 @@ modalName[8]='#modalTono_2';
 modalName[9]='#modalVolumen';
 
 var loader = new THREE.STLLoader();
+var loaderJSON = new THREE.JSONLoader();
 
-function cargarSTL(mystl,myMaterial,sufix,position,modalName){
 
-    loader.load( mystl, function ( geometry ) {
-        var myObject = new THREE.Mesh( geometry, myMaterial);
+function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
+
+    loader.load(mystl, function (geometry) {
+        var myObject = new THREE.Mesh(geometry, myMaterial);
         myObject.scale.set(0.05, 0.05, 0.05);
-        myObject.position.set( position.x,position.y,position.z );
-        myObject.rotation.set( THREE.Math.degToRad(90),THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
+        myObject.position.set(position.x, position.y, position.z);
+        myObject.rotation.set(THREE.Math.degToRad(90), THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
 
-        myObject.callback = function(){
+        myObject.callback = function () {
             $(modalName).modal();
         }
-        myObject.borrar = function (){
+        myObject.borrar = function () {
             scene.remove(myObject);
         }
         //Si intento mostrar el objeto desde JS fuera de la funcion no funciona
         //Sin embargo, al llamar a otras funciones de JS desde HTML si que reconoce el objeto.
         scene.add(myObject);
-        miguitarra[sufix]=myObject;
+        miguitarra[sufix] = myObject;
         //Si de aqui guardo por cada iteracion la pieza correspondiente en el objeto de clase Miguitarra
         // Desde afuera(el html) puedo llamar a funciones pasando como argumento el objeto.cuerpo (prueba.cuerpo)
         //prueba.cuerpo=myObject;
-    } );
+    });
+}
+function cargarJSON(mystl,myMaterial,sufix,position,modalName){
+
+
+    loaderJSON.load( 'static/modelos/prueba/strat cuerpo.json',
+
+        // onLoad callback
+        // Here the loaded data is assumed to be an object
+        function onLoad( geometry, materials ) {
+            var material = new THREE.MeshPhongMaterial({ transparent: false,
+                map: THREE.ImageUtils.loadTexture('static/modelos/prueba/Sin título-2.jpg'),
+                shininess: 30,//con esto parece que refleja, pero como que ciega un poco
+                specular: 0x444444,//con esto parece que refleja
+                //color: 0xffffff,
+                //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
+                //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
+            });
+            var object = new THREE.Mesh( geometry, material );
+            object.name='cuerp';
+            //object.position.set( 15, 10, -20);
+            object.position.set(position.x, position.y, position.z);
+            object.rotation.set( THREE.Math.degToRad(-180),THREE.Math.degToRad(0), THREE.Math.degToRad(90));
+            object.callback = function(){
+                $(modalName).modal();
+            }
+            object.borrar = function (){
+                scene.remove(object);
+            }
+            scene.add( object );
+            miguitarra[sufix]=object;
+        },
+
+        // onProgress callback
+        function onProgress( xhr ) {
+            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+        },
+
+        // onError callback
+        function onError( err ) {
+            console.error( 'An error happened' );
+    });
 }
 var counter=0;
 for(var index in guitarra) {
     var attr = guitarra[index];
-    cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);
+    if (counter!=0){
+    cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);}
     counter++;
 }
+cargarJSON('',materiales[0],0,posicionstl.cuerpo,modalName[0]);
 
 function cambiarCuerpo(event,obj,nuevo,modalName){
     //hace falta poner el event.preventDefault()
