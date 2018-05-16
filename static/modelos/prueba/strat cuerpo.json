@@ -10,7 +10,7 @@
         "wireframe":false,
         "depthTest":true,
         "mapDiffuseRepeat":[1,1],
-        "mapDiffuse":"Sin t\u00edtulo-2.jpg",
+        "mapDiffuse":"sunburst.jpg",
         "transparent":false,
         "shading":"phong",
         "mapDiffuseAnisotropy":1,

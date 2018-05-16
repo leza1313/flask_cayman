@@ -346,21 +346,21 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
 function cargarJSON(mystl,myMaterial,sufix,position,modalName){
 
 
-    loaderJSON.load( 'static/modelos/prueba/strat cuerpo.json',
+    loaderJSON.load(mystl,
 
-        // onLoad callback
-        // Here the loaded data is assumed to be an object
+        //TODO load the 1st option for that part in "opcionesPartes3D" db
         function onLoad( geometry, materials ) {
             var material = new THREE.MeshPhongMaterial({ transparent: false,
-                map: THREE.ImageUtils.loadTexture('static/modelos/prueba/Sin título-2.jpg'),
+                map: THREE.ImageUtils.loadTexture('static/modelos/prueba/sunburst.jpg'),
                 shininess: 30,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
                 //color: 0xffffff,
                 //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                 //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
             });
+
             var object = new THREE.Mesh( geometry, material );
-            object.name='cuerp';
+            object.name=1;
             //object.position.set( 15, 10, -20);
             object.position.set(position.x, position.y, position.z);
             object.rotation.set( THREE.Math.degToRad(-180),THREE.Math.degToRad(0), THREE.Math.degToRad(90));
@@ -391,16 +391,35 @@ for(var index in guitarra) {
     cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);}
     counter++;
 }
-cargarJSON('',materiales[0],0,posicionstl.cuerpo,modalName[0]);
+//cargarJSON('static/modelos/prueba/strat cuerpo.json',materiales[0],0,posicionstl.cuerpo,'#modalCuerpo0');
 
-function cambiarCuerpo(event,obj,nuevo,modalName){
+function cambiarCuerpo(event,obj,parte,nuevo,modalName){
     //hace falta poner el event.preventDefault()
     //y pasarselo a la funcion tmbn
     event.preventDefault();
     $(modalName).modal('hide');
-    obj[0].borrar();
+    obj[parte].borrar();
     //obj[1].borrar();
-    cargarSTL(nuevo,obj[0].material,0,posicionstl.cuerpo,modalName);
+    cargarSTL(nuevo,obj[parte].material,0,posicionstl.cuerpo,modalName);
+}
+function cambiarTextura(event,obj,parte,nuevo,modalName){
+    //hace falta poner el event.preventDefault()
+    //y pasarselo a la funcion tmbn
+    event.preventDefault();
+    $(modalName).modal('hide');
+    console.log(nuevo);
+    var material2 = new THREE.MeshPhongMaterial({ transparent: false,
+        map: THREE.ImageUtils.loadTexture(nuevo),
+        shininess: 30,//con esto parece que refleja, pero como que ciega un poco
+        specular: 0x444444,//con esto parece que refleja
+        //color: 0xffffff,
+        //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
+        //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
+    });
+    obj[parte].material= material2;
+    //modeloGuit = nuevo.split('modelos/')[1].split('/')[0];
+    //acabadoParte = nuevo.split('modelos/')[1].split('/')[1];
+    actualizarPrecio(250,100);
 }
 
 function iluminar(parte){
@@ -487,3 +506,95 @@ var animate = function () {
 };
 
 animate();
+
+
+var partes3D;
+$.ajax({
+    url: "http://localhost:5000/api/partes3D/",
+    dataType: "jsonp",    // Work with the response
+    success: function (response) {
+        $('#precio').html('555');
+        console.log('A');
+        console.log(response); // server response
+    },
+    error: function (response) {
+        //console.log('ERROR');
+        //TODO cargar el resto de piezas de la primera guitarra (por defecto) aqui.
+        // Una vez cargado la primera guitarra tras la peticion AJAX,
+        // Ya tenemos todas las partes3D en la variable.
+        // Una vez se hace un cambio de modelo json, cambiar con javascript el modal
+        //
+        // Si se cambia el cuerpo cambiar modal entero
+        //
+        // Si se cambia cualquier otra pieza solo cambiar las opciones del modal de esa pieza.
+        // Para esto hacer una peticion AJAX al server para saber las opciones de esa pieza
+        // /api/opciones3D/<string:parte3D>
+        partes3D = JSON.parse(response.responseText);
+        var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
+        cargarJSON(partes3D[0].rutaJSON,'',0,myposicion,'#modalCuerpo0');
+    }
+});
+
+
+var opciones3D;
+function getOpciones3D(pieza){
+    $.ajax({
+    url: "http://localhost:5000/api/opciones3D/"+pieza,
+    dataType: "jsonp",    // Work with the response
+    success: function (response) {
+        //$('#precio').html('555');
+        console.log('AJAX SUCCESS - Revisar codigo');
+        opciones3D = JSON.parse(response.responseText);
+    },
+    error: function (response) {
+        //console.log('ERROR');
+        opciones3D = JSON.parse(response.responseText);
+        //console.log(opciones3D);
+        //return opciones3D;
+    }
+    });
+}
+/*var precios3D;
+$.ajax({
+    url: "http://localhost:5000/api/precios3D/1",
+    dataType: "jsonp",    // Work with the response
+    success: function (response) {
+        $('#precio').html('555');
+        console.log('A');
+        console.log(response); // server response
+    },
+    error: function (response) {
+        //console.log('ERROR');
+        opciones3D = JSON.parse(response.responseText);
+    }
+});*/
+
+function actualizarPrecio(restarPrecio,sumarPrecio) {
+    precio=$('#precio').html()-restarPrecio+sumarPrecio;
+    $('#precio').html(precio);
+}
+function actualizarBody2(pieza){
+    getOpciones3D(pieza);
+    //qw = JSON.parse(opciones3D.responseText);
+    setTimeout(function(){
+    //do what you need here
+        console.log(opciones3D);
+        var html='';
+        Number()
+        for (var i=0;i<opciones3D.length;i++) {
+            html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+String(Number(pieza)-1)+',');
+            html=html.concat("'"+opciones3D[i].rutaTextura+"'");
+            html=html.concat(',\'modalCuerpo0\')');
+            html=html.concat('"><img src=static/img/'+opciones3D[i].foto+' ' );
+            html=html.concat('data-toggle=\'modalCuerpo0\' data-dismiss=\'modal\' height=\'200\'>' );
+            html=html.concat('</a>');
+        }
+        $('#modalCuerpo0Body2').html(html);
+        /*<div id="{{ item.id }}Body1" class="modal-body">
+            {% for modelo in item.opcionesModelo %}
+                <script>modelo.push('{{ modelo.modelo }}')</script>
+                <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
+            {% endfor %}
+        </div>*/
+    }, 200);
+}

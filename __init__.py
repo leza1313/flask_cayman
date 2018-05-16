@@ -18,6 +18,7 @@ from models.user import UserModel
 from models.fotosbajos import FotosBajosModel
 from models.fotosguitarras import FotosGuitarrasModel
 from models.promociones import PromocionesModel
+from models.editor import Partes3DModel, Opciones3DModel, Precios3DModel
 
 from pages import editor
 from pages import guitarras
@@ -36,6 +37,7 @@ from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
 from resources.artistas import Artistas, ArtistasList
 from resources.pedidos import Pedidos, PedidosList, TopModelo, CountEsteMes
+from resources.editor import Partes3D, Opciones3D
 
 app = Flask(__name__)
 app.debug = True
@@ -71,6 +73,8 @@ api.add_resource(Pedidos, '/api/pedido/<string:num>')
 api.add_resource(PedidosList, '/api/pedidos/')
 api.add_resource(TopModelo, '/api/top/modelo/')
 api.add_resource(CountEsteMes, '/api/countestemes/')
+api.add_resource(Partes3D, '/api/partes3D/')
+api.add_resource(Opciones3D, '/api/opciones3D/<string:parte3D>')
 
 
 app.register_blueprint(login.login)
@@ -111,6 +115,11 @@ app.register_blueprint(promociones.promociones)
 
 @app.route('/prueba')
 def prueba():
+    #aa = Partes3DModel('Standard2', 'Cuerpo', 'Stratocaster', 10, 10, 10, 'static/modelos/prueba/strat cuerpo.json',
+    #              'rojo.jpg')
+    #aa.insert_to_db()
+    #bb = Opciones3DModel('strato2opcion1','static/modelos/prueba/sunburst.jpg','firebird.png',2)
+    #bb.insert_to_db()
     return render_template('prueba.html')
 
 @app.route('/pagocancelado')

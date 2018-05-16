@@ -4,43 +4,67 @@
     <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js')}}"></script>
     <script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
     <section id="editor">
-  <!-- Html para el menu de la izquierda-->
-   <div class="sidenav">
-     <a class="editor-a" data-toggle="modal" data-target="#modalModelo" onmouseover="iluminar(miguitarra[0])" onmouseout="apagar(miguitarra[0])">Modelo</a>
-      <a class="editor-a" >Maderas</a>
-      <a class="editor-a">Acabado</a>
-      <a class="editor-a">Pastillas</a>
-      <a class="editor-a">Componentes</a>
-    </div>
-    <img id="turn" src="static/img/rotate-device.png" alt="">
-    <button onclick="vistaEnfrente()" id="vistaEnfrente" class="btn">Vista Delantera</button>
-    <button onclick="vistaTrasera()" id="vistaTrasera" class="btn">Vista Trasera</button>
-    <button id="rotar" onclick="rotar(miguitarra)" class="btn">Rotar</button>
-        {% for item in lista %}
-            <!-- Modal -->
-            <div class="modal fade" id="{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">{{ item.titulo }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                      {% for opcion in item.opciones %}
-                      <a onclick="cambiarCuerpo(event, miguitarra,'static/modelos/{{ opcion.modelo }}',{{ item.id }})"><img src='static/img/{{ opcion.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
-                        {% endfor %}
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  </div>
+        <!-- Html para el menu de la izquierda-->
+        <div class="sidenav">
+            <a class="editor-a" data-toggle="modal" data-target="#modalModelo" onmouseover="iluminar(miguitarra[0])" onmouseout="apagar(miguitarra[0])">Modelo</a>
+            <a class="editor-a" >Maderas</a>
+            <a class="editor-a">Acabado</a>
+            <a class="editor-a">Pastillas</a>
+            <a class="editor-a">Componentes</a>
+            <div id="precio" class="text-light">1500</div>
+        </div>
+        <img id="turn" src="static/img/rotate-device.png" alt="">
+        <button onclick="vistaEnfrente()" id="vistaEnfrente" class="btn">Vista Delantera</button>
+        <button onclick="vistaTrasera()" id="vistaTrasera" class="btn">Vista Trasera</button>
+        <button id="rotar" onclick="rotar(miguitarra)" class="btn">Rotar</button>
+        <script>
+            var Modelos=[];
+            var modelo=[];
+        </script>
+
+        {% for pieza in lista %}
+            {% for item in pieza %}
+                {% set outer_loop = loop %}
+                <!-- Modal -->
+                <div class="modal fade" id="{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 id="{{ item.id }}Titulo" class="modal-title">{{ item.titulo }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div id="{{ item.id }}Body1" class="modal-body">
+                                {% for modelo in item.opcionesModelo %}
+                                    <script>modelo.push('{{ modelo.modelo }}')</script>
+                                    <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
+                                {% endfor %}
+                            </div>
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Escoge acabado</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div id="{{ item.id }}Body2" class="modal-body">
+                                {% for color in item.opcionesColor %}
+                                    <!-- Comentado par ver que funciona la funcion de editor.js actualizarBody2(1)-->
+                                    <!--<a onclick="cambiarTextura(event, miguitarra,{{ outer_loop.index-1 }},'{{ color.rutaTextura }}',{{ item.id }})"><img src='static/img/{{ color.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>-->
+                                {% endfor %}
+                                <!--<a onclick="cambiarTextura(event, miguitarra,{{ outer_loop.index-1 }},opciones3D[0],{{ item.id }})"><img src='static/img/' alt="aa" data-toggle='' data-dismiss='modal' height='200'></a>-->
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-
+                <script>Modelos.push(modelo);</script>
+            {% endfor %}
         {% endfor %}
-
     <canvas id="mycanvas"></canvas>
 
     <script src="{{ url_for('static',filename='js/THREEx.WindowResize.js')}}"></script>
