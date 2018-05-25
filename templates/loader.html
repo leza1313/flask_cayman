@@ -38,7 +38,7 @@
                             <div id="{{ item.id }}Body1" class="modal-body">
                                 {% for modelo in item.opcionesModelo %}
                                     <script>modelo.push('{{ modelo.modelo }}')</script>
-                                    <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
+                                    <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' width='200'></a>
                                 {% endfor %}
                             </div>
 

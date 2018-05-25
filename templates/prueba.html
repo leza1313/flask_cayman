@@ -141,22 +141,24 @@
         var guitarobj,golpeadorobj,mastilobj;
         //Importar el modelo STL
         var loader = new THREE.JSONLoader();
-        loader.load( 'static/modelos/prueba/strat cuerpo.json',
+        loader.load( 'static/modelos/stratocaster/jack.json',
 
             // onLoad callback
             // Here the loaded data is assumed to be an object
             function onLoad( geometry, materials ) {
                 var material = new THREE.MeshPhongMaterial({ transparent: false,
-                    map: THREE.ImageUtils.loadTexture('static/modelos/prueba/Sin título-2.jpg'),
+                    map: THREE.ImageUtils.loadTexture('static/modelos/stratocaster/texturas/jack.jpg'),
                     shininess: 100,//con esto parece que refleja, pero como que ciega un poco
                     specular: 0x444444,//con esto parece que refleja
                     //color: 0xffffff,
                     //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                     //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
                 });
+                 var material1 = new THREE.MeshPhongMaterial({color: 0xffaa00});
                 var object = new THREE.Mesh( geometry, material );
                 object.name='mast';
-                object.position.set( 15, 10, -20);
+                object.position.set( 30.52, 12.46, 0);
+                object.scale.set( 0.05, 0.05, 0.05);
                 object.rotation.set( THREE.Math.degToRad(-180),THREE.Math.degToRad(0), THREE.Math.degToRad(90));
                 scene.add( object );
             },
