@@ -323,6 +323,8 @@ modalName[8]='#modalTono_1';
 modalName[9]='#modalTono_2';
 modalName[10]='#modalVolumen';
 modalName[11]='#modalTapa';
+modalName[12]='#modalChapa';
+modalName[13]='#modalJack';
 
 var loader = new THREE.STLLoader();
 var loaderJSON = new THREE.JSONLoader();
@@ -575,6 +577,8 @@ $.ajax({
         partes3D = JSON.parse(response.responseText);
         var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
         var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
+        var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
+        var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
 
 
         $.ajax({
@@ -600,7 +604,15 @@ $.ajax({
             cargarJSON(partes3D[3].pieza,partes3D[3].rutaJSON,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
             cargarJSON(partes3D[4].pieza,partes3D[4].rutaJSON,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
             cargarJSON(partes3D[5].pieza,partes3D[5].rutaJSON,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
-        },1000);
+            //cargarJSON(partes3D[6].pieza,partes3D[6].rutaJSON,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
+            //cargarJSON(partes3D[7].pieza,partes3D[7].rutaJSON,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
+            cargarJSON(partes3D[8].pieza,partes3D[8].rutaJSON,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
+            cargarJSON(partes3D[9].pieza,partes3D[9].rutaJSON,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
+            cargarJSON(partes3D[10].pieza,partes3D[10].rutaJSON,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
+            cargarJSON(partes3D[11].pieza,partes3D[11].rutaJSON,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
+            cargarJSON(partes3D[12].pieza,partes3D[12].rutaJSON,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
+            cargarJSON(partes3D[13].pieza,partes3D[13].rutaJSON,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
+        },200);
 
 
     }

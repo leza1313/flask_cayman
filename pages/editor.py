@@ -40,8 +40,11 @@ def html():
     opcionesTono1=[]
     opcionesTono2=[]
     opcionesVolumen=[]
-    opcionesClavijero=[]
+    #opcionesClavijero=[]
     opcionesDiapason=[]
+    opcionesTapa=[]
+    opcionesChapa=[]
+    opcionesJack=[]
 
 
     #cuerpos, es un array con todos los cuerpos disponibles
@@ -55,8 +58,11 @@ def html():
     tonos1=Partes3DModel.find_by_pieza('Tono1')
     tonos2=Partes3DModel.find_by_pieza('Tono2')
     volumenes=Partes3DModel.find_by_pieza('Volumen')
-    clavijeros=Partes3DModel.find_by_pieza('Clavijero')
+    #clavijeros=Partes3DModel.find_by_pieza('Clavijero')
     diapasones=Partes3DModel.find_by_pieza('Diapason')
+    tapas=Partes3DModel.find_by_pieza('Tapa')
+    chapas=Partes3DModel.find_by_pieza('Chapa')
+    jacks=Partes3DModel.find_by_pieza('Jack')
 
     opcionesModelo1=[]
     for index, item in enumerate(cuerpos):
@@ -120,8 +126,8 @@ def html():
         opcionesVolumen1.append(aux)
 
     ##QUE ONDA CON CLAVIJERO Y PUENTE
-    for index, item in enumerate(clavijeros):
-        opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
+    #for index, item in enumerate(clavijeros):
+        #opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
 
     opcionesDiapason1 = []
     for index, item in enumerate(diapasones):
@@ -129,11 +135,33 @@ def html():
         aux = myOpciones(item.rutaJSON, item.foto)
         opcionesDiapason1.append(aux)
 
+    opcionesTapa1 = []
+    for index, item in enumerate(tapas):
+        opcionesTapa.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesTapa1.append(aux)
+
+    opcionesChapa1 = []
+    for index, item in enumerate(chapas):
+        opcionesChapa.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesChapa1.append(aux)
+
+    opcionesJack1 = []
+    for index, item in enumerate(jacks):
+        opcionesJack.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesJack1.append(aux)
+
+    ########################################
+    ##LISTA DE LOS MODELOS CON SUS OPCIONES#
+    ########################################
+
     listaCuerpos=[]
     for index, item in enumerate(cuerpos):
         listaCuerpos.append(myModal('modalCuerpo'+index.__str__(),'Escoge Modelo', opcionesModelo1,opcionesCuerpo[index]))
     #print(listaCuerpos[0].opcionesModelo[1].modelo)
-    print(opcionesCuerpo[0][0].rutaTextura)
+    #print(opcionesCuerpo[0][0].rutaTextura)
     #cuerpoStrato2 = myModal('modalCuerpoStrato2','Escoge Modelo',cuerpos,opcionesCuerpo[1])
 
     listaGolpeadores = []
@@ -165,24 +193,53 @@ def html():
             myModal('modalPastillaMedio' + index.__str__(), 'Escoge Pastilla Medio', opcionesPastillaMedio1,
                     opcionesPastillaMedio[index]))
 
-    """golpeador = myModal('modalGolpeador','Escoge Golpeador','','')
+    listaPastillasPuente = []
+    for index, item in enumerate(pastillasMedio):
+        listaPastillasPuente.append(
+            myModal('modalPastillaPuente' + index.__str__(), 'Escoge Pastilla Puente', opcionesPastillaMedio1,
+                    opcionesPastillaPuente[index]))
 
-    mastil = myModal('modalMastil','Escoge Mastil','','')
+    listaPuentes = []
+    for index, item in enumerate(puentes):
+        listaPuentes.append(
+            myModal('modalPuente' + index.__str__(), 'Escoge Puente', opcionesPuente1,
+                    opcionesPuente[index]))
 
-    pastilla_mastil = myModal('modalPastilla_Mastil','Escoge Pastilla Mastil','','')
+    listaTonos1 = []
+    for index, item in enumerate(tonos1):
+        listaTonos1.append(
+            myModal('modalTono1' + index.__str__(), 'Escoge Tono1', opcionesTono11,
+                    opcionesTono1[index]))
 
-    pastilla_medio = myModal('modalPastilla_Medio','Escoge Pastilla Medio','','')
+    listaTonos2 = []
+    for index, item in enumerate(tonos2):
+        listaTonos2.append(
+            myModal('modalTono2' + index.__str__(), 'Escoge Tono2', opcionesTono21,
+                    opcionesTono2[index]))
 
-    pastilla_puente = myModal('modalPastilla_Puente','Escoge Pastilla Puente','','')
+    listaVolumenes = []
+    for index, item in enumerate(volumenes):
+        listaVolumenes.append(
+            myModal('modalVolumen' + index.__str__(), 'Escoge Volumen', opcionesVolumen1,
+                    opcionesVolumen[index]))
 
-    puente = myModal('modalPuente','Escoge Puente','','')
+    listaTapas = []
+    for index, item in enumerate(tapas):
+        listaTapas.append(
+            myModal('modalTapa' + index.__str__(), 'Escoge  Tapa', opcionesTapa1,
+                    opcionesTapa[index]))
 
-    per_tono = myModal('modalTono_1','Escoge Perilla tono 1','','')
+    listaChapas = []
+    for index, item in enumerate(chapas):
+        listaChapas.append(
+            myModal('modalChapa' + index.__str__(), 'Escoge  Chapa', opcionesChapa1,
+                    opcionesChapa[index]))
 
-    per_tono2 = myModal('modalTono_2','Escoge Perilla tono 2','','')
-
-    per_volumen = myModal('modalVolumen','Escoge Perilla volumen','','')"""
-
+    listaJacks = []
+    for index, item in enumerate(jacks):
+        listaJacks.append(
+            myModal('modalJack' + index.__str__(), 'Escoge  Jack', opcionesJack1,
+                    opcionesJack1[index]))
 
     lista = [
         listaCuerpos,
@@ -190,6 +247,14 @@ def html():
         listaMastiles,
         listaDiapasones,
         listaPastillasMastil,
-        listaPastillasMedio
+        listaPastillasMedio,
+        listaPastillasPuente,
+        listaPuentes,
+        listaTonos1,
+        listaTonos2,
+        listaVolumenes,
+        listaTapas,
+        listaChapas,
+        listaJacks
     ]
     return render_template('loader.html', mytitle=title, lista=lista)

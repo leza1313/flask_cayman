@@ -49,12 +49,7 @@
                                 </button>
                             </div>
                             <div id="{{ item.id }}Body2" class="modal-body">
-                                {% for color in item.opcionesColor %}
-                                    <!-- Comentado par ver que funciona la funcion de editor.js actualizarBody2(1)-->
-                                    <!--<a onclick="cambiarTextura(event, miguitarra,{{ outer_loop.index-1 }},'{{ color.rutaTextura }}',{{ item.id }})"><img src='static/img/{{ color.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>-->
-                                {% endfor %}
-                                <!--<a onclick="cambiarTextura(event, miguitarra,{{ outer_loop.index-1 }},opciones3D[0],{{ item.id }})"><img src='static/img/' alt="aa" data-toggle='' data-dismiss='modal' height='200'></a>-->
-                            </div>
+                           </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
