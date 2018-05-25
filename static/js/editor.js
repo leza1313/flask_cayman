@@ -351,7 +351,7 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
         //prueba.cuerpo=myObject;
     });
 }*/
-function cargarJSON(mystl,myMaterial,sufix,position,pieza,modalName){
+function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
 
 
     loaderJSON.load(mystl,
@@ -368,7 +368,7 @@ function cargarJSON(mystl,myMaterial,sufix,position,pieza,modalName){
             });
 
             var object = new THREE.Mesh( geometry, material );
-            object.name=1;
+            object.name=nombre;
             //object.position.set( 22.52, 12.46, 0);
             object.scale.set( 0.05, 0.05, 0.05);
             object.position.set(position.x, position.y, position.z);
@@ -574,6 +574,7 @@ $.ajax({
         // /api/opciones3D/<string:parte3D>
         partes3D = JSON.parse(response.responseText);
         var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
+        var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
 
 
         $.ajax({
@@ -593,9 +594,12 @@ $.ajax({
         });
 
         setTimeout(function () {
-            cargarJSON(partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
-            cargarJSON(partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
-            cargarJSON(partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
+            cargarJSON(partes3D[0].pieza,partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
+            cargarJSON(partes3D[1].pieza,partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
+            cargarJSON(partes3D[2].pieza,partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
+            cargarJSON(partes3D[3].pieza,partes3D[3].rutaJSON,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
+            cargarJSON(partes3D[4].pieza,partes3D[4].rutaJSON,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
+            cargarJSON(partes3D[5].pieza,partes3D[5].rutaJSON,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
         },1000);
 
 

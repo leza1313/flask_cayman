@@ -77,32 +77,57 @@ def html():
         aux = myOpciones(item.rutaJSON, item.foto)
         opcionesMastil1.append(aux)
 
+    opcionesPastillaMastil1=[]
     for index, item in enumerate(pastillasMastil):
         opcionesPastillaMastil.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesPastillaMastil1.append(aux)
 
+    opcionesPastillaMedio1 = []
     for index, item in enumerate(pastillasMedio):
         opcionesPastillaMedio.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesPastillaMedio1.append(aux)
 
+    opcionesPastillaPuente1=[]
     for index, item in enumerate(pastillasPuente):
         opcionesPastillaPuente.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesPastillaPuente1.append(aux)
 
+    opcionesPuente1 = []
     for index, item in enumerate(puentes):
         opcionesPuente.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesPuente1.append(aux)
 
+    opcionesTono11 = []
     for index, item in enumerate(tonos1):
         opcionesTono1.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesTono11.append(aux)
 
+    opcionesTono21 = []
     for index, item in enumerate(tonos2):
         opcionesTono2.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesTono21.append(aux)
 
+    opcionesVolumen1 = []
     for index, item in enumerate(volumenes):
         opcionesVolumen.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesVolumen1.append(aux)
 
+    ##QUE ONDA CON CLAVIJERO Y PUENTE
     for index, item in enumerate(clavijeros):
         opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
 
+    opcionesDiapason1 = []
     for index, item in enumerate(diapasones):
         opcionesDiapason.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesDiapason1.append(aux)
 
     listaCuerpos=[]
     for index, item in enumerate(cuerpos):
@@ -117,10 +142,28 @@ def html():
             myModal('modalGolpeador' + index.__str__(), 'Escoge Golpeador', opcionesGolpeador1, opcionesGolpeador[index]))
 
     listaMastiles = []
-    for index, item in enumerate(golpeadores):
+    for index, item in enumerate(mastiles):
         listaMastiles.append(
             myModal('modalMastil' + index.__str__(), 'Escoge Mastil', opcionesMastil1,
                     opcionesMastil[index]))
+
+    listaDiapasones = []
+    for index, item in enumerate(diapasones):
+        listaDiapasones.append(
+            myModal('modalDiapason' + index.__str__(), 'Escoge Diapason', opcionesDiapason1,
+                    opcionesDiapason[index]))
+
+    listaPastillasMastil = []
+    for index, item in enumerate(pastillasMastil):
+        listaPastillasMastil.append(
+            myModal('modalPastillaMastil' + index.__str__(), 'Escoge Pastilla Mastil', opcionesPastillaMastil1,
+                    opcionesPastillaMastil[index]))
+
+    listaPastillasMedio = []
+    for index, item in enumerate(pastillasMedio):
+        listaPastillasMedio.append(
+            myModal('modalPastillaMedio' + index.__str__(), 'Escoge Pastilla Medio', opcionesPastillaMedio1,
+                    opcionesPastillaMedio[index]))
 
     """golpeador = myModal('modalGolpeador','Escoge Golpeador','','')
 
@@ -144,6 +187,9 @@ def html():
     lista = [
         listaCuerpos,
         listaGolpeadores,
-        listaMastiles
+        listaMastiles,
+        listaDiapasones,
+        listaPastillasMastil,
+        listaPastillasMedio
     ]
     return render_template('loader.html', mytitle=title, lista=lista)
