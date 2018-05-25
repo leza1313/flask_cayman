@@ -65,11 +65,17 @@ def html():
         opcionesModelo1.append(aux)
     #print(opcionesModelo1[0].modelo)
 
+    opcionesGolpeador1 = []
     for index, item in enumerate(golpeadores):
         opcionesGolpeador.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesGolpeador1.append(aux)
 
+    opcionesMastil1=[]
     for index, item in enumerate(mastiles):
         opcionesMastil.append(Opciones3DModel.find_by_parte(item.id))
+        aux = myOpciones(item.rutaJSON, item.foto)
+        opcionesMastil1.append(aux)
 
     for index, item in enumerate(pastillasMastil):
         opcionesPastillaMastil.append(Opciones3DModel.find_by_parte(item.id))
@@ -105,6 +111,17 @@ def html():
     print(opcionesCuerpo[0][0].rutaTextura)
     #cuerpoStrato2 = myModal('modalCuerpoStrato2','Escoge Modelo',cuerpos,opcionesCuerpo[1])
 
+    listaGolpeadores = []
+    for index, item in enumerate(golpeadores):
+        listaGolpeadores.append(
+            myModal('modalGolpeador' + index.__str__(), 'Escoge Golpeador', opcionesGolpeador1, opcionesGolpeador[index]))
+
+    listaMastiles = []
+    for index, item in enumerate(golpeadores):
+        listaMastiles.append(
+            myModal('modalMastil' + index.__str__(), 'Escoge Mastil', opcionesMastil1,
+                    opcionesMastil[index]))
+
     """golpeador = myModal('modalGolpeador','Escoge Golpeador','','')
 
     mastil = myModal('modalMastil','Escoge Mastil','','')
@@ -125,6 +142,8 @@ def html():
 
 
     lista = [
-        listaCuerpos
+        listaCuerpos,
+        listaGolpeadores,
+        listaMastiles
     ]
     return render_template('loader.html', mytitle=title, lista=lista)

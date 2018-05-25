@@ -194,6 +194,14 @@ var person = new Person("Bob", "M");
 // Invoke methods like this
 //person.speak(); // alerts "Howdy, my name is Bob"
 //*/
+
+function myposition(x,y,z){
+    this.x=x;
+    this.y=y;
+    this.z=z;
+}
+
+/*
 function myguitarrastl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
     this.cuerpo=cuerpo;
     this.golpeador=golpeador;
@@ -216,11 +224,7 @@ function myperillas(tono,tono2,volumen){
     this.tono2=tono2;
     this.volumen=volumen;
 }
-function myposition(x,y,z){
-    this.x=x;
-    this.y=y;
-    this.z=z;
-}
+
 function mypositionstl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
     this.cuerpo=cuerpo;
     this.golpeador=golpeador;
@@ -233,6 +237,7 @@ function mypositionstl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,
     this.per_tono2=per_tono2;
     this.per_volumen=per_volumen;
 }
+
 peri = new myperillas('static/modelos/stratocaster/TONO_1.STL',
     'static/modelos/stratocaster/TONO_2.STL',
     'static/modelos/stratocaster/VOLUMEN.STL');
@@ -266,8 +271,9 @@ posicionstl= new mypositionstl( //Cuerpo
                                 new myposition(4.943,-1.033, 3.067),
                                 new myposition(4.943,-1.033, 3.067)
 );
-
+*/
 miguitarra=[];
+/*
 function Miguitarra(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
     this.cuerpo=cuerpo;
     this.golpeador=golpeador;
@@ -280,7 +286,7 @@ function Miguitarra(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per
     this.per_tono2=per_tono2;
     this.per_volumen=per_volumen;
 }
-prueba = new Miguitarra();
+prueba = new Miguitarra();*/
 /*
 //Estos metodos no consiguen hacer que cargue/devuelva los objetos dentro del js.
 //Desde afuera (funciones llamadas desde html) es igual utilizar el set o get Cuerpo que prueba.cuerpo
@@ -308,18 +314,20 @@ modalName=[];
 modalName[0]='#modalModelo';
 modalName[1]='#modalGolpeador';
 modalName[2]='#modalMastil';
-modalName[3]='#modalPastilla_Mastil';
-modalName[4]='#modalPastilla_Medio';
-modalName[5]='#modalPastilla_Puente';
-modalName[6]='#modalPuente';
-modalName[7]='#modalTono_1';
-modalName[8]='#modalTono_2';
-modalName[9]='#modalVolumen';
+modalName[3]='#modalDiapason';
+modalName[4]='#modalPastilla_Mastil';
+modalName[5]='#modalPastilla_Medio';
+modalName[6]='#modalPastilla_Puente';
+modalName[7]='#modalPuente';
+modalName[8]='#modalTono_1';
+modalName[9]='#modalTono_2';
+modalName[10]='#modalVolumen';
+modalName[11]='#modalTapa';
 
 var loader = new THREE.STLLoader();
 var loaderJSON = new THREE.JSONLoader();
 
-
+/*
 function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
 
     loader.load(mystl, function (geometry) {
@@ -342,8 +350,8 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
         // Desde afuera(el html) puedo llamar a funciones pasando como argumento el objeto.cuerpo (prueba.cuerpo)
         //prueba.cuerpo=myObject;
     });
-}
-function cargarJSON(mystl,myMaterial,sufix,position,modalName){
+}*/
+function cargarJSON(mystl,myMaterial,sufix,position,pieza,modalName){
 
 
     loaderJSON.load(mystl,
@@ -351,7 +359,7 @@ function cargarJSON(mystl,myMaterial,sufix,position,modalName){
         //TODO load the 1st option for that part in "opcionesPartes3D" db
         function onLoad( geometry, materials ) {
             var material = new THREE.MeshPhongMaterial({ transparent: false,
-                map: THREE.ImageUtils.loadTexture('static/modelos/prueba/sunburst.jpg'),
+                map: THREE.ImageUtils.loadTexture(myMaterial),
                 shininess: 30,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
                 //color: 0xffffff,
@@ -361,11 +369,13 @@ function cargarJSON(mystl,myMaterial,sufix,position,modalName){
 
             var object = new THREE.Mesh( geometry, material );
             object.name=1;
-            //object.position.set( 15, 10, -20);
+            //object.position.set( 22.52, 12.46, 0);
+            object.scale.set( 0.05, 0.05, 0.05);
             object.position.set(position.x, position.y, position.z);
             object.rotation.set( THREE.Math.degToRad(-180),THREE.Math.degToRad(0), THREE.Math.degToRad(90));
             object.callback = function(){
                 $(modalName).modal();
+                actualizarBody2(pieza,modalName);
             }
             object.borrar = function (){
                 scene.remove(object);
@@ -385,12 +395,13 @@ function cargarJSON(mystl,myMaterial,sufix,position,modalName){
     });
 }
 var counter=0;
+/*
 for(var index in guitarra) {
     var attr = guitarra[index];
     if (counter!=0){
     cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);}
     counter++;
-}
+}*/
 //cargarJSON('static/modelos/prueba/strat cuerpo.json',materiales[0],0,posicionstl.cuerpo,'#modalCuerpo0');
 
 function cambiarCuerpo(event,obj,parte,nuevo,modalName){
@@ -507,6 +518,38 @@ var animate = function () {
 
 animate();
 
+var opciones3D;
+function getOpciones3D(pieza){
+    $.ajax({
+    url: "http://localhost:5000/api/opciones3D/"+pieza,
+    dataType: "jsonp",    // Work with the response
+    success: function (response) {
+        //$('#precio').html('555');
+        console.log('AJAX SUCCESS - Revisar codigo');
+        opciones3D = JSON.parse(response.responseText);
+    },
+    error: function (response) {
+        //console.log('ERROR');
+        opciones3D = JSON.parse(response.responseText);
+        console.log(opciones3D);
+        //return opciones3D;
+    }
+    });
+}
+/*var precios3D;
+$.ajax({
+    url: "http://localhost:5000/api/precios3D/1",
+    dataType: "jsonp",    // Work with the response
+    success: function (response) {
+        $('#precio').html('555');
+        console.log('A');
+        console.log(response); // server response
+    },
+    error: function (response) {
+        //console.log('ERROR');
+        opciones3D = JSON.parse(response.responseText);
+    }
+});*/
 
 var partes3D;
 $.ajax({
@@ -531,70 +574,62 @@ $.ajax({
         // /api/opciones3D/<string:parte3D>
         partes3D = JSON.parse(response.responseText);
         var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
-        cargarJSON(partes3D[0].rutaJSON,'',0,myposicion,'#modalCuerpo0');
+
+
+        $.ajax({
+            url: "http://localhost:5000/api/todasOpciones3D/",
+            dataType: "jsonp",    // Work with the response
+            success: function (response) {
+                //$('#precio').html('555');
+                console.log('AJAX SUCCESS - Revisar codigo');
+                opciones3D = JSON.parse(response.responseText);
+            },
+            error: function (response) {
+                //console.log('ERROR');
+                opciones3D = JSON.parse(response.responseText);
+                console.log(opciones3D);
+                //return opciones3D;
+            }
+        });
+
+        setTimeout(function () {
+            cargarJSON(partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
+            cargarJSON(partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
+            cargarJSON(partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
+        },1000);
+
+
     }
 });
 
-
-var opciones3D;
-function getOpciones3D(pieza){
-    $.ajax({
-    url: "http://localhost:5000/api/opciones3D/"+pieza,
-    dataType: "jsonp",    // Work with the response
-    success: function (response) {
-        //$('#precio').html('555');
-        console.log('AJAX SUCCESS - Revisar codigo');
-        opciones3D = JSON.parse(response.responseText);
-    },
-    error: function (response) {
-        //console.log('ERROR');
-        opciones3D = JSON.parse(response.responseText);
-        //console.log(opciones3D);
-        //return opciones3D;
-    }
-    });
-}
-/*var precios3D;
-$.ajax({
-    url: "http://localhost:5000/api/precios3D/1",
-    dataType: "jsonp",    // Work with the response
-    success: function (response) {
-        $('#precio').html('555');
-        console.log('A');
-        console.log(response); // server response
-    },
-    error: function (response) {
-        //console.log('ERROR');
-        opciones3D = JSON.parse(response.responseText);
-    }
-});*/
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
     precio=$('#precio').html()-restarPrecio+sumarPrecio;
     $('#precio').html(precio);
 }
-function actualizarBody2(pieza){
+function actualizarBody2(pieza,modalname){
     getOpciones3D(pieza);
     //qw = JSON.parse(opciones3D.responseText);
     setTimeout(function(){
     //do what you need here
-        console.log(opciones3D);
+        //console.log(opciones3D);
         var html='';
-        Number()
         for (var i=0;i<opciones3D.length;i++) {
             html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+String(Number(pieza)-1)+',');
             html=html.concat("'"+opciones3D[i].rutaTextura+"'");
-            html=html.concat(',\'modalCuerpo0\')');
+            html=html.concat(',\''+modalname+'\')');
             html=html.concat('"><img src=static/img/'+opciones3D[i].foto+' ' );
-            html=html.concat('data-toggle=\'modalCuerpo0\' data-dismiss=\'modal\' height=\'200\'>' );
+            html=html.concat('data-toggle='+modalname+' data-dismiss=\'modal\' height=\'200\'>' );
             html=html.concat('</a>');
         }
-        $('#modalCuerpo0Body2').html(html);
+        $(modalname+'Body2').html(html);
         /*<div id="{{ item.id }}Body1" class="modal-body">
             {% for modelo in item.opcionesModelo %}
                 <script>modelo.push('{{ modelo.modelo }}')</script>
                 <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
             {% endfor %}
         </div>*/
+
+        //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
     }, 200);
 }

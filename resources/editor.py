@@ -11,3 +11,8 @@ class Opciones3D(Resource):
 
     def get(self,parte3D):
         return [opcion.json() for opcion in Opciones3DModel.find_by_parte(parte3D)]
+
+class TodasOpciones3D(Resource):
+
+    def get(self):
+        return [opcion.json() for opcion in Opciones3DModel.query.all()]
