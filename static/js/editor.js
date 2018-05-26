@@ -1,5 +1,7 @@
 document.getElementById("cover").style.textAlign = "left";
 turn = document.getElementById("turn");
+var urlBase= 'http://localhost:5000/api/';
+//var urlBase= 'https://leza1313.hopto.org/api/';
 
 var show = function() {
  if (screen.orientation.type == 'portrait'){
@@ -273,6 +275,7 @@ posicionstl= new mypositionstl( //Cuerpo
 );
 */
 miguitarra=[];
+piezasguitarra=[];
 /*
 function Miguitarra(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
     this.cuerpo=cuerpo;
@@ -364,6 +367,7 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
                 map: THREE.ImageUtils.loadTexture(myMaterial),
                 shininess: 30,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
+                name: myMaterial.split('texturas/')[1].split('-')[1].split('.')[0]
                 //color: 0xffffff,
                 //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                 //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
@@ -378,12 +382,17 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
             object.callback = function(){
                 $(modalName).modal();
                 actualizarBody2(pieza,modalName);
+                if (sufix==0){
+                    actualizarDropMaderas(modalName,pieza);
+                }
             }
             object.borrar = function (){
                 scene.remove(object);
             }
+
             scene.add( object );
             miguitarra[sufix]=object;
+            piezasguitarra[sufix]=pieza;
         },
 
         // onProgress callback
@@ -415,29 +424,71 @@ function cambiarCuerpo(event,obj,parte,nuevo,modalName){
     //obj[1].borrar();
     cargarSTL(nuevo,obj[parte].material,0,posicionstl.cuerpo,modalName);
 }
+
+//cambiarTextura(event, miguitarra,1,'static/modelos/stratocaster/texturas/golpeador2.jpg','#modalGolpeador0')
 function cambiarTextura(event,obj,parte,nuevo,modalName){
     //hace falta poner el event.preventDefault()
     //y pasarselo a la funcion tmbn
     event.preventDefault();
     $(modalName).modal('hide');
-    console.log(nuevo);
+    //console.log(piezasguitarra[parte]);
+
+    var precioViejo;
+    $.ajax({
+        url: urlBase+"precio3D/"+piezasguitarra[parte]+"/"+obj[parte].material.name,
+        dataType: "jsonp",    // Work with the response
+        success: function (response) {
+            //$('#precio').html('555');
+            console.log('AJAX SUCCESS - Revisar codigo');
+            precioViejo = JSON.parse(response.responseText);
+        },
+        error: function (response) {
+            //console.log('ERROR');
+            precioViejo = JSON.parse(response.responseText);
+        }
+    });
+
+    //console.log(nuevo);
     var material2 = new THREE.MeshPhongMaterial({ transparent: false,
         map: THREE.ImageUtils.loadTexture(nuevo),
         shininess: 30,//con esto parece que refleja, pero como que ciega un poco
         specular: 0x444444,//con esto parece que refleja
+        name: nuevo.split('/texturas/')[1].split('-')[1].split('.')[0]
         //color: 0xffffff,
         //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
         //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
     });
     obj[parte].material= material2;
-    //modeloGuit = nuevo.split('modelos/')[1].split('/')[0];
-    //acabadoParte = nuevo.split('modelos/')[1].split('/')[1];
-    actualizarPrecio(250,100);
+
+        //Cuerpo, si cambia textura no se cambia precio. Solo cambio de modelo, o seleccion de madera
+    if(parte==3 || parte==2) {
+        //Diapason, si cambia textura cambia precio
+        var material = nuevo.split('/texturas/')[1].split('-')[1].split('.')[0];
+        var precioNuevo;
+        $.ajax({
+            url: urlBase + "precio3D/" + piezasguitarra[parte] + "/" + material,
+            dataType: "jsonp",    // Work with the response
+            success: function (response) {
+                //$('#precio').html('555');
+                console.log('AJAX SUCCESS - Revisar codigo');
+                precioNuevo = JSON.parse(response.responseText);
+            },
+            error: function (response) {
+                //console.log('ERROR');
+                precioNuevo = JSON.parse(response.responseText);
+                //return opciones3D;
+            }
+        });
+
+        setTimeout(function () {
+            actualizarPrecio(precioViejo[0].precio, precioNuevo[0].precio);
+        }, 200);
+    }
 }
 
 function iluminar(parte){
     parte.currentHex = parte.material.emissive.getHex();
-    parte.material.emissive.setHex( 0x333333 );
+    parte.material.emissive.setHex( 0x772200);
 }
 function apagar(parte){
     parte.material.emissive.setHex(parte.currentHex );
@@ -523,7 +574,7 @@ animate();
 var opciones3D;
 function getOpciones3D(pieza){
     $.ajax({
-    url: "http://localhost:5000/api/opciones3D/"+pieza,
+    url: urlBase+"opciones3D/"+pieza,
     dataType: "jsonp",    // Work with the response
     success: function (response) {
         //$('#precio').html('555');
@@ -533,14 +584,14 @@ function getOpciones3D(pieza){
     error: function (response) {
         //console.log('ERROR');
         opciones3D = JSON.parse(response.responseText);
-        console.log(opciones3D);
+        //console.log(opciones3D);
         //return opciones3D;
     }
     });
 }
 /*var precios3D;
 $.ajax({
-    url: "http://localhost:5000/api/precios3D/1",
+    url: urlBase+"precios3D/1",
     dataType: "jsonp",    // Work with the response
     success: function (response) {
         $('#precio').html('555');
@@ -555,7 +606,7 @@ $.ajax({
 
 var partes3D;
 $.ajax({
-    url: "http://localhost:5000/api/partes3D/",
+    url: urlBase+"partes3D/",
     dataType: "jsonp",    // Work with the response
     success: function (response) {
         $('#precio').html('555');
@@ -582,7 +633,7 @@ $.ajax({
 
 
         $.ajax({
-            url: "http://localhost:5000/api/todasOpciones3D/",
+            url: urlBase+"todasOpciones3D/",
             dataType: "jsonp",    // Work with the response
             success: function (response) {
                 //$('#precio').html('555');
@@ -625,10 +676,7 @@ function actualizarPrecio(restarPrecio,sumarPrecio) {
 }
 function actualizarBody2(pieza,modalname){
     getOpciones3D(pieza);
-    //qw = JSON.parse(opciones3D.responseText);
     setTimeout(function(){
-    //do what you need here
-        //console.log(opciones3D);
         var html='';
         for (var i=0;i<opciones3D.length;i++) {
             html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+String(Number(pieza)-1)+',');
@@ -645,6 +693,40 @@ function actualizarBody2(pieza,modalname){
                 <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
             {% endfor %}
         </div>*/
+
+        //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
+    }, 200);
+}
+function actualizarDropMaderas(modalname,parte3D){
+    var precios3D;
+    $.ajax({
+        url: urlBase+"todosPrecio3D/"+parte3D,
+        dataType: "jsonp",    // Work with the response
+        success: function (response) {
+            //$('#precio').html('555');
+            console.log('AJAX SUCCESS - Revisar codigo');
+            precios3D = JSON.parse(response.responseText);
+        },
+        error: function (response) {
+            //console.log('ERROR');
+            precios3D = JSON.parse(response.responseText);
+            console.log(opciones3D);
+            //return opciones3D;
+        }
+    });
+
+    setTimeout(function(){
+        var html=$(modalname+'Header2').html();
+        html=html.concat(' - ');
+        $(modalname+'Header2').html(html);
+        html=$(modalname+'Header2').html().split(' - ')[0];
+        html=html.concat(' - ');
+        html=html.concat('<select>');
+        for (var i=0;i<precios3D.length;i++){
+            html=html.concat('<option value="'+precios3D[i].material+'">'+precios3D[i].material+' '+precios3D[i].precio+'€</option>');
+        }
+        html=html.concat('</select>');
+        $(modalname+'Header2').html(html);
 
         //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
     }, 200);

@@ -37,7 +37,7 @@ from resources.guitarras import Guitarras, GuitarrasList
 from resources.bajos import Bajos, BajosList
 from resources.artistas import Artistas, ArtistasList
 from resources.pedidos import Pedidos, PedidosList, TopModelo, CountEsteMes
-from resources.editor import Partes3D, Opciones3D, TodasOpciones3D
+from resources.editor import Partes3D, Opciones3D, TodasOpciones3D, Precio3D, TodosPrecio3D
 
 app = Flask(__name__)
 app.debug = True
@@ -76,6 +76,9 @@ api.add_resource(CountEsteMes, '/api/countestemes/')
 api.add_resource(Partes3D, '/api/partes3D/')
 api.add_resource(Opciones3D, '/api/opciones3D/<string:parte3D>')
 api.add_resource(TodasOpciones3D, '/api/todasOpciones3D/')
+api.add_resource(Precio3D, '/api/precio3D/<string:parte3D>/<string:material>/')
+api.add_resource(TodosPrecio3D, '/api/todosPrecio3D/<string:parte3D>')
+
 
 
 app.register_blueprint(login.login)

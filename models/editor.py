@@ -119,6 +119,14 @@ class Precios3DModel(db.Model):
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
 
+    @classmethod
+    def find_by_parte_material(cls, parte3D,material):
+        return cls.query.filter_by(parte3D=parte3D, material=material).first()
+
+    @classmethod
+    def find_by_parte(cls,parte3D):
+        return cls.query.filter_by(parte3D=parte3D).all()
+
     def insert_to_db(self):
         db.session.add(self)
         db.session.commit()
