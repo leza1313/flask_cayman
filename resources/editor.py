@@ -20,7 +20,10 @@ class TodasOpciones3D(Resource):
 class Precio3D(Resource):
 
     def get(self,parte3D,material):
-        return [Precios3DModel.find_by_parte_material(parte3D,material).json()]
+        precio = Precios3DModel.find_by_parte_material(parte3D,material)
+        if precio:
+            return [precio.json()]
+        return [{'message': 'Precio not found'}], 404
 
 class TodosPrecio3D(Resource):
 

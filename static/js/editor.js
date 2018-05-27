@@ -31,6 +31,39 @@ function mobileCanvas() {
     return [canvas.width,canvas.height];
 }
 
+
+//Intento de hacer loading screen
+var loadingScreen = {
+	scene: new THREE.Scene(),
+	camera: new THREE.PerspectiveCamera(90, 1280/720, 0.1, 100),
+	sphere: new THREE.Mesh(
+		new THREE.SphereGeometry( 0.15, 0.15, 0.15 ),
+		new THREE.MeshBasicMaterial({ color:0xbbbbbb })
+	)
+
+};
+var loadingManager = null;
+var RESOURCES_LOADED = false;
+
+// Set up the loading screen's scene.
+// It can be treated just like our main scene.
+loadingScreen.sphere.position.set(0,0,5);
+loadingScreen.camera.lookAt(loadingScreen.sphere.position);
+loadingScreen.scene.add(loadingScreen.sphere);
+
+// Create a loading manager to set RESOURCES_LOADED when appropriate.
+// Pass loadingManager to all resource loaders.
+loadingManager = new THREE.LoadingManager();
+
+loadingManager.onProgress = function(item, loaded, total){
+    console.log(item, loaded, total);
+};
+
+loadingManager.onLoad = function(){
+    console.log("loaded all resources");
+		RESOURCES_LOADED = true;
+};
+//FIN de loading screen
 var renderer = new THREE.WebGLRenderer({canvas: canvas});
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 50, canvas.width/canvas.height, 0.01, 1000 );
@@ -329,8 +362,8 @@ modalName[11]='#modalTapa';
 modalName[12]='#modalChapa';
 modalName[13]='#modalJack';
 
-var loader = new THREE.STLLoader();
-var loaderJSON = new THREE.JSONLoader();
+var loader = new THREE.STLLoader(loadingManager);
+var loaderJSON = new THREE.JSONLoader(loadingManager);
 
 /*
 function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
@@ -365,10 +398,10 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
         function onLoad( geometry, materials ) {
             var material = new THREE.MeshPhongMaterial({ transparent: false,
                 map: THREE.ImageUtils.loadTexture(myMaterial),
-                shininess: 30,//con esto parece que refleja, pero como que ciega un poco
+                shininess: 20,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
-                name: myMaterial.split('texturas/')[1].split('-')[1].split('.')[0]
-                //color: 0xffffff,
+                name: myMaterial.split('texturas/')[1].split('-')[1].split('.')[0],
+                color: 0xbbbbbb,
                 //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                 //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
             });
@@ -451,10 +484,10 @@ function cambiarTextura(event,obj,parte,nuevo,modalName){
     //console.log(nuevo);
     var material2 = new THREE.MeshPhongMaterial({ transparent: false,
         map: THREE.ImageUtils.loadTexture(nuevo),
-        shininess: 30,//con esto parece que refleja, pero como que ciega un poco
+        shininess: 20,//con esto parece que refleja, pero como que ciega un poco
         specular: 0x444444,//con esto parece que refleja
-        name: nuevo.split('/texturas/')[1].split('-')[1].split('.')[0]
-        //color: 0xffffff,
+        name: nuevo.split('/texturas/')[1].split('-')[1].split('.')[0],
+        color: 0xbbbbbb,
         //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
         //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
     });
@@ -482,7 +515,7 @@ function cambiarTextura(event,obj,parte,nuevo,modalName){
 
         setTimeout(function () {
             actualizarPrecio(precioViejo[0].precio, precioNuevo[0].precio);
-        }, 200);
+        }, 400);
     }
 }
 
@@ -560,8 +593,34 @@ window.requestAnimationFrame(render);
 }
 
 
-
+var t=0;
+var texto=0;
 var animate = function () {
+    if( RESOURCES_LOADED == false ){
+		requestAnimationFrame(animate);
+		if (texto==0){
+		    $('#cover').append('<div id="carga" style=" color: #bbbbbb;position: absolute; top: 51%;right: 8%;width: 100%;text-align: center;z-index: 10000;display:block;">Cargando</div>');
+		    texto=1;
+        }
+
+
+		//loadingScreen.sphere.rotation.x += 0.005;
+        //loadingScreen.sphere.rotation.y += 0.005;
+        t += 0.05;
+        loadingScreen.sphere.position.x = 2*Math.cos(t) + 0;
+        loadingScreen.sphere.position.y = 2*Math.sin(t) + 0;
+		//loadingScreen.sphere.position.x -= 0.05;
+		//if( loadingScreen.sphere.position.x < -10 ) loadingScreen.sphere.position.x = 10;
+		//loadingScreen.sphere.position.y = Math.sin(loadingScreen.sphere.position.x);
+
+		renderer.render(loadingScreen.scene, loadingScreen.camera);
+		return; // Stop the function here.
+    }
+    if (texto==1){
+        $('#carga').remove();
+        texto=0;
+    }
+
     requestAnimationFrame( animate );
     controls.update();
 
@@ -663,7 +722,7 @@ $.ajax({
             cargarJSON(partes3D[11].pieza,partes3D[11].rutaJSON,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
             cargarJSON(partes3D[12].pieza,partes3D[12].rutaJSON,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
             cargarJSON(partes3D[13].pieza,partes3D[13].rutaJSON,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
-        },200);
+        },2000);
 
 
     }
@@ -730,4 +789,11 @@ function actualizarDropMaderas(modalname,parte3D){
 
         //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
     }, 200);
+}
+
+function hacerGloss(material){
+    material.setValues({shininess: 100,color: 0xbbbbbb,specular:0x999999});
+}
+function hacerMate(material){
+    material.setValues({shininess: 20,color: 0xbbbbbb,specular:0x444444});
 }
