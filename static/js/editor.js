@@ -460,62 +460,56 @@ function cambiarCuerpo(event,obj,parte,nuevo,modalName){
 
 //cambiarTextura(event, miguitarra,1,'static/modelos/stratocaster/texturas/golpeador2.jpg','#modalGolpeador0')
 function cambiarTextura(event,obj,parte,nuevo,modalName){
-    //hace falta poner el event.preventDefault()
-    //y pasarselo a la funcion tmbn
     event.preventDefault();
     $(modalName).modal('hide');
-    //console.log(piezasguitarra[parte]);
-
-    var precioViejo;
-    $.ajax({
-        url: urlBase+"precio3D/"+piezasguitarra[parte]+"/"+obj[parte].material.name,
-        dataType: "jsonp",    // Work with the response
-        success: function (response) {
-            //$('#precio').html('555');
-            console.log('AJAX SUCCESS - Revisar codigo');
-            precioViejo = JSON.parse(response.responseText);
-        },
-        error: function (response) {
-            //console.log('ERROR');
-            precioViejo = JSON.parse(response.responseText);
-        }
-    });
-
-    //console.log(nuevo);
+    var urlMatViejo=urlBase + "precio3D/" + piezasguitarra[parte] + "/" + obj[parte].material.name;
     var material2 = new THREE.MeshPhongMaterial({ transparent: false,
         map: THREE.ImageUtils.loadTexture(nuevo),
         shininess: 20,//con esto parece que refleja, pero como que ciega un poco
         specular: 0x444444,//con esto parece que refleja
         name: nuevo.split('/texturas/')[1].split('-')[1].split('.')[0],
         color: 0xbbbbbb,
-        //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
-        //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
     });
     obj[parte].material= material2;
-
-        //Cuerpo, si cambia textura no se cambia precio. Solo cambio de modelo, o seleccion de madera
+    //Cuerpo, si cambia textura no se cambia precio. Solo cambio de modelo, o seleccion de madera
     if(parte==3 || parte==2) {
-        //Diapason, si cambia textura cambia precio
+        //Diapason y mastil, si cambia textura cambia precio
         var material = nuevo.split('/texturas/')[1].split('-')[1].split('.')[0];
         var precioNuevo;
-        $.ajax({
-            url: urlBase + "precio3D/" + piezasguitarra[parte] + "/" + material,
-            dataType: "jsonp",    // Work with the response
-            success: function (response) {
-                //$('#precio').html('555');
-                console.log('AJAX SUCCESS - Revisar codigo');
-                precioNuevo = JSON.parse(response.responseText);
-            },
-            error: function (response) {
-                //console.log('ERROR');
-                precioNuevo = JSON.parse(response.responseText);
-                //return opciones3D;
-            }
-        });
-
-        setTimeout(function () {
+        var precioViejo;
+        $('#precio').before('<div id="loaderPrecio" class="loaderPrecio"></div>');
+        $('#precio').hide()
+        $.when(ajax1(),ajax2()).done(function (a1,a2) {
+            $('#precio').show()
+            $('#loaderPrecio').remove()
             actualizarPrecio(precioViejo[0].precio, precioNuevo[0].precio);
-        }, 400);
+        });
+        function ajax1() {
+            return $.ajax({
+                    url: urlBase + "precio3D/" + piezasguitarra[parte] + "/" + material,
+                    dataType: "json",    // Work with the response
+                    crossdomain: true,
+                    success: function (response) {
+                        precioNuevo = response;
+                    },
+                    error: function (response) {
+                        console.log('ERROR');
+                    }
+                });
+            }
+        function ajax2() {
+            return $.ajax({
+                url: urlMatViejo,
+                dataType: "json",    // Work with the response
+                crossdomain: true,
+                success: function (response) {
+                    precioViejo = response;
+                },
+                error: function (response) {
+                    console.log('ERROR');
+                }
+            });
+        }
     }
 }
 
@@ -631,23 +625,7 @@ var animate = function () {
 animate();
 
 var opciones3D;
-function getOpciones3D(pieza){
-    $.ajax({
-    url: urlBase+"opciones3D/"+pieza,
-    dataType: "jsonp",    // Work with the response
-    success: function (response) {
-        //$('#precio').html('555');
-        console.log('AJAX SUCCESS - Revisar codigo');
-        opciones3D = JSON.parse(response.responseText);
-    },
-    error: function (response) {
-        //console.log('ERROR');
-        opciones3D = JSON.parse(response.responseText);
-        //console.log(opciones3D);
-        //return opciones3D;
-    }
-    });
-}
+
 /*var precios3D;
 $.ajax({
     url: urlBase+"precios3D/1",
@@ -664,69 +642,64 @@ $.ajax({
 });*/
 
 var partes3D;
-$.ajax({
-    url: urlBase+"partes3D/",
-    dataType: "jsonp",    // Work with the response
-    success: function (response) {
-        $('#precio').html('555');
-        console.log('A');
-        console.log(response); // server response
-    },
-    error: function (response) {
-        //console.log('ERROR');
-        //TODO cargar el resto de piezas de la primera guitarra (por defecto) aqui.
-        // Una vez cargado la primera guitarra tras la peticion AJAX,
-        // Ya tenemos todas las partes3D en la variable.
-        // Una vez se hace un cambio de modelo json, cambiar con javascript el modal
-        //
-        // Si se cambia el cuerpo cambiar modal entero
-        //
-        // Si se cambia cualquier otra pieza solo cambiar las opciones del modal de esa pieza.
-        // Para esto hacer una peticion AJAX al server para saber las opciones de esa pieza
-        // /api/opciones3D/<string:parte3D>
-        partes3D = JSON.parse(response.responseText);
-        var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
-        var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
-        var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
-        var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
+$.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
+    var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
+    var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
+    var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
+    var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
 
-
-        $.ajax({
+    cargarJSON(partes3D[0].pieza,partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
+    cargarJSON(partes3D[1].pieza,partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
+    cargarJSON(partes3D[2].pieza,partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
+    cargarJSON(partes3D[3].pieza,partes3D[3].rutaJSON,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
+    cargarJSON(partes3D[4].pieza,partes3D[4].rutaJSON,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
+    cargarJSON(partes3D[5].pieza,partes3D[5].rutaJSON,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
+    //cargarJSON(partes3D[6].pieza,partes3D[6].rutaJSON,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
+    //cargarJSON(partes3D[7].pieza,partes3D[7].rutaJSON,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
+    cargarJSON(partes3D[8].pieza,partes3D[8].rutaJSON,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
+    cargarJSON(partes3D[9].pieza,partes3D[9].rutaJSON,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
+    cargarJSON(partes3D[10].pieza,partes3D[10].rutaJSON,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
+    cargarJSON(partes3D[11].pieza,partes3D[11].rutaJSON,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
+    cargarJSON(partes3D[12].pieza,partes3D[12].rutaJSON,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
+    cargarJSON(partes3D[13].pieza,partes3D[13].rutaJSON,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
+});
+function ajaxP1() {
+    return $.ajax({
+        url: urlBase+"partes3D/",
+        dataType: "json",    // Work with the response
+        crossdomain: true,
+        success: function (response) {
+            partes3D = response;
+        },
+        error: function (response) {
+            console.log('ERROR');
+            //TODO cargar el resto de piezas de la primera guitarra (por defecto) aqui.
+            // Una vez cargado la primera guitarra tras la peticion AJAX,
+            // Ya tenemos todas las partes3D en la variable.
+            // Una vez se hace un cambio de modelo json, cambiar con javascript el modal
+            //
+            // Si se cambia el cuerpo cambiar modal entero
+            //
+            // Si se cambia cualquier otra pieza solo cambiar las opciones del modal de esa pieza.
+            // Para esto hacer una peticion AJAX al server para saber las opciones de esa pieza
+            // /api/opciones3D/<string:parte3D>
+        }
+    });
+}
+function ajaxP2() {
+    return  $.ajax({
             url: urlBase+"todasOpciones3D/",
-            dataType: "jsonp",    // Work with the response
+            dataType: "json",    // Work with the response
+            crossdomain: true,
             success: function (response) {
-                //$('#precio').html('555');
-                console.log('AJAX SUCCESS - Revisar codigo');
-                opciones3D = JSON.parse(response.responseText);
+                opciones3D = response;
             },
             error: function (response) {
-                //console.log('ERROR');
-                opciones3D = JSON.parse(response.responseText);
-                console.log(opciones3D);
-                //return opciones3D;
+                console.log('ERROR');
             }
         });
+}
 
-        setTimeout(function () {
-            cargarJSON(partes3D[0].pieza,partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
-            cargarJSON(partes3D[1].pieza,partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
-            cargarJSON(partes3D[2].pieza,partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
-            cargarJSON(partes3D[3].pieza,partes3D[3].rutaJSON,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
-            cargarJSON(partes3D[4].pieza,partes3D[4].rutaJSON,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
-            cargarJSON(partes3D[5].pieza,partes3D[5].rutaJSON,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
-            //cargarJSON(partes3D[6].pieza,partes3D[6].rutaJSON,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
-            //cargarJSON(partes3D[7].pieza,partes3D[7].rutaJSON,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
-            cargarJSON(partes3D[8].pieza,partes3D[8].rutaJSON,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
-            cargarJSON(partes3D[9].pieza,partes3D[9].rutaJSON,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
-            cargarJSON(partes3D[10].pieza,partes3D[10].rutaJSON,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
-            cargarJSON(partes3D[11].pieza,partes3D[11].rutaJSON,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
-            cargarJSON(partes3D[12].pieza,partes3D[12].rutaJSON,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
-            cargarJSON(partes3D[13].pieza,partes3D[13].rutaJSON,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
-        },2000);
-
-
-    }
-});
 
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
@@ -734,8 +707,12 @@ function actualizarPrecio(restarPrecio,sumarPrecio) {
     $('#precio').html(precio);
 }
 function actualizarBody2(pieza,modalname){
-    getOpciones3D(pieza);
-    setTimeout(function(){
+    $(modalname+'Body2').before('<div id="loaderBody2" class="loader"></div>');
+    $(modalname+'Body2').hide();
+    //Peticion ajax
+    $.when(ajax1()).done(function (a1) {
+        $(modalname+'Body2').show();
+        $('#loaderBody2').remove();
         var html='';
         for (var i=0;i<opciones3D.length;i++) {
             html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+String(Number(pieza)-1)+',');
@@ -746,36 +723,26 @@ function actualizarBody2(pieza,modalname){
             html=html.concat('</a>');
         }
         $(modalname+'Body2').html(html);
-        /*<div id="{{ item.id }}Body1" class="modal-body">
-            {% for modelo in item.opcionesModelo %}
-                <script>modelo.push('{{ modelo.modelo }}')</script>
-                <a onclick="cambiarCuerpo(event, miguitarra,{{ outer_loop.index-1 }},'static/modelos/{{ modelo.modelo }}',{{ item.id }})"><img src='static/img/{{ modelo.foto }}' data-toggle='{{ item.id }}' data-dismiss='modal' height='200'></a>
-            {% endfor %}
-        </div>*/
-
-        //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
-    }, 200);
+    });
+    function ajax1(){
+        return $.ajax({
+            url: urlBase+"opciones3D/"+pieza,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                opciones3D = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
 }
 function actualizarDropMaderas(modalname,parte3D){
     var precios3D;
-    $.ajax({
-        url: urlBase+"todosPrecio3D/"+parte3D,
-        dataType: "jsonp",    // Work with the response
-        success: function (response) {
-            //$('#precio').html('555');
-            console.log('AJAX SUCCESS - Revisar codigo');
-            precios3D = JSON.parse(response.responseText);
-        },
-        error: function (response) {
-            //console.log('ERROR');
-            precios3D = JSON.parse(response.responseText);
-            console.log(opciones3D);
-            //return opciones3D;
-        }
-    });
-
-    setTimeout(function(){
-        var html=$(modalname+'Header2').html();
+    var html=$(modalname+'Header2').html();
+    $.when(ajax1()).done(function (a1){
+        html=$(modalname+'Header2').html();
         html=html.concat(' - ');
         $(modalname+'Header2').html(html);
         html=$(modalname+'Header2').html().split(' - ')[0];
@@ -787,8 +754,27 @@ function actualizarDropMaderas(modalname,parte3D){
         html=html.concat('</select>');
         $(modalname+'Header2').html(html);
 
+    });
+    function ajax1(){
+        //Loading...
+        return $.ajax({
+            url: urlBase+"todosPrecio3D/"+parte3D,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                precios3D = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+                //precios3D = response;
+            }
+        });
+    }
+
+
+    /*setTimeout(function(){
         //Tiempo que espera para ejecutar el codigo de arriba, igual hay que anadir algo mas
-    }, 200);
+    }, 400);*/
 }
 
 function hacerGloss(material){
