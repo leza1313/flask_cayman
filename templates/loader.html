@@ -31,12 +31,10 @@
                         </button>
                     </div>
                     <div id="" class="modal-body">
-                        <!-- Creo que puede sobrar uno de los dos indices, habria que revisar editor.py-->
-                        <!-- Recorrer dentro de lista ListaCuerpos,con todos sus arrays, mirando las opciones de modelo que hay-->
-
-                        <!-- Ya he quitado indices, no estoy seguro.TODO Con mas modelos volver a probar-->
-                        <!-- Bucle viejo recorria esto lista[0][0].opcionesModelo-->
-                        {% for modelo in lista[0] %}
+                        <!-- Nueva variable para mostrar los cuerpos-->
+                        <!-- Hacen falta los dos indices de lista. Así generamos los modalCuerpo0, etc... de todas las piezas -->
+                        <!-- Si no estan los dos indices, no se recorre bien por todas las partes y no funcionan los callback-->
+                        {% for modelo in cuerpos %}
                             <a onclick="cambiarCuerpo(event, miguitarra,0,'static/modelos/{{ modelo.modelo }}','')">
                                 <img src='static/img/{{ modelo.foto }}' data-toggle=''
                                                          data-dismiss='modal' width='200'></a>

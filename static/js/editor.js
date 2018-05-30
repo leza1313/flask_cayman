@@ -426,9 +426,11 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
             miguitarra[sufix]=object;
             piezasguitarra[sufix]=pieza;
             if (sufix==0){miacabado='mate';}
-            if (sufix==0 || sufix==3 ||sufix==2){
+            //If the second request finish the last one, it makes de AJAX without knowing the id of the
+            // diapason, so it ends with the dropDiapason empty.MOVED TO-> after cargarJSON() for 1st time
+            /*if (sufix==0 || sufix==3 ||sufix==2){
                 actualizarDropMaderas(piezasguitarra[0],piezasguitarra[3],piezasguitarra[2]);
-            }
+            }*/
         },
 
         // onProgress callback
@@ -643,7 +645,7 @@ $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     cargarJSON(partes3D[12].nombre,partes3D[12].rutaJSON,opciones3D[22].nombre,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
     cargarJSON(partes3D[13].nombre,partes3D[13].rutaJSON,opciones3D[23].nombre,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
     //cargarJSON(partes3D[14].nombre,partes3D[14].rutaJSON,opciones3D[].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalClavijero0');
-
+    actualizarDropMaderas(piezasguitarra[0],piezasguitarra[3],piezasguitarra[2]);
 });
 function ajaxP1() {
     return $.ajax({
