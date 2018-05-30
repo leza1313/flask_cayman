@@ -6,6 +6,14 @@ class Partes3D(Resource):
     def get(self):
         return [parte.json() for parte in Partes3DModel.query.all()]
 
+class Parte3D(Resource):
+
+    def get(self,parte3D):
+        parte = Partes3DModel.find_by_id(parte3D)
+        if parte:
+            return [parte.json()]
+        return [{'message': 'Precio not found'}], 404
+
 
 class Opciones3D(Resource):
 
