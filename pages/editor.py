@@ -128,6 +128,7 @@ def html():
 
     #cuerpos, es un array con todos los cuerpos disponibles
     cuerpos=Partes3DModel.find_by_pieza('Cuerpo')
+    print(cuerpos)
     golpeadores=Partes3DModel.find_by_pieza('Golpeador')
     mastiles=Partes3DModel.find_by_pieza('Mastil')
     pastillasMastil=Partes3DModel.find_by_pieza('PastillaMastil')
@@ -143,7 +144,7 @@ def html():
     chapas=Partes3DModel.find_by_pieza('Chapa')
     jacks=Partes3DModel.find_by_pieza('Jack')
 
-    opcionesModelo1=[]
+    """opcionesModelo1=[]
     for index, item in enumerate(cuerpos):
         opcionesCuerpo.append(Opciones3DModel.find_by_parte(item.id))
         aux=myOpciones(item.rutaJSON,item.foto)
@@ -230,13 +231,17 @@ def html():
     for index, item in enumerate(jacks):
         opcionesJack.append(Opciones3DModel.find_by_parte(item.id))
         aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesJack1.append(aux)
+        opcionesJack1.append(aux)"""
 
     ########################################
     ##LISTA DE LOS MODELOS CON SUS OPCIONES#
     ########################################
 
-    listaCuerpos=[]
+    #Ya actualizo los Body2 de los modal en JS mediante AJAX.
+    #Quitar todas estas listas dentro de listas
+    #Y dejar unicamente Lista->ListaCuerpos->
+
+    """listaCuerpos=[]
     for index, item in enumerate(cuerpos):
         listaCuerpos.append(myModal('modalCuerpo'+index.__str__(),'Escoge Modelo', opcionesModelo1,opcionesCuerpo[index]))
     #print(listaCuerpos[0].opcionesModelo[1].modelo)
@@ -318,11 +323,11 @@ def html():
     for index, item in enumerate(jacks):
         listaJacks.append(
             myModal('modalJack' + index.__str__(), 'Escoge  Jack', opcionesJack1,
-                    opcionesJack1[index]))
+                    opcionesJack1[index]))"""
 
     lista = [
-        listaCuerpos,
-        listaGolpeadores,
+        cuerpos,
+        """listaGolpeadores,
         listaMastiles,
         listaDiapasones,
         listaPastillasMastil,
@@ -334,7 +339,8 @@ def html():
         listaVolumenes,
         listaTapas,
         listaChapas,
-        listaJacks
+        listaJacks"""
     ]
+    #print(lista[0][0].opcionesModelo[1].modelo)
     return render_template('loader.html', mytitle=title, lista=lista)
 
