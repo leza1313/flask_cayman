@@ -1,12 +1,42 @@
 from connection import db
 
+class ModelosModel(db.Model):
+    __tablename__ = 'modelos3D'
+
+    modelo = db.Column(db.String(80), primary_key=True)
+
+    partes3D = db.relationship('Partes3DModel')
+
+
+    def __init__(self,modelo):
+        self.modelo = modelo
+
+    def json(self):
+        return {'id': self.id,
+                'modelo': self.modelo,
+                }
+
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
+
+
+    def insert_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
 class Partes3DModel(db.Model):
     __tablename__ = 'partes3D'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(80))
     pieza = db.Column(db.String(80))
-    modelo = db.Column(db.String(80))
+    modelo = db.Column(db.String(80), db.ForeignKey('modelos3D.modelo'))
     x = db.Column(db.Float)
     y = db.Column(db.Float)
     z = db.Column(db.Float)

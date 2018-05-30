@@ -18,7 +18,7 @@ from models.user import UserModel
 from models.fotosbajos import FotosBajosModel
 from models.fotosguitarras import FotosGuitarrasModel
 from models.promociones import PromocionesModel
-from models.editor import Partes3DModel, Opciones3DModel, Precios3DModel
+from models.editor import ModelosModel, Partes3DModel, Opciones3DModel, Precios3DModel
 from models.presupuestos import PresupuestosModel
 
 from pages import editor
@@ -45,7 +45,7 @@ app = Flask(__name__)
 app.debug = True
 
 app.config.from_object('config.ProductionConfig')
-
+app.config['UPLOAD_FOLDER']=os.path.dirname(os.path.abspath(__file__))+'/static'
 db.init_app(app)
 @app.before_first_request
 def create_db():

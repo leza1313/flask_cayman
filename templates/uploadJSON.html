@@ -1,0 +1,57 @@
+{% extends'core/base.html' %}
+{% block cover %}
+<div class="mylogin card">
+    <form id="texturaForm" class="form" action = "{{ url_for('editor.nuevoJSON') }}" method = "POST" enctype = "multipart/form-data">
+        <h2>Introduzca datos sobre el nuevo modelo JSON</h2>
+        <div class="form-group">
+            <label for="nombre" class="mymodal-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="pieza" class="mymodal-label">Pieza</label><br>
+            <select name="pieza" form="texturaForm">
+                <option value="Cuerpo">Cuerpo</option>
+                <option value="Golpeador">Golpeador</option>
+                <option value="Mastil">Mastil</option>
+                <option value="Diapason">Diapason</option>
+                <option value="PastillaMastil">PastillaMastil</option>
+                <option value="PastillaMedio">PastillaMedio</option>
+                <option value="PastillaPuente">PastillaPuente</option>
+                <option value="Puente">Puente</option>
+                <option value="Tono1">Tono1</option>
+                <option value="Tono2">Tono2</option>
+                <option value="Volumen">Volumen</option>
+                <option value="Tapa">Tapa</option>
+                <option value="Chapa">Chapa</option>
+                <option value="Jack">Jack</option>
+                <option value="Clavijero">Clavijero</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="modelo" class="mymodal-label">Modelo</label><br>
+            <select name="modelo" form="texturaForm">
+                {% for modelo in modelos %}
+                    <option value="{{ modelo.modelo }}">{{ modelo.modelo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="x" class="mymodal-label">Coordenada X</label>
+            <input type="text" name="x" size="1" value="" required>
+            <label for="y" class="mymodal-label">Coordenada Y</label>
+            <input type="text" name="y" size="1" value="" required>
+            <label for="z" class="mymodal-label">Coordenada Z</label>
+            <input type="text" name="z" size="1" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="file" class="mymodal-label">JSON</label>
+            <input type = "file" class="form-control-file" name = "file" />
+        </div>
+        <div class="form-group">
+            <label for="file2" class="mymodal-label">Foto a mostrar en el editor</label>
+            <input type = "file" class="form-control-file" name = "file2" />
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar JSON</button>
+    </form>
+</div><br>
+{% endblock %}

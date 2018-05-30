@@ -1,0 +1,37 @@
+{% extends'core/base.html' %}
+{% block cover %}
+<div class="mylogin card">
+    <form id="texturaForm" class="form" action = "{{ url_for('editor.nuevoTextura') }}" method = "POST" enctype = "multipart/form-data">
+        <h2>Introduzca datos sobre la textura</h2>
+        <div class="form-group">
+            <label for="nombre" class="mymodal-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="modelo" class="mymodal-label">Modelo</label><br>
+            <select name="modelo" form="texturaForm">
+                {% for modelo in modelos %}
+                    <option value="{{ modelo.modelo }}">{{ modelo.modelo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="file" class="mymodal-label">Textura</label>
+            <input type = "file" class="form-control-file" name = "file" />
+        </div>
+        <div class="form-group">
+            <label for="file2" class="mymodal-label">Foto a mostrar en el editor</label>
+            <input type = "file" class="form-control-file" name = "file2" />
+        </div>
+        <div class="form-group">
+            <label for="partes3Dlist" class="mymodal-label">Parte3D</label><br>
+            <select name="partes3Dlist" form="texturaForm">
+                {% for parte in partes %}
+                    <option value="{{ parte.id }}">{{ parte.pieza+' '+parte.nombre+' '+ parte.modelo}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar Textura</button>
+    </form>
+</div><br>
+{% endblock %}

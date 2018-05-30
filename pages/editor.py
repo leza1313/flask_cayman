@@ -1,8 +1,11 @@
-from flask import Blueprint,render_template,redirect,url_for,request
+import os
+from flask import Blueprint,render_template,redirect,url_for,request,flash
 from flask import current_app as app
-editor = Blueprint('editor', __name__)
+from flask_login import login_required
+from werkzeug.utils import secure_filename
 
-from models.editor import Partes3DModel,Opciones3DModel,Precios3DModel
+editor = Blueprint('editor', __name__)
+from models.editor import Partes3DModel,Opciones3DModel,Precios3DModel, ModelosModel
 
 class myModal:
     def __init__(self, id, titulo,opcionesModelo,opcionesColor):
@@ -15,10 +18,91 @@ class myOpciones:
         self.modelo=modelo
         self.foto=foto
 
-@editor.route("/presupuesto/nuevo", methods=['POST'])
-def nuevoPresupuesto():
-    print(request.form)
-    return redirect(url_for('index'))
+@login_required
+@editor.route("/nuevo/modelo", methods=['GET','POST'])
+def nuevoModelo():
+    if request.method == 'POST':
+
+        modelo = request.form['modelo']
+        static = os.path.join(app.config['UPLOAD_FOLDER'])
+        print(static+'/modelos')
+
+        myparte=ModelosModel(modelo)
+        myparte.insert_to_db()
+        flash('Exito: Se ha anadido correctamente el modelo')
+        return render_template('nuevomodelo.html')
+
+    modelos=ModelosModel.query.all()
+    return render_template('nuevomodelo.html',mytitle='Nuevo Modelo',modelos=modelos)
+
+@login_required
+@editor.route("/upload/json", methods=['GET','POST'])
+def nuevoJSON():
+    if request.method == 'POST':
+        print(request.form)
+        print(request.files)
+        modelo = request.form['modelo']
+
+
+        f1 = request.files['file']
+        static = os.path.join(app.config['UPLOAD_FOLDER'])
+        rutaJSON = static + '/' + 'modelos/' + modelo
+
+        if not (os.path.isdir(rutaJSON)):
+            os.mkdir(rutaJSON)
+        f1.save(os.path.join(rutaJSON, secure_filename(f1.filename)))
+
+        f2 = request.files['file2']
+        rutaFoto = static + '/' + 'img'
+        f2.save(os.path.join(rutaFoto, secure_filename(f2.filename)))
+
+        nombre = request.form['nombre']
+        pieza = request.form['pieza']
+        x = request.form['x']
+        y = request.form['y']
+        z = request.form['z']
+
+        jsonPath = 'static/modelos/' + modelo + '/' + secure_filename(f1.filename)
+        fotoPath = secure_filename(f2.filename)
+        myparte=Partes3DModel(nombre,pieza,modelo,x,y,z,jsonPath,fotoPath)
+        myparte.insert_to_db()
+        flash('Exito: Se ha anadido correctamente el modelo')
+        return render_template('uploadJSON.html')
+
+    modelos=ModelosModel.query.all()
+    return render_template('uploadJSON.html',mytitle='Nuevo JSON',modelos=modelos)
+
+@login_required
+@editor.route("/upload/textura", methods=['GET','POST'])
+def nuevoTextura():
+    if request.method == 'POST':
+
+        print(request.form)
+        f1 = request.files['file']
+        static=os.path.join(app.config['UPLOAD_FOLDER'])
+        rutaTextura=static+'/'+'modelos/'+request.form['modelo']+'/texturas'
+        if not (os.path.isdir(rutaTextura)):
+            os.mkdir(rutaTextura)
+        f1.save(os.path.join(rutaTextura, secure_filename(f1.filename)))
+
+        f2 = request.files['file2']
+        rutaFoto = static + '/' + 'img'
+        f2.save(os.path.join(rutaFoto, secure_filename(f2.filename)))
+
+        nombre=request.form['nombre']
+        parte3D=request.form['partes3Dlist']
+        texturaPath='static/modelos/' + request.form['modelo'] + '/texturas/' +secure_filename(f1.filename)
+        fotoPath=secure_filename(f2.filename)
+
+
+        mytextura=Opciones3DModel(nombre,texturaPath,fotoPath,parte3D)
+        mytextura.insert_to_db()
+        flash('Exito: Se ha anadido correctamente la textura')
+        return render_template('uploadTextura.html')
+
+    partes=Partes3DModel.query.all()
+    modelos=ModelosModel.query.all()
+    return render_template('uploadTextura.html',mytitle='Nueva Textura',partes=partes, modelos=modelos)
 
 @editor.route("/editor")
 def html():
