@@ -1,21 +1,40 @@
-from flask import Blueprint,render_template,redirect,url_for,request
+from flask import Blueprint,render_template,redirect,url_for,request,flash
 from flask import current_app as app
+from flask_login import login_required
 presupuestos = Blueprint('presupuestos', __name__)
 
 from models.presupuestos import PresupuestosModel
 
 import datetime
 
-
+@login_required
 @presupuestos.route("/presupuestos", methods=['GET'])
 def html():
     mypresupuestos= PresupuestosModel.query.all()
     return render_template('presupuestos.html',mytitle='Presupuestos', mypresupuestos=mypresupuestos)
 
+@login_required
+@presupuestos.route("/presupuestos/<string:id>", methods=['GET'])
+def info(id):
+    mypresupuesto = PresupuestosModel.find_by_id(id)
+    return render_template('presupuestoInfo.html',mytitle='Info Presupuesto', mypresupuesto=mypresupuesto)
+
+@login_required
+@presupuestos.route("/presupuestos/borrar/<string:id>", methods=['GET'])
+def borrar(id):
+    mypresupuesto = PresupuestosModel.find_by_id(id)
+    if mypresupuesto:
+        mypresupuesto.delete_from_db()
+        flash('Exito: Se ha eliminado correctamente el presupuesto')
+        return redirect(url_for('presupuestos.html'))
+    flash('Error: No se ha conseguido eliminar el presupuesto')
+    return render_template('presupuestoInfo.html',mytitle='Info Presupuesto', mypresupuesto=mypresupuesto)
+
+
+
 @presupuestos.route("/presupuestos/nuevo", methods=['POST'])
 def nuevo():
     r = request.form
-    print(r)
     fecha = datetime.date.today()
 
     mypresupuesto=PresupuestosModel(r['nombre'],r['telefono'],r['email'],fecha,r['modelo'],r['maderaCuerpo'],
@@ -28,4 +47,5 @@ def nuevo():
                                     r['colorVolumen'],r['colorTapa'],r['colorChapa'],r['colorJack'],r['comentarios'])
 
     mypresupuesto.insert_to_db()
+    flash('Exito: Nos pondremos en contacto contigo, para valorar el presupuesto')
     return redirect(url_for('index'))

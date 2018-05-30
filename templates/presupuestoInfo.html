@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% block cover %}
+    <br>
+    <h1 class="">Información del presupuesto: {{ mypresupuesto.id }}</h1>
+    <hr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="mytable table table-light table-sm table-hover table-bordered">
+                <tbody>
+                    <tr><th>ID</th><td>{{ mypresupuesto.id }}</td></tr>
+                    <tr><th>Nombre</th><td>{{ mypresupuesto.nombre }}</td></tr>
+                    <tr><th>Telefono</th><td>{{ mypresupuesto.telefono }}</td></tr>
+                    <tr><th>Email</th><td>{{ mypresupuesto.email  }}</td></tr>
+                    <tr><th>Fecha</th><td>{{ mypresupuesto.fecha }}</td></tr>
+                    <tr><th>Modelo</th><td>{{ mypresupuesto.modelo }}</td></tr>
+                    <tr><th>Comentarios</th><td>{{ mypresupuesto.comentarios}}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="mytable table table-light table-sm table-hover table-bordered">
+                <tbody>
+                    <tr><th>Madera Cuerpo</th><td>{{ mypresupuesto.maderaCuerpo }}</td></tr>
+                    <tr><th>Madera Diapason</th><td>{{ mypresupuesto.maderaDiapason }}</td></tr>
+                    <tr><th>Madera Mastil</th><td>{{ mypresupuesto.maderaMastil }}</td></tr>
+                    <tr><th>Mastil</th><td>{{ mypresupuesto.mastil }}</td></tr>
+                    <tr><th>Pastilla Mastil</th><td>{{ mypresupuesto.pastillaMastil }}</td></tr>
+                    <tr><th>Pastilla Medio</th><td>{{ mypresupuesto.pastillaMedio }}</td></tr>
+                    <tr><th>Pastilla Puente</th><td>{{ mypresupuesto.pastillaPuente }}</td></tr>
+                    <tr><th>Puente</th><td>{{ mypresupuesto.puente }}</td></tr>
+                    <tr><th>Tono1</th><td>{{ mypresupuesto.tono1 }}</td></tr>
+                    <tr><th>Tono2</th><td>{{ mypresupuesto.tono2 }}</td></tr>
+                    <tr><th>Volumen</th><td>{{ mypresupuesto.volumen }}</td></tr>
+                    <tr><th>Tapa</th><td>{{ mypresupuesto.tapa }}</td></tr>
+                    <tr><th>Chapa</th><td>{{ mypresupuesto.chapa }}</td></tr>
+                    <tr><th>Jack</th><td>{{ mypresupuesto.jack }}</td></tr>
+                    <tr><th>Clavijero</th><td>{{ mypresupuesto.clavijero }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="mytable table table-light table-sm table-hover table-bordered">
+                <tbody>
+                    <tr><th>Acabado</th><td>{{ mypresupuesto.acabado }}</td></tr>
+                    <tr><th>Color Cuerpo</th><td>{{ mypresupuesto.colorCuerpo }}</td></tr>
+                    <tr><th>Color Golpeador</th><td>{{ mypresupuesto.colorGolpeador }}</td></tr>
+                    <tr><th>Color Pastilla Mastil</th><td>{{ mypresupuesto.colorPastillaMastil }}</td></tr>
+                    <tr><th>Color Pastilla Medio</th><td>{{ mypresupuesto.colorPastillaMedio }}</td></tr>
+                    <tr><th>Color Pastilla Puente</th><td>{{ mypresupuesto.colorPastillaPuente }}</td></tr>
+                    <tr><th>Color Puente</th><td>{{ mypresupuesto.colorPuente }}</td></tr>
+                    <tr><th>Color Clavijero</th><td>{{ mypresupuesto.colorClavijero }}</td></tr>
+                    <tr><th>Color Tono1</th><td>{{ mypresupuesto.colorTono1 }}</td></tr>
+                    <tr><th>Color Tono2</th><td>{{ mypresupuesto.colorTono2 }}</td></tr>
+                    <tr><th>Color Volumen</th><td>{{ mypresupuesto.colorVolumen }}</td></tr>
+                    <tr><th>Color Tapa</th><td>{{ mypresupuesto.colorTapa }}</td></tr>
+                    <tr><th>Color Chapa</th><td>{{ mypresupuesto.colorChapa }}</td></tr>
+                    <tr><th>Color Jack</th><td>{{ mypresupuesto.colorJack }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@
 {% block cover %}
     <div class="section-content">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="{{ url_for('static',filename='js/clickable-tr-jquery.js') }}"></script>
        <div class="">
            <br>
            <h2>Presupuestos</h2>
@@ -9,92 +10,39 @@
            <hr>
            <br>
            <br>
-            <div class="mytable table-responsive-xl">
-                <table class="table table-sm table-hover">
+            <div class="mytable table-responsive">
+                <table class="table table-sm table-hover clickable-table">
                     <thead>
-                        <th>
+                        <tr>
                             <th>ID</th>
-                            <th>nombre </th>
-                            <th>telefono </th>
-                            <th>email  </th>
-                            <th>fecha </th>
-                            <th>modelo </th>
-                            <!--<th>maderaCuerpo </th>
-                            <th>maderaDiapason </th>
-                            <th>maderaMastil </th>
-                            <th>mastil </th>
-                            <th>pastillaMastil </th>
-                            <th>pastillaMedio </th>
-                            <th>pastillaPuente </th>
-                            <th>puente </th>
-                            <th>tono1 </th>
-                            <th>tono2 </th>
-                            <th>volumen </th>
-                            <th>tapa </th>
-                            <th>chapa </th>
-                            <th>jack </th>
-                            <th>clavijero </th>
-                            <th>acabado </th>
-                            <th>colorCuerpo </th>
-                            <th>colorGolpeador </th>
-                            <th>colorPastillaMastil </th>
-                            <th>colorPastillaMedio </th>
-                            <th>colorPastillaPuente </th>
-                            <th>colorPuente </th>
-                            <th>rClavijero </th>
-                            <th>colorTono1 </th>
-                            <th>colorTono2 </th>
-                            <th>colorVolumen </th>
-                            <th>colorTapa </th>
-                            <th>colorChapa </th>
-                            <th>colorJack </th>
-                            <th>comentarios</th>-->
+                            <th>Nombre </th>
+                            <th>Telefono </th>
+                            <th>Email  </th>
+                            <th>Fecha </th>
+                            <th>Modelo </th>
+                            <th>Madera Cuerpo </th>
+                            <th>Madera Diapason </th>
+                            <th>Madera Mastil </th>
+                            <th>Comentarios</th>
+                            <th>Accion</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for presupuesto in mypresupuestos %}
-                        <tr>
+                        <tr data-href="{{ url_for('presupuestos.info',id=presupuesto.id) }}">
                             <td>{{ presupuesto.id }}</td>
                             <td>{{ presupuesto.nombre }}</td>
                             <td>{{ presupuesto.telefono }}</td>
                             <td>{{ presupuesto.email  }}</td>
                             <td>{{ presupuesto.fecha }}</td>
-                        </tr><tr>
                             <td>{{ presupuesto.modelo }}</td>
                             <td>{{ presupuesto.maderaCuerpo }}</td>
                             <td>{{ presupuesto.maderaDiapason }}</td>
                             <td>{{ presupuesto.maderaMastil }}</td>
-                            <td>{{ presupuesto.mastil }}</td>
-                            <td>{{ presupuesto.pastillaMastil }}</td>
-                            <td>{{ presupuesto.pastillaMedio }}</td>
-                            <td>{{ presupuesto.pastillaPuente }}</td>
-                            <td>{{ presupuesto.puente }}</td>
-                            <td>{{ presupuesto.tono1 }}</td>
-                            <td>{{ presupuesto.tono2 }}</td>
-                            <td>{{ presupuesto.volumen }}</td>
-                            <td>{{ presupuesto.tapa }}</td>
-                            <td>{{ presupuesto.chapa }}</td>
-                            <td>{{ presupuesto.jack }}</td>
-                            <td>{{ presupuesto.clavijero }}</td>
-                    </tr><tr>
-                            <td>{{ presupuesto.acabado }}</td>
-                            <td>{{ presupuesto.colorCuerpo }}</td>
-                            <td>{{ presupuesto.colorGolpeador }}</td>
-                            <td>{{ presupuesto.colorPastillaMastil }}</td>
-                            <td>{{ presupuesto.colorPastillaMedio }}</td>
-                            <td>{{ presupuesto.colorPastillaPuente }}</td>
-                            <td>{{ presupuesto.colorPuente }}</td>
-                            <td>{{ presupuesto.rClavijero }}</td>
-                            <td>{{ presupuesto.colorTono1 }}</td>
-                            <td>{{ presupuesto.colorTono2 }}</td>
-                            <td>{{ presupuesto.colorVolumen }}</td>
-                            <td>{{ presupuesto.colorTapa }}</td>
-                            <td>{{ presupuesto.colorChapa }}</td>
-                            <td>{{ presupuesto.colorJack }}</td>
                             <td>{{ presupuesto.comentarios}}</td>
 
                             <td>
-                                <a data-toggle="confirmation" href="">
+                                <a data-toggle="confirmation" href="{{ url_for('presupuestos.borrar',id=presupuesto.id) }}">
                                     <i class="material-icons myicon">clear</i>
                                 </a>
                             </td>
@@ -113,6 +61,9 @@
             singleton: true,
             title: '¿Estas seguro?',
             btnOkLabel: 'Si',
+        });
+        $(document).ready(function() {
+          $('.clickable-table').clickableTable();
         });
     </script>
 {% endblock %}
