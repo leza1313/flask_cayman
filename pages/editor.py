@@ -18,8 +18,9 @@ class myOpciones:
         self.modelo=modelo
         self.foto=foto
 
-@login_required
+
 @editor.route("/nuevo/modelo", methods=['GET','POST'])
+@login_required
 def nuevoModelo():
     if request.method == 'POST':
 
@@ -35,8 +36,9 @@ def nuevoModelo():
     modelos=ModelosModel.query.all()
     return render_template('nuevomodelo.html',mytitle='Nuevo Modelo',modelos=modelos)
 
-@login_required
+
 @editor.route("/upload/json", methods=['GET','POST'])
+@login_required
 def nuevoJSON():
     if request.method == 'POST':
         print(request.form)
@@ -72,8 +74,9 @@ def nuevoJSON():
     modelos=ModelosModel.query.all()
     return render_template('uploadJSON.html',mytitle='Nuevo JSON',modelos=modelos)
 
-@login_required
+
 @editor.route("/upload/textura", methods=['GET','POST'])
+@login_required
 def nuevoTextura():
     if request.method == 'POST':
 
