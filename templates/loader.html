@@ -13,7 +13,8 @@
             <a class="editor-a" data-toggle="modal" data-target="#acabado">Acabado</a>
             <a class="editor-a" data-toggle="modal" data-target="#pastillas">Pastillas</a>
             <a class="editor-a" data-toggle="modal" data-target="#componentes">Componentes</a>
-            <div id="precio" class="text-light">1500</div>
+            <div class="text-light"><span id="precio">1500</span>€</div>
+            <a onclick="cargarForm()" class="btn btn-info" data-toggle="modal" data-target="#modalPresupuesto">Pedir Presupuesto</a>
         </div>
         <img id="turn" src="static/img/rotate-device.png" alt="">
         <button onclick="vistaEnfrente()" id="vistaEnfrente" class="btn">Vista Delantera</button>
@@ -160,6 +161,43 @@
                 <script>Modelos.push(modelo);</script>
             {% endfor %}
         {% endfor %}
+    <!-- Modal para formulario de nuevo presupuesto-->
+    <div class="modal fade mymodal" id="modalPresupuesto" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title">Introduzca nuevos datos del Producto</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form class="form" method="post" action="{{ url_for('presupuestos.nuevo') }}">
+                        <div class="form-group">
+                            <label for="nombre" class="mymodal-label">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" value="" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="mymodal-label">Telefono</label>
+                            <input type="text" name="telefono" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="mymodal-label">Email</label>
+                            <input name="email" class="form-control" placeholder="aaaaaaaa@bbbbbbb.com" value="">
+                        </div>
+                      <div class="form-group">
+                            <label for="comentarios" class="mymodal-label">Comentarios</label>
+                            <textarea name="comentarios" class="form-control" placeholder="Acabados no disponibles en el editor, color del mastil, dibujo tal en el cuerpo, etc...."></textarea>
+                        </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Pedir Presupuesto</button>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
     <canvas id="mycanvas"></canvas>
 
     <script src="{{ url_for('static',filename='js/THREEx.WindowResize.js')}}"></script>

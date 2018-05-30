@@ -19,6 +19,7 @@ from models.fotosbajos import FotosBajosModel
 from models.fotosguitarras import FotosGuitarrasModel
 from models.promociones import PromocionesModel
 from models.editor import Partes3DModel, Opciones3DModel, Precios3DModel
+from models.presupuestos import PresupuestosModel
 
 from pages import editor
 from pages import guitarras
@@ -30,6 +31,7 @@ from pages import infoartista
 from pages import login
 from pages import promociones
 from pages import pedidos
+from pages import presupuestos
 
 import paypal_ipn
 
@@ -158,6 +160,8 @@ app.register_blueprint(infoartista.infoartista)
 app.register_blueprint(paypal_ipn.paypal_ipn)
 
 app.register_blueprint(pedidos.pedidos)
+
+app.register_blueprint(presupuestos.presupuestos)
 
 
 @app.route('/contacto')

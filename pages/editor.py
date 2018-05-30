@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template
+from flask import Blueprint,render_template,redirect,url_for,request
 from flask import current_app as app
 editor = Blueprint('editor', __name__)
 
@@ -15,20 +15,15 @@ class myOpciones:
         self.modelo=modelo
         self.foto=foto
 
+@editor.route("/presupuesto/nuevo", methods=['POST'])
+def nuevoPresupuesto():
+    print(request.form)
+    return redirect(url_for('index'))
+
 @editor.route("/editor")
 def html():
     title = 'Taller Custom'
 
-    """
-    Si guardo todo esto en una BBDD (MySql), con hacer CRUD a esas tablas
-    consigo que el administrador pueda gestionar este editor.
-    Anadiendo mas modelos STL de diferentes cuerpos de guitarras,
-    anadiendo mas texturas y tambien modificando el menu derecho del editor
-
-    Mirar el JS editor.js, para ver si se pueden cargar todos los modelos de un array.
-    Asi simplifico el codigo reutilizandolo, y permitiendo al administrador que gestione 
-    el editor 3D
-    """
     #opcionesCuerpo, es un array con las opciones que tiene esa pieza en concreto
     opcionesCuerpo=[]
     opcionesGolpeador=[]
@@ -258,3 +253,4 @@ def html():
         listaJacks
     ]
     return render_template('loader.html', mytitle=title, lista=lista)
+

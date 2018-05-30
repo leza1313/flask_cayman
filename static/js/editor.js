@@ -56,11 +56,11 @@ loadingScreen.scene.add(loadingScreen.sphere);
 loadingManager = new THREE.LoadingManager();
 
 loadingManager.onProgress = function(item, loaded, total){
-    console.log(item, loaded, total);
+    //console.log(item, loaded, total);
 };
 
 loadingManager.onLoad = function(){
-    console.log("loaded all resources");
+    //console.log("loaded all resources");
 		RESOURCES_LOADED = true;
 };
 //FIN de loading screen
@@ -389,7 +389,9 @@ function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
         //prueba.cuerpo=myObject;
     });
 }*/
-function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
+
+var miacabado;
+function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName){
 
 
     loaderJSON.load(mystl,
@@ -400,12 +402,11 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
                 map: THREE.ImageUtils.loadTexture(myMaterial),
                 shininess: 20,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
-                name: myMaterial.split('texturas/')[1].split('-')[1].split('.')[0],
+                name: color,
                 color: 0xbbbbbb,
                 //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                 //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
             });
-
             var object = new THREE.Mesh( geometry, material );
             object.name=nombre;
             //object.position.set( 22.52, 12.46, 0);
@@ -424,7 +425,7 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
             scene.add( object );
             miguitarra[sufix]=object;
             piezasguitarra[sufix]=pieza;
-
+            if (sufix==0){miacabado='mate';}
             if (sufix==0 || sufix==3 ||sufix==2){
                 actualizarDropMaderas(piezasguitarra[0],piezasguitarra[3],piezasguitarra[2]);
             }
@@ -432,7 +433,7 @@ function cargarJSON(nombre,mystl,myMaterial,sufix,position,pieza,modalName){
 
         // onProgress callback
         function onProgress( xhr ) {
-            console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            //console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
         },
 
         // onError callback
@@ -461,7 +462,7 @@ function cambiarCuerpo(event,obj,parte,nuevo,modalName){
 }
 
 //cambiarTextura(event, miguitarra,1,'static/modelos/stratocaster/texturas/golpeador2.jpg','#modalGolpeador0')
-function cambiarTextura(event,obj,parte,nuevo,modalName){
+function cambiarTextura(event,obj,parte,color,nuevo,modalName){
     event.preventDefault();
     $(modalName).modal('hide');
     //var urlMatViejo=urlBase + "precio3D/" + piezasguitarra[parte] + "/" + obj[parte].material.name;
@@ -469,7 +470,7 @@ function cambiarTextura(event,obj,parte,nuevo,modalName){
         map: THREE.ImageUtils.loadTexture(nuevo),
         shininess: 20,//con esto parece que refleja, pero como que ciega un poco
         specular: 0x444444,//con esto parece que refleja
-        name: nuevo.split('/texturas/')[1].split('-')[1].split('.')[0],
+        name: color,
         color: 0xbbbbbb,
     });
     //Cuerpo, si cambia textura no se cambia precio. Solo cambio de modelo, o seleccion de madera
@@ -488,6 +489,7 @@ function cambiarTextura(event,obj,parte,nuevo,modalName){
         }
     }else{
         obj[parte].material= material2;
+        if (parte==0){miacabado='mate';}
     }
 }
 
@@ -626,20 +628,22 @@ $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
     var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
 
-    cargarJSON(partes3D[0].pieza,partes3D[0].rutaJSON,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
-    cargarJSON(partes3D[1].pieza,partes3D[1].rutaJSON,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
-    cargarJSON(partes3D[2].pieza,partes3D[2].rutaJSON,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
-    cargarJSON(partes3D[3].pieza,partes3D[3].rutaJSON,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
-    cargarJSON(partes3D[4].pieza,partes3D[4].rutaJSON,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
-    cargarJSON(partes3D[5].pieza,partes3D[5].rutaJSON,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
-    //cargarJSON(partes3D[6].pieza,partes3D[6].rutaJSON,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
-    //cargarJSON(partes3D[7].pieza,partes3D[7].rutaJSON,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
-    cargarJSON(partes3D[8].pieza,partes3D[8].rutaJSON,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
-    cargarJSON(partes3D[9].pieza,partes3D[9].rutaJSON,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
-    cargarJSON(partes3D[10].pieza,partes3D[10].rutaJSON,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
-    cargarJSON(partes3D[11].pieza,partes3D[11].rutaJSON,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
-    cargarJSON(partes3D[12].pieza,partes3D[12].rutaJSON,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
-    cargarJSON(partes3D[13].pieza,partes3D[13].rutaJSON,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
+    cargarJSON(partes3D[0].nombre,partes3D[0].rutaJSON,opciones3D[0].nombre,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
+    cargarJSON(partes3D[1].nombre,partes3D[1].rutaJSON,opciones3D[2].nombre,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
+    cargarJSON(partes3D[2].nombre,partes3D[2].rutaJSON,opciones3D[3].nombre,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
+    cargarJSON(partes3D[3].nombre,partes3D[3].rutaJSON,opciones3D[7].nombre,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
+    cargarJSON(partes3D[4].nombre,partes3D[4].rutaJSON,opciones3D[6].nombre,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
+    cargarJSON(partes3D[5].nombre,partes3D[5].rutaJSON,opciones3D[9].nombre,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
+    //cargarJSON(partes3D[6].nombre,partes3D[6].rutaJSON,opciones3D[].nombre,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
+    //cargarJSON(partes3D[7].nombre,partes3D[7].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
+    cargarJSON(partes3D[8].nombre,partes3D[8].rutaJSON,opciones3D[14].nombre,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
+    cargarJSON(partes3D[9].nombre,partes3D[9].rutaJSON,opciones3D[16].nombre,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
+    cargarJSON(partes3D[10].nombre,partes3D[10].rutaJSON,opciones3D[18].nombre,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
+    cargarJSON(partes3D[11].nombre,partes3D[11].rutaJSON,opciones3D[20].nombre,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
+    cargarJSON(partes3D[12].nombre,partes3D[12].rutaJSON,opciones3D[22].nombre,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
+    cargarJSON(partes3D[13].nombre,partes3D[13].rutaJSON,opciones3D[23].nombre,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
+    //cargarJSON(partes3D[14].nombre,partes3D[14].rutaJSON,opciones3D[].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalClavijero0');
+
 });
 function ajaxP1() {
     return $.ajax({
@@ -684,6 +688,7 @@ function actualizarBody2(pieza,modalname){
         var html='';
         for (var i=0;i<opciones3D.length;i++) {
             html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+String(Number(pieza)-1)+',');
+            html=html.concat("'"+opciones3D[i].nombre+"',");
             html=html.concat("'"+opciones3D[i].rutaTextura+"'");
             html=html.concat(',\''+modalname+'\')');
             html=html.concat('"><img src=static/img/'+opciones3D[i].foto+' ' );
@@ -708,9 +713,6 @@ function actualizarBody2(pieza,modalname){
 }
 function actualizarDropMaderas(parteCuerpo,parteDiapason,parteMastil){
     var preciosCuerpo,preciosDiapason,preciosMastil;
-    console.log('PARTE CUERPO: '+parteCuerpo);
-    console.log('PARTE DIAPASON: '+parteDiapason);
-    console.log('PARTE MASTIL: '+parteMastil);
     var modalBody= '#maderasBody';
     var html=$(modalBody).html();
     $(modalBody).before('<div id="loaderBody3" class="loader"></div>');
@@ -719,11 +721,8 @@ function actualizarDropMaderas(parteCuerpo,parteDiapason,parteMastil){
         $(modalBody).show();
         $('#loaderBody3').remove();
         html='';
-        //html=html.concat(' - ');
-        //$(modalBody).html(html);
-        //html=$(modalBody).html().split(' - ')[0];
         html=html.concat('Escoge madera para el Cuerpo: ');
-        html=html.concat('<select onchange="cambioMaderaCuerpo(this.value)" onfocus="valViejo(this.value)">');
+        html=html.concat('<select id="dropCuerpo" onchange="cambioMaderaCuerpo(this.value)" onfocus="valViejo(this.value)">');
         for (var i=0;i<preciosCuerpo.length;i++){
             html=html.concat('<option data-dismiss="modal" value="'+preciosCuerpo[i].material+'">'+preciosCuerpo[i].material+' '+preciosCuerpo[i].precio+'€</option>');
         }
@@ -792,11 +791,12 @@ function actualizarDropMaderas(parteCuerpo,parteDiapason,parteMastil){
         });
     }
 }
-
 function hacerGloss(material){
+    miacabado='brillo';
     material.setValues({shininess: 100,color: 0xbbbbbb,specular:0x999999});
 }
 function hacerMate(material){
+    miacabado='mate';
     material.setValues({shininess: 20,color: 0xbbbbbb,specular:0x444444});
 }
 function valViejo(val) {
@@ -914,4 +914,204 @@ function cambioMaderaDiapasonMastil(DoM,val){
             }
         });
     }
+}
+function cargarForm() {
+    var modelo;
+    console.log('CARGANDO FORM')
+
+    $.when(ajax1()).done(function (a1) {
+        modelo=tipo[0].modelo;
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'modelo',
+            value: modelo,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'maderaCuerpo',
+            value: $('#dropCuerpo').val(),
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'maderaDiapason',
+            value: $('#dropDiapason').val(),
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'maderaMastil',
+            value: $('#dropMastil').val(),
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'mastil',
+            value: miguitarra[2].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'pastillaMastil',
+            value: miguitarra[4].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'pastillaMedio',
+            value: miguitarra[5].name,
+        }).appendTo('form');
+
+        /*$('<input>').attr({
+            type: 'hidden',
+            name: 'pastillaPuente',
+            value: miguitarra[6].name,
+        }).appendTo('form');*/ //PastillaPuente
+
+        /*$('<input>').attr({
+            type: 'hidden',
+            name: 'puente',
+            value: miguitarra[7].name,
+        }).appendTo('form');*/ //Puente
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'tono1',
+            value: miguitarra[8].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'tono2',
+            value: miguitarra[9].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'volumen',
+            value: miguitarra[10].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'tapa',
+            value: miguitarra[11].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'chapa',
+            value: miguitarra[12].name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'jack',
+            value: miguitarra[13].name,
+        }).appendTo('form');
+
+        /*$('<input>').attr({
+            type: 'hidden',
+            name: 'clavijero',
+            value: miguitarra[14].name,
+        }).appendTo('form');*/ //Clavijero
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'acabado',
+            value: miacabado,
+        }).appendTo('form');
+
+        //COLORES
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorCuerpo',
+            value: miguitarra[0].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorGolpeador',
+            value: miguitarra[1].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorPastillaMastil',
+            value: miguitarra[4].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorPastillaMedio',
+            value: miguitarra[5].material.name,
+        }).appendTo('form');
+
+        /*$('<input>').attr({
+            type: 'hidden',
+            name: 'colorPastillaPuente',
+            value: miguitarra[6].material.name,
+        }).appendTo('form');*/ //ColorPastillaPuente
+
+        /*$('<input>').attr({
+            type: 'hidden',
+            name: 'colorPuente',
+            value: miguitarra[7].material.name,
+        }).appendTo('form');*/ //ColorPuente
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorTono1',
+            value: miguitarra[8].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorTono2',
+            value: miguitarra[9].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorVolumen',
+            value: miguitarra[10].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorTapa',
+            value: miguitarra[11].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorChapa',
+            value: miguitarra[12].material.name,
+        }).appendTo('form');
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'colorJack',
+            value: miguitarra[13].material.name,
+        }).appendTo('form');
+
+    });
+    function ajax1() {
+        //This ajax request is to get the type of guitar of the item (stratocaster, telecaster....)
+        //With that we add to the path for the texture change
+        return $.ajax({
+            url: urlBase + "parte3D/" + piezasguitarra[0],
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                tipo = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
+
+
 }
