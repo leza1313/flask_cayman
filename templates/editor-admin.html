@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% block cover %}
+<br>
+<div class="container">
+       <div class="row">
+           <div class="card-deck">
+                   <!-- Primera carta-->
+                   <div id='bloque-carta' class="card polaroid">
+                       <div class="card-header">
+                           <a class="card-link" href="{{ url_for('editor.nuevoModelo') }}">
+                               <h4 class="card-title2">Modelo</h4>
+                           </a>
+                       </div>
+                       <div class="card-body">
+                           <p class="card-text">Formulario para crear nuevos modelos de guitarras</p>
+                       </div>
+                       <div class="card-footer">
+                           <a href="{{ url_for('editor.nuevoModelo') }}" class="btn btn-primary mybutton">Crear Nuevo Modelo</a>
+                       </div>
+                   </div>
+                   <!-- Segunda carta-->
+                   <div id='bloque-carta' class="card polaroid">
+                       <div class="card-header">
+                           <a class="card-link" href="{{ url_for('editor.nuevoJSON') }}">
+                               <h4 class="card-title2">JSON</h4>
+                           </a>
+                       </div>
+                       <div class="card-body">
+                           <p class="card-text">Formulario para subir al servidor nuevas piezas 3D en formato JSON</p>
+                       </div>
+                       <div class="card-footer">
+                           <a href="{{ url_for('editor.nuevoJSON') }}" class="btn btn-primary mybutton">Subir JSON</a>
+                       </div>
+                   </div>
+
+                   <!-- Tercera carta-->
+                   <div id='bloque-carta' class="card polaroid">
+                       <div class="card-header">
+                           <a class="card-link" href="{{ url_for('editor.nuevoTextura') }}">
+                               <h4 class="card-title2">Textura</h4>
+                           </a>
+                       </div>
+                       <div class="card-body">
+                           <p class="card-text">Formulario para subir al servidor, nuevas texturas para las piezas 3D</p>
+                       </div>
+                       <div class="card-footer">
+                           <a href="{{ url_for('editor.nuevoTextura') }}" class="btn btn-primary mybutton">Subir Textura</a>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    <br>
+{% endblock %}

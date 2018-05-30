@@ -128,6 +128,11 @@ img{
     padding-top: 45px;
     padding-bottom: 45px;
 }
+.card-title2{
+    font-family: "Lato", sans-serif;
+    font-size: 26px;
+    color: #49a9b9;
+}
 .enlaces{
     color: rgba(255,255,255,0.4);
     font-size: 18px;

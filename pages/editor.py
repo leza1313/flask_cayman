@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint,render_template,redirect,url_for,request,flash
 from flask import current_app as app
-from flask_login import login_required
+from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 
 editor = Blueprint('editor', __name__)
@@ -110,240 +110,242 @@ def nuevoTextura():
 @editor.route("/editor")
 def html():
     title = 'Taller Custom'
+    if current_user.is_authenticated:
+        return render_template('editor-admin.html')
+    else:
+        #opcionesCuerpo, es un array con las opciones que tiene esa pieza en concreto
+        opcionesCuerpo=[]
+        opcionesGolpeador=[]
+        opcionesMastil=[]
+        opcionesPastillaMastil=[]
+        opcionesPastillaMedio=[]
+        opcionesPastillaPuente=[]
+        opcionesPuente=[]
+        opcionesTono1=[]
+        opcionesTono2=[]
+        opcionesVolumen=[]
+        #opcionesClavijero=[]
+        opcionesDiapason=[]
+        opcionesTapa=[]
+        opcionesChapa=[]
+        opcionesJack=[]
 
-    #opcionesCuerpo, es un array con las opciones que tiene esa pieza en concreto
-    opcionesCuerpo=[]
-    opcionesGolpeador=[]
-    opcionesMastil=[]
-    opcionesPastillaMastil=[]
-    opcionesPastillaMedio=[]
-    opcionesPastillaPuente=[]
-    opcionesPuente=[]
-    opcionesTono1=[]
-    opcionesTono2=[]
-    opcionesVolumen=[]
-    #opcionesClavijero=[]
-    opcionesDiapason=[]
-    opcionesTapa=[]
-    opcionesChapa=[]
-    opcionesJack=[]
 
+        #cuerpos, es un array con todos los cuerpos disponibles
+        cuerpos=Partes3DModel.find_by_pieza('Cuerpo')
+        print(cuerpos)
+        golpeadores=Partes3DModel.find_by_pieza('Golpeador')
+        mastiles=Partes3DModel.find_by_pieza('Mastil')
+        pastillasMastil=Partes3DModel.find_by_pieza('PastillaMastil')
+        pastillasMedio=Partes3DModel.find_by_pieza('PastillaMedio')
+        pastillasPuente=Partes3DModel.find_by_pieza('PastillaPuente')
+        puentes=Partes3DModel.find_by_pieza('Puente')
+        tonos1=Partes3DModel.find_by_pieza('Tono1')
+        tonos2=Partes3DModel.find_by_pieza('Tono2')
+        volumenes=Partes3DModel.find_by_pieza('Volumen')
+        #clavijeros=Partes3DModel.find_by_pieza('Clavijero')
+        diapasones=Partes3DModel.find_by_pieza('Diapason')
+        tapas=Partes3DModel.find_by_pieza('Tapa')
+        chapas=Partes3DModel.find_by_pieza('Chapa')
+        jacks=Partes3DModel.find_by_pieza('Jack')
 
-    #cuerpos, es un array con todos los cuerpos disponibles
-    cuerpos=Partes3DModel.find_by_pieza('Cuerpo')
-    print(cuerpos)
-    golpeadores=Partes3DModel.find_by_pieza('Golpeador')
-    mastiles=Partes3DModel.find_by_pieza('Mastil')
-    pastillasMastil=Partes3DModel.find_by_pieza('PastillaMastil')
-    pastillasMedio=Partes3DModel.find_by_pieza('PastillaMedio')
-    pastillasPuente=Partes3DModel.find_by_pieza('PastillaPuente')
-    puentes=Partes3DModel.find_by_pieza('Puente')
-    tonos1=Partes3DModel.find_by_pieza('Tono1')
-    tonos2=Partes3DModel.find_by_pieza('Tono2')
-    volumenes=Partes3DModel.find_by_pieza('Volumen')
-    #clavijeros=Partes3DModel.find_by_pieza('Clavijero')
-    diapasones=Partes3DModel.find_by_pieza('Diapason')
-    tapas=Partes3DModel.find_by_pieza('Tapa')
-    chapas=Partes3DModel.find_by_pieza('Chapa')
-    jacks=Partes3DModel.find_by_pieza('Jack')
+        opcionesModelo1=[]
+        for index, item in enumerate(cuerpos):
+            opcionesCuerpo.append(Opciones3DModel.find_by_parte(item.id))
+            aux=myOpciones(item.rutaJSON,item.foto)
+            opcionesModelo1.append(aux)
+        #print(opcionesModelo1[0].modelo)
 
-    opcionesModelo1=[]
-    for index, item in enumerate(cuerpos):
-        opcionesCuerpo.append(Opciones3DModel.find_by_parte(item.id))
-        aux=myOpciones(item.rutaJSON,item.foto)
-        opcionesModelo1.append(aux)
-    #print(opcionesModelo1[0].modelo)
+        opcionesGolpeador1 = []
+        for index, item in enumerate(golpeadores):
+            opcionesGolpeador.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesGolpeador1.append(aux)
 
-    opcionesGolpeador1 = []
-    for index, item in enumerate(golpeadores):
-        opcionesGolpeador.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesGolpeador1.append(aux)
+        opcionesMastil1=[]
+        for index, item in enumerate(mastiles):
+            opcionesMastil.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesMastil1.append(aux)
 
-    opcionesMastil1=[]
-    for index, item in enumerate(mastiles):
-        opcionesMastil.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesMastil1.append(aux)
+        opcionesPastillaMastil1=[]
+        for index, item in enumerate(pastillasMastil):
+            opcionesPastillaMastil.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesPastillaMastil1.append(aux)
 
-    opcionesPastillaMastil1=[]
-    for index, item in enumerate(pastillasMastil):
-        opcionesPastillaMastil.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesPastillaMastil1.append(aux)
+        opcionesPastillaMedio1 = []
+        for index, item in enumerate(pastillasMedio):
+            opcionesPastillaMedio.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesPastillaMedio1.append(aux)
 
-    opcionesPastillaMedio1 = []
-    for index, item in enumerate(pastillasMedio):
-        opcionesPastillaMedio.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesPastillaMedio1.append(aux)
+        opcionesPastillaPuente1=[]
+        for index, item in enumerate(pastillasPuente):
+            opcionesPastillaPuente.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesPastillaPuente1.append(aux)
 
-    opcionesPastillaPuente1=[]
-    for index, item in enumerate(pastillasPuente):
-        opcionesPastillaPuente.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesPastillaPuente1.append(aux)
+        opcionesPuente1 = []
+        for index, item in enumerate(puentes):
+            opcionesPuente.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesPuente1.append(aux)
 
-    opcionesPuente1 = []
-    for index, item in enumerate(puentes):
-        opcionesPuente.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesPuente1.append(aux)
+        opcionesTono11 = []
+        for index, item in enumerate(tonos1):
+            opcionesTono1.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesTono11.append(aux)
 
-    opcionesTono11 = []
-    for index, item in enumerate(tonos1):
-        opcionesTono1.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesTono11.append(aux)
+        opcionesTono21 = []
+        for index, item in enumerate(tonos2):
+            opcionesTono2.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesTono21.append(aux)
 
-    opcionesTono21 = []
-    for index, item in enumerate(tonos2):
-        opcionesTono2.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesTono21.append(aux)
+        opcionesVolumen1 = []
+        for index, item in enumerate(volumenes):
+            opcionesVolumen.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesVolumen1.append(aux)
 
-    opcionesVolumen1 = []
-    for index, item in enumerate(volumenes):
-        opcionesVolumen.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesVolumen1.append(aux)
+        ##QUE ONDA CON CLAVIJERO Y PUENTE
+        #for index, item in enumerate(clavijeros):
+            #opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
 
-    ##QUE ONDA CON CLAVIJERO Y PUENTE
-    #for index, item in enumerate(clavijeros):
-        #opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
+        opcionesDiapason1 = []
+        for index, item in enumerate(diapasones):
+            opcionesDiapason.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesDiapason1.append(aux)
 
-    opcionesDiapason1 = []
-    for index, item in enumerate(diapasones):
-        opcionesDiapason.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesDiapason1.append(aux)
+        opcionesTapa1 = []
+        for index, item in enumerate(tapas):
+            opcionesTapa.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesTapa1.append(aux)
 
-    opcionesTapa1 = []
-    for index, item in enumerate(tapas):
-        opcionesTapa.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesTapa1.append(aux)
+        opcionesChapa1 = []
+        for index, item in enumerate(chapas):
+            opcionesChapa.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesChapa1.append(aux)
 
-    opcionesChapa1 = []
-    for index, item in enumerate(chapas):
-        opcionesChapa.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesChapa1.append(aux)
+        opcionesJack1 = []
+        for index, item in enumerate(jacks):
+            opcionesJack.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesJack1.append(aux)
 
-    opcionesJack1 = []
-    for index, item in enumerate(jacks):
-        opcionesJack.append(Opciones3DModel.find_by_parte(item.id))
-        aux = myOpciones(item.rutaJSON, item.foto)
-        opcionesJack1.append(aux)
+        ########################################
+        ##LISTA DE LOS MODELOS CON SUS OPCIONES#
+        ########################################
 
-    ########################################
-    ##LISTA DE LOS MODELOS CON SUS OPCIONES#
-    ########################################
+        #Ya actualizo los Body2 de los modal en JS mediante AJAX.
+        #Quitar todas estas listas dentro de listas
+        #Y dejar unicamente Lista->ListaCuerpos->
 
-    #Ya actualizo los Body2 de los modal en JS mediante AJAX.
-    #Quitar todas estas listas dentro de listas
-    #Y dejar unicamente Lista->ListaCuerpos->
+        listaCuerpos=[]
+        for index, item in enumerate(cuerpos):
+            listaCuerpos.append(myModal('modalCuerpo'+index.__str__(),'Escoge Modelo', opcionesModelo1,opcionesCuerpo[index]))
+        #print(listaCuerpos[0].opcionesModelo[1].modelo)
+        #print(opcionesCuerpo[0][0].rutaTextura)
+        #cuerpoStrato2 = myModal('modalCuerpoStrato2','Escoge Modelo',cuerpos,opcionesCuerpo[1])
 
-    listaCuerpos=[]
-    for index, item in enumerate(cuerpos):
-        listaCuerpos.append(myModal('modalCuerpo'+index.__str__(),'Escoge Modelo', opcionesModelo1,opcionesCuerpo[index]))
-    #print(listaCuerpos[0].opcionesModelo[1].modelo)
-    #print(opcionesCuerpo[0][0].rutaTextura)
-    #cuerpoStrato2 = myModal('modalCuerpoStrato2','Escoge Modelo',cuerpos,opcionesCuerpo[1])
+        listaGolpeadores = []
+        for index, item in enumerate(golpeadores):
+            listaGolpeadores.append(
+                myModal('modalGolpeador' + index.__str__(), 'Escoge Golpeador', opcionesGolpeador1, opcionesGolpeador[index]))
 
-    listaGolpeadores = []
-    for index, item in enumerate(golpeadores):
-        listaGolpeadores.append(
-            myModal('modalGolpeador' + index.__str__(), 'Escoge Golpeador', opcionesGolpeador1, opcionesGolpeador[index]))
+        listaMastiles = []
+        for index, item in enumerate(mastiles):
+            listaMastiles.append(
+                myModal('modalMastil' + index.__str__(), 'Escoge Mastil', opcionesMastil1,
+                        opcionesMastil[index]))
 
-    listaMastiles = []
-    for index, item in enumerate(mastiles):
-        listaMastiles.append(
-            myModal('modalMastil' + index.__str__(), 'Escoge Mastil', opcionesMastil1,
-                    opcionesMastil[index]))
+        listaDiapasones = []
+        for index, item in enumerate(diapasones):
+            listaDiapasones.append(
+                myModal('modalDiapason' + index.__str__(), 'Escoge Diapason', opcionesDiapason1,
+                        opcionesDiapason[index]))
 
-    listaDiapasones = []
-    for index, item in enumerate(diapasones):
-        listaDiapasones.append(
-            myModal('modalDiapason' + index.__str__(), 'Escoge Diapason', opcionesDiapason1,
-                    opcionesDiapason[index]))
+        listaPastillasMastil = []
+        for index, item in enumerate(pastillasMastil):
+            listaPastillasMastil.append(
+                myModal('modalPastillaMastil' + index.__str__(), 'Escoge Pastilla Mastil', opcionesPastillaMastil1,
+                        opcionesPastillaMastil[index]))
 
-    listaPastillasMastil = []
-    for index, item in enumerate(pastillasMastil):
-        listaPastillasMastil.append(
-            myModal('modalPastillaMastil' + index.__str__(), 'Escoge Pastilla Mastil', opcionesPastillaMastil1,
-                    opcionesPastillaMastil[index]))
+        listaPastillasMedio = []
+        for index, item in enumerate(pastillasMedio):
+            listaPastillasMedio.append(
+                myModal('modalPastillaMedio' + index.__str__(), 'Escoge Pastilla Medio', opcionesPastillaMedio1,
+                        opcionesPastillaMedio[index]))
 
-    listaPastillasMedio = []
-    for index, item in enumerate(pastillasMedio):
-        listaPastillasMedio.append(
-            myModal('modalPastillaMedio' + index.__str__(), 'Escoge Pastilla Medio', opcionesPastillaMedio1,
-                    opcionesPastillaMedio[index]))
+        listaPastillasPuente = []
+        for index, item in enumerate(pastillasMedio):
+            listaPastillasPuente.append(
+                myModal('modalPastillaPuente' + index.__str__(), 'Escoge Pastilla Puente', opcionesPastillaMedio1,
+                        opcionesPastillaPuente[index]))
 
-    listaPastillasPuente = []
-    for index, item in enumerate(pastillasMedio):
-        listaPastillasPuente.append(
-            myModal('modalPastillaPuente' + index.__str__(), 'Escoge Pastilla Puente', opcionesPastillaMedio1,
-                    opcionesPastillaPuente[index]))
+        listaPuentes = []
+        for index, item in enumerate(puentes):
+            listaPuentes.append(
+                myModal('modalPuente' + index.__str__(), 'Escoge Puente', opcionesPuente1,
+                        opcionesPuente[index]))
 
-    listaPuentes = []
-    for index, item in enumerate(puentes):
-        listaPuentes.append(
-            myModal('modalPuente' + index.__str__(), 'Escoge Puente', opcionesPuente1,
-                    opcionesPuente[index]))
+        listaTonos1 = []
+        for index, item in enumerate(tonos1):
+            listaTonos1.append(
+                myModal('modalTono1' + index.__str__(), 'Escoge Tono1', opcionesTono11,
+                        opcionesTono1[index]))
 
-    listaTonos1 = []
-    for index, item in enumerate(tonos1):
-        listaTonos1.append(
-            myModal('modalTono1' + index.__str__(), 'Escoge Tono1', opcionesTono11,
-                    opcionesTono1[index]))
+        listaTonos2 = []
+        for index, item in enumerate(tonos2):
+            listaTonos2.append(
+                myModal('modalTono2' + index.__str__(), 'Escoge Tono2', opcionesTono21,
+                        opcionesTono2[index]))
 
-    listaTonos2 = []
-    for index, item in enumerate(tonos2):
-        listaTonos2.append(
-            myModal('modalTono2' + index.__str__(), 'Escoge Tono2', opcionesTono21,
-                    opcionesTono2[index]))
+        listaVolumenes = []
+        for index, item in enumerate(volumenes):
+            listaVolumenes.append(
+                myModal('modalVolumen' + index.__str__(), 'Escoge Volumen', opcionesVolumen1,
+                        opcionesVolumen[index]))
 
-    listaVolumenes = []
-    for index, item in enumerate(volumenes):
-        listaVolumenes.append(
-            myModal('modalVolumen' + index.__str__(), 'Escoge Volumen', opcionesVolumen1,
-                    opcionesVolumen[index]))
+        listaTapas = []
+        for index, item in enumerate(tapas):
+            listaTapas.append(
+                myModal('modalTapa' + index.__str__(), 'Escoge  Tapa', opcionesTapa1,
+                        opcionesTapa[index]))
 
-    listaTapas = []
-    for index, item in enumerate(tapas):
-        listaTapas.append(
-            myModal('modalTapa' + index.__str__(), 'Escoge  Tapa', opcionesTapa1,
-                    opcionesTapa[index]))
+        listaChapas = []
+        for index, item in enumerate(chapas):
+            listaChapas.append(
+                myModal('modalChapa' + index.__str__(), 'Escoge  Chapa', opcionesChapa1,
+                        opcionesChapa[index]))
 
-    listaChapas = []
-    for index, item in enumerate(chapas):
-        listaChapas.append(
-            myModal('modalChapa' + index.__str__(), 'Escoge  Chapa', opcionesChapa1,
-                    opcionesChapa[index]))
+        listaJacks = []
+        for index, item in enumerate(jacks):
+            listaJacks.append(
+                myModal('modalJack' + index.__str__(), 'Escoge  Jack', opcionesJack1,
+                        opcionesJack1[index]))
 
-    listaJacks = []
-    for index, item in enumerate(jacks):
-        listaJacks.append(
-            myModal('modalJack' + index.__str__(), 'Escoge  Jack', opcionesJack1,
-                    opcionesJack1[index]))
-
-    lista = [
-        listaCuerpos,
-        listaGolpeadores,
-        listaMastiles,
-        listaDiapasones,
-        listaPastillasMastil,
-        listaPastillasMedio,
-        listaPastillasPuente,
-        listaPuentes,
-        listaTonos1,
-        listaTonos2,
-        listaVolumenes,
-        listaTapas,
-        listaChapas,
-        listaJacks
-    ]
-    #print(lista[0][0].opcionesModelo[1].modelo)
-    return render_template('loader.html', mytitle=title, lista=lista, cuerpos=cuerpos)
+        lista = [
+            listaCuerpos,
+            listaGolpeadores,
+            listaMastiles,
+            listaDiapasones,
+            listaPastillasMastil,
+            listaPastillasMedio,
+            listaPastillasPuente,
+            listaPuentes,
+            listaTonos1,
+            listaTonos2,
+            listaVolumenes,
+            listaTapas,
+            listaChapas,
+            listaJacks
+        ]
+        #print(lista[0][0].opcionesModelo[1].modelo)
+        return render_template('loader.html', mytitle=title, lista=lista, cuerpos=cuerpos)
 
