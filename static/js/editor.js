@@ -428,9 +428,10 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
             if (sufix==0){miacabado='mate';}
             //If the second request finish the last one, it makes de AJAX without knowing the id of the
             // diapason, so it ends with the dropDiapason empty.MOVED TO-> after cargarJSON() for 1st time
-            /*if (sufix==0 || sufix==3 ||sufix==2){
+            // Now it only loads the dropDowns with the last item involved in wood selection. the Diapason
+            if (sufix==3){
                 actualizarDropMaderas(piezasguitarra[0],piezasguitarra[3],piezasguitarra[2]);
-            }*/
+            }
         },
 
         // onProgress callback
@@ -608,21 +609,6 @@ animate();
 
 var opciones3D;
 
-/*var precios3D;
-$.ajax({
-    url: urlBase+"precios3D/1",
-    dataType: "jsonp",    // Work with the response
-    success: function (response) {
-        $('#precio').html('555');
-        console.log('A');
-        console.log(response); // server response
-    },
-    error: function (response) {
-        //console.log('ERROR');
-        opciones3D = JSON.parse(response.responseText);
-    }
-});*/
-
 var partes3D;
 $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
@@ -645,7 +631,6 @@ $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     cargarJSON(partes3D[12].nombre,partes3D[12].rutaJSON,opciones3D[22].nombre,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
     cargarJSON(partes3D[13].nombre,partes3D[13].rutaJSON,opciones3D[23].nombre,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
     //cargarJSON(partes3D[14].nombre,partes3D[14].rutaJSON,opciones3D[].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalClavijero0');
-    actualizarDropMaderas(piezasguitarra[0],piezasguitarra[3],piezasguitarra[2]);
 });
 function ajaxP1() {
     return $.ajax({
