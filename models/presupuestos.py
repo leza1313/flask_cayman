@@ -12,6 +12,7 @@ class PresupuestosModel(db.Model):
     telefono = db.Column(db.String(20))
     email = db.Column(db.String(128))
 
+    #precioAprox = db.Column(db.Integer)
     fecha = db.Column(db.DateTime)
 
     modelo = db.Column(db.String(80))

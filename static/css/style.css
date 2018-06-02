@@ -64,7 +64,7 @@ img{
     padding: 10px;
     background: #003874;
     color: rgba(255,255,255,0.75);
-    width:100%
+    width:100%;
 }
 #footer-admin a{
     color: rgba(255,255,255,0.75);
@@ -176,6 +176,11 @@ img{
 .myimage{
     margin: 5px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, .5);
+}
+.myimage:hover{
+    -moz-box-shadow: 0px 0px 10px #222;
+    -webkit-box-shadow: 0px 0px 10px #222;
+    box-shadow: 0px 0px 10px #222;
 }
 .polaroid {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.29);

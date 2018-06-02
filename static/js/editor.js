@@ -678,8 +678,8 @@ function actualizarBody2(pieza,modalname){
             html=html.concat("'"+opciones3D[i].nombre+"',");
             html=html.concat("'"+opciones3D[i].rutaTextura+"'");
             html=html.concat(',\''+modalname+'\')');
-            html=html.concat('"><img src=static/img/'+opciones3D[i].foto+' ' );
-            html=html.concat('data-toggle='+modalname+' data-dismiss=\'modal\' width=\'200\'>' );
+            html=html.concat('"><img class=\'myimage\' src=static/img/'+opciones3D[i].foto+' ' );
+            html=html.concat('data-toggle='+modalname+' data-dismiss=\'modal\' width=\'200\' height=\'115\'>' );
             html=html.concat('</a>');
         }
         $(modalname+'Body2').html(html);
