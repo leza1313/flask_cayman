@@ -480,28 +480,6 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
     $.when(ajax1()).done(function (a1) {
         cargarJSON(myPartes3D[pieza1].nombre, myPartes3D[pieza1].rutaJSON, myOpciones3D[0].nombre, myOpciones3D[0].rutaTextura, 4,
             position, myPartes3D[pieza1].id, modalname);
-        //console.log(myPartes3D[pieza].nombre,myPartes3D[pieza].rutaJSON,myOpciones3D[0].nombre,myOpciones3D[0].rutaTextura,4,
-        //position,myPartes3D[pieza].id,modalname)
-        if(parte==4 || parte==5 || parte==6) {
-            //Diapason y mastil, si cambia textura cambia precio y opcion del select del menu derecho
-            //TODO si no es stratocaster y telecaster, hay que cambiar la ruta de la textura o NO?
-            if (parte == 4) {
-                /*setTimeout(function(){
-                    $('#dropPastillaMastil').triggerHandler("focus");
-                    $('#dropPastillaMastil').val();
-                    $('#dropPastillaMastil').trigger('change');
-                }, 200);*/
-                //console.log($('#dropPastillaMastil').val());
-            } else if (parte == 5) {
-                $('#dropPastillaMedio').triggerHandler("focus");
-                $('#dropPastillaMedio').val('seymour duncan');
-                $('#dropPastillaMedio').trigger('change');
-            } else if (parte == 6) {
-                $('#dropPastillaPuente').triggerHandler("focus");
-                $('#dropPastillaPuente').val('seymour duncan');
-                $('#dropPastillaPuente').trigger('change');
-            }
-        }
     });
     function ajax1(){
         return $.ajax({
