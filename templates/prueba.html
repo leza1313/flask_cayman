@@ -141,13 +141,13 @@
         var guitarobj,golpeadorobj,mastilobj;
         //Importar el modelo STL
         var loader = new THREE.JSONLoader();
-        loader.load( 'static/modelos/stratocaster/cuerpo.json',
+        loader.load( 'static/modelos/stratocaster/humbucker.json',
 
             // onLoad callback
             // Here the loaded data is assumed to be an object
             function onLoad( geometry, materials ) {
                 var material = new THREE.MeshPhongMaterial({ transparent: false,
-                    map: THREE.ImageUtils.loadTexture('static/modelos/stratocaster/texturas/cuerpo-mat2.jpg'),
+                    map: THREE.ImageUtils.loadTexture('static/modelos/stratocaster/texturas/humbucker.png'),
                     shininess: 20,//con esto parece que refleja, pero como que ciega un poco
                     specular: 0x444444,//con esto parece que refleja
                     color: 0xbbbbbb,

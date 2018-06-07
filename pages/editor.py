@@ -347,5 +347,7 @@ def html():
             listaJacks
         ]
         #print(lista[0][0].opcionesModelo[1].modelo)
-        return render_template('loader.html', mytitle=title, lista=lista, cuerpos=cuerpos)
+        return render_template('loader.html', mytitle=title, lista=lista, cuerpos=cuerpos,
+                               pastillasMastil=pastillasMastil, pastillasMedio=pastillasMedio,
+                               pastillasPuente=pastillasPuente)
 

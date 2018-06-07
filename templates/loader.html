@@ -36,8 +36,8 @@
                         <!-- Si no estan los dos indices, no se recorre bien por todas las partes y no funcionan los callback-->
                         {% for modelo in cuerpos %}
                             <a onclick="cambiarCuerpo(event, miguitarra,0,'static/modelos/{{ modelo.modelo }}','')">
-                                <img src='static/img/{{ modelo.foto }}' data-toggle=''
-                                                         data-dismiss='modal' width='200'></a>
+                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                         data-dismiss='modal' width='200' height="115"></a>
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
@@ -56,7 +56,20 @@
                         </button>
                     </div>
                     <div id="maderasBody" class="modal-body">
+                        <label for="dropCuerpo">Escoge madera para el Cuerpo:</label>
+                        <select id="dropCuerpo" onchange="cambioMaderaCuerpo(this.value)" onfocus="valViejo(this.value)"">
 
+                        </select>
+                        <br>
+                        <label for="dropDiapason">Escoge madera para el diapason:</label>
+                        <select id="dropDiapason" onchange="cambioMaderaDiapasonMastil(3,this.value)" onfocus="valViejo(this.value)">
+
+                        </select>
+                        <br>
+                        <label for="dropMastil">Escoge madera para el mastil:</label>
+                        <select id="dropMastil" onchange="cambioMaderaDiapasonMastil(2,this.value)" onfocus="valViejo(this.value)">
+
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -73,15 +86,19 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="" class="modal-body">
-                        <a onclick="hacerGloss(miguitarra[0].material)" data-dismiss="modal">
-                            <img src='static/img/brillo.png'width='200'>
-                            <span style="display: block;">Brillo</span>
-                        </a>
-                        <a onclick="hacerMate(miguitarra[0].material)" data-dismiss="modal">
-                            <img src='static/img/mate.png' width='200'>
-                        <span style="display: block;">Mate</span>
-                        </a>
+                    <div id="" class="modal-body row">
+                        <div class="col-sm-6">
+                            <a onclick="hacerGloss(miguitarra[0].material)" data-dismiss="modal">
+                                <img class="myimage" src='static/img/brillo.png'width='200' height="115">
+                                <span style="">Brillo</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a onclick="hacerMate(miguitarra[0].material)" data-dismiss="modal">
+                                <img class="myimage" src='static/img/mate.png' width='200' height="115">
+                                <span style="">Mate</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -99,7 +116,30 @@
                         </button>
                     </div>
                     <div id="" class="modal-body">
+                        <h6 id="labelPastillaMastil">Pastilla Mastil</h6>
+                        {% for modelo in  pastillasMastil%}
+                            <!-- Esto cambia bien de modelo, falta corregir cambiar la textura de ese nuevo modelo-->
+                            <a onclick="cambiarModelo(event,partes3D,opciones3D,4,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                         data-dismiss='modal' width='200' height="115"></a>
+                        {% endfor %}
+                        <br>
+                        <label for="dropPastillaMastil">Escoge marca de pastilla:</label>
+                        <select id="dropPastillaMastil" onchange="cambioPastillaMastil(this.value)" onfocus="valViejo(this.value)">
 
+                        </select>
+                        <h6>Pastilla Medio</h6>
+                        {% for modelo in pastillasMedio %}
+                            <a onclick="cambiarModelo(event,partes3D,opciones3D,5,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                         data-dismiss='modal' width='200' height="115"></a>
+                        {% endfor %}
+                        <h6>Pastilla Puente</h6>
+                        {% for modelo in  pastillasPuente%}
+                            <a onclick="cambiarModelo(event,partes3D,opciones3D,6,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                         data-dismiss='modal' width='200' height="115"></a>
+                        {% endfor %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
