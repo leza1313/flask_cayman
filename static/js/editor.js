@@ -649,22 +649,30 @@ $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
     var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
     var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
+    var myposicionGolp= {'x':partes3D[1].x,'y':partes3D[1].y,'z':partes3D[1].z};
+    var myposicionPastillaPuente= {'x':partes3D[6].x,'y':partes3D[6].y,'z':partes3D[6].z};
+    var myposicionClavijero= {'x':partes3D[15].x,'y':partes3D[15].y,'z':partes3D[15].z};
+    var myposicionCejuela= {'x':partes3D[16].x,'y':partes3D[16].y,'z':partes3D[16].z};
+    var myposicionSwitch= {'x':partes3D[17].x,'y':partes3D[17].y,'z':partes3D[17].z};
+
 
     cargarJSON(partes3D[0].nombre,partes3D[0].rutaJSON,opciones3D[0].nombre,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
-    cargarJSON(partes3D[1].nombre,partes3D[1].rutaJSON,opciones3D[2].nombre,opciones3D[2].rutaTextura,1,myposicion,partes3D[1].id,'#modalGolpeador0');
+    cargarJSON(partes3D[1].nombre,partes3D[1].rutaJSON,opciones3D[2].nombre,opciones3D[2].rutaTextura,1,myposicionGolp,partes3D[1].id,'#modalGolpeador0');
     cargarJSON(partes3D[2].nombre,partes3D[2].rutaJSON,opciones3D[3].nombre,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
     cargarJSON(partes3D[3].nombre,partes3D[3].rutaJSON,opciones3D[7].nombre,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
     cargarJSON(partes3D[4].nombre,partes3D[4].rutaJSON,opciones3D[6].nombre,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
     cargarJSON(partes3D[5].nombre,partes3D[5].rutaJSON,opciones3D[9].nombre,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
-    //cargarJSON(partes3D[6].nombre,partes3D[6].rutaJSON,opciones3D[].nombre,opciones3D[].rutaTextura,6,myposicion,partes3D[6].id,'#modalPastillaPuente0');
-    //cargarJSON(partes3D[7].nombre,partes3D[7].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
+    cargarJSON(partes3D[6].nombre,partes3D[6].rutaJSON,opciones3D[9].nombre,opciones3D[9].rutaTextura,6,myposicionPastillaPuente,partes3D[6].id,'#modalPastillaPuente0');
+    cargarJSON(partes3D[7].nombre,partes3D[7].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
     cargarJSON(partes3D[8].nombre,partes3D[8].rutaJSON,opciones3D[14].nombre,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
     cargarJSON(partes3D[9].nombre,partes3D[9].rutaJSON,opciones3D[16].nombre,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
     cargarJSON(partes3D[10].nombre,partes3D[10].rutaJSON,opciones3D[18].nombre,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
     cargarJSON(partes3D[11].nombre,partes3D[11].rutaJSON,opciones3D[20].nombre,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
     cargarJSON(partes3D[12].nombre,partes3D[12].rutaJSON,opciones3D[22].nombre,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
     cargarJSON(partes3D[13].nombre,partes3D[13].rutaJSON,opciones3D[23].nombre,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
-    //cargarJSON(partes3D[14].nombre,partes3D[14].rutaJSON,opciones3D[].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalClavijero0');
+    cargarJSON(partes3D[15].nombre,partes3D[15].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,14,myposicionClavijero,partes3D[15].id,'#modalClavijero0');
+    cargarJSON(partes3D[16].nombre,partes3D[16].rutaJSON,opciones3D[27].nombre,opciones3D[27].rutaTextura,15,myposicionCejuela,partes3D[16].id,'#modalCejuela0');
+    cargarJSON(partes3D[17].nombre,partes3D[17].rutaJSON,opciones3D[28].nombre,opciones3D[28].rutaTextura,16,myposicionSwitch,partes3D[17].id,'#modalSwitch0');
 });
 function ajaxP1() {
     return $.ajax({
