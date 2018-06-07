@@ -444,10 +444,10 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
                 actualizarDropPastillaMastil(piezasguitarra[4],oldPieza);
             }else
             if (sufix==5){
-                //actualizarDropPastillaMastil(piezasguitarra[4]);
+                actualizarDropPastillaMedio(piezasguitarra[5],oldPieza);
             }else
             if (sufix==6){
-                //actualizarDropPastillaMastil(piezasguitarra[4]);
+                actualizarDropPastillaPuente(piezasguitarra[6],oldPieza);
             }
         },
 
@@ -853,7 +853,7 @@ function actualizarDropPastillaMastil(partePastillaMastil,oldPieza){
         $('#loaderBody3').remove();
         html = '';
         //Pastillas Mastil
-        html = ('<select id="dropPastillaMastil" onchange="cambioPastillaMastil(this.value)" onfocus="valViejo(this.value)">');
+        html = ('<select id="dropPastillaMastil" onchange="cambioPastillaMedio(this.value)" onfocus="valViejo(this.value)">');
         for (var i = 0; i < preciosPastillaMastil.length; i++) {
             html = html.concat('<option data-dismiss="modal" value="' + preciosPastillaMastil[i].material + '">' + preciosPastillaMastil[i].material + ' ' + preciosPastillaMastil[i].precio + '€</option>');
         }
@@ -899,6 +899,140 @@ function actualizarDropPastillaMastil(partePastillaMastil,oldPieza){
             crossdomain: true,
             success: function (response) {
                 preciosPastillaMastil = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+                //precios3D = response;
+            }
+        });
+    }
+}
+function actualizarDropPastillaMedio(partePastillaMedio,oldPieza){
+    var preciosPastillaMedio,precioViejo,precioNuevo;
+    var modalBody= '#dropPastillaMedio';
+    var html=$(modalBody).html();
+    var optOld=$(modalBody).val() || 'fender';
+    var optNew;
+    $(modalBody).before('<div id="loaderBody3" class="loader"></div>');
+    $(modalBody).hide();
+    $.when(ajax1()).done(function (a1) {
+        $(modalBody).show();
+        $('#loaderBody3').remove();
+        html = '';
+        //Pastillas Mastil
+        html = ('<select id="dropPastillaMedio" onchange="cambioPastilla(this.value,5)" onfocus="valViejo(this.value)">');
+        for (var i = 0; i < preciosPastillaMedio.length; i++) {
+            html = html.concat('<option data-dismiss="modal" value="' + preciosPastillaMedio[i].material + '">' + preciosPastillaMedio[i].material + ' ' + preciosPastillaMedio[i].precio + '€</option>');
+        }
+        html = html.concat('</select><br>')
+        $(modalBody).html(html);
+        optNew=$(modalBody).val();
+
+        $.when(ajax2(),ajax3()).done(function (a2,a3) {
+            actualizarPrecio(precioViejo[0].precio,precioNuevo[0].precio);
+        });
+        function ajax2() {
+            return $.ajax({
+                    url: urlBase + "precio3D/" + piezasguitarra[5] + "/" + optNew,
+                    dataType: "json",    // Work with the response
+                    crossdomain: true,
+                    success: function (response) {
+                        precioNuevo = response;
+                    },
+                    error: function (response) {
+                        console.log('ERROR');
+                    }
+                });
+        }
+        function ajax3() {
+            return $.ajax({
+                    url: urlBase + "precio3D/" + oldPieza + "/" + optOld,
+                    dataType: "json",    // Work with the response
+                    crossdomain: true,
+                    success: function (response) {
+                        precioViejo = response;
+                    },
+                    error: function (response) {
+                        console.log('ERROR');
+                    }
+                });
+        }
+    });
+    function ajax1(){
+        //Loading...
+        return $.ajax({
+            url: urlBase+"todosPrecio3D/"+partePastillaMedio,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                preciosPastillaMedio = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+                //precios3D = response;
+            }
+        });
+    }
+}
+function actualizarDropPastillaPuente(partePastillaPuente,oldPieza){
+    var preciosPastillaPuente,precioViejo,precioNuevo;
+    var modalBody= '#dropPastillaPuente';
+    var html=$(modalBody).html();
+    var optOld=$(modalBody).val() || 'fender';
+    var optNew;
+    $(modalBody).before('<div id="loaderBody3" class="loader"></div>');
+    $(modalBody).hide();
+    $.when(ajax1()).done(function (a1) {
+        $(modalBody).show();
+        $('#loaderBody3').remove();
+        html = '';
+        //Pastillas Mastil
+        html = ('<select id="dropPastillaPuente" onchange="cambioPastilla(this.value,6)" onfocus="valViejo(this.value)">');
+        for (var i = 0; i < preciosPastillaPuente.length; i++) {
+            html = html.concat('<option data-dismiss="modal" value="' + preciosPastillaPuente[i].material + '">' + preciosPastillaPuente[i].material + ' ' + preciosPastillaPuente[i].precio + '€</option>');
+        }
+        html = html.concat('</select><br>')
+        $(modalBody).html(html);
+        optNew=$(modalBody).val();
+
+        $.when(ajax2(),ajax3()).done(function (a2,a3) {
+            actualizarPrecio(precioViejo[0].precio,precioNuevo[0].precio);
+        });
+        function ajax2() {
+            return $.ajax({
+                    url: urlBase + "precio3D/" + piezasguitarra[6] + "/" + optNew,
+                    dataType: "json",    // Work with the response
+                    crossdomain: true,
+                    success: function (response) {
+                        precioNuevo = response;
+                    },
+                    error: function (response) {
+                        console.log('ERROR');
+                    }
+                });
+        }
+        function ajax3() {
+            return $.ajax({
+                    url: urlBase + "precio3D/" + oldPieza + "/" + optOld,
+                    dataType: "json",    // Work with the response
+                    crossdomain: true,
+                    success: function (response) {
+                        precioViejo = response;
+                    },
+                    error: function (response) {
+                        console.log('ERROR');
+                    }
+                });
+        }
+    });
+    function ajax1(){
+        //Loading...
+        return $.ajax({
+            url: urlBase+"todosPrecio3D/"+partePastillaPuente,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                preciosPastillaPuente = response;
             },
             error: function (response) {
                 console.log('ERROR');
@@ -1031,7 +1165,7 @@ function cambioMaderaDiapasonMastil(DoM,val){
         });
     }
 }
-function cambioPastillaMastil(val){
+function cambioPastilla(val,past){
     var oldValue = $(this).data('val');
     var newValue= val;
     var precioViejo;
@@ -1045,7 +1179,7 @@ function cambioPastillaMastil(val){
     });
     function ajax1() {
         return $.ajax({
-                url: urlBase + "precio3D/" + piezasguitarra[4] + "/" + oldValue,
+                url: urlBase + "precio3D/" + piezasguitarra[past] + "/" + oldValue,
                 dataType: "json",    // Work with the response
                 crossdomain: true,
                 success: function (response) {
@@ -1058,7 +1192,7 @@ function cambioPastillaMastil(val){
     }
     function ajax2() {
         return $.ajax({
-            url: urlBase + "precio3D/" + piezasguitarra[4] + "/" + newValue,
+            url: urlBase + "precio3D/" + piezasguitarra[past] + "/" + newValue,
             dataType: "json",    // Work with the response
             crossdomain: true,
             success: function (response) {
