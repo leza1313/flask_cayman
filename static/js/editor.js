@@ -476,11 +476,12 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
     event.preventDefault();
     $(modalName).modal('hide');
     obj[parte].borrar();
-    var pieza1=pieza-1;
+    var index = myPartes3D.findIndex(x => x.id==pieza);
+    console.log(index);
     $.when(ajax1()).done(function (a1) {
-        cargarJSON(myPartes3D[myPartes3Dindex(pieza1)].nombre, myPartes3D[myPartes3Dindex(pieza1)].rutaJSON,
+        cargarJSON(myPartes3D[index].nombre, myPartes3D[index].rutaJSON,
             myOpciones3D[0].nombre, myOpciones3D[0].rutaTextura, parte,
-            position, myPartes3D[pieza1].id, modalname);
+            position, myPartes3D[index].id, modalname);
     });
     function ajax1(){
         return $.ajax({
