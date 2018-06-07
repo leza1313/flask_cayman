@@ -350,9 +350,9 @@ def html():
                         opcionesPastillaMedio[index]))
 
         listaPastillasPuente = []
-        for index, item in enumerate(pastillasMedio):
+        for index, item in enumerate(pastillasPuente):
             listaPastillasPuente.append(
-                myModal('modalPastillaPuente' + index.__str__(), 'Escoge Pastilla Puente', opcionesPastillaMedio1,
+                myModal('modalPastillaPuente' + index.__str__(), 'Escoge Pastilla Puente', opcionesPastillaPuente1,
                         opcionesPastillaPuente[index]))
 
         listaPuentes = []
