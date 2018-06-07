@@ -12,13 +12,12 @@ class ModelosModel(db.Model):
         self.modelo = modelo
 
     def json(self):
-        return {'id': self.id,
-                'modelo': self.modelo,
+        return {'modelo': self.modelo,
                 }
 
     @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+    def find_by_nombre(cls, nombre):
+        return cls.query.filter_by(modelo=nombre).first()
 
 
     def insert_to_db(self):

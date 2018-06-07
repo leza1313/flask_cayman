@@ -841,7 +841,7 @@ function actualizarDropPastillaMastil(partePastillaMastil,oldPieza){
     var preciosPastillaMastil,precioViejo,precioNuevo;
     var modalBody= '#dropPastillaMastil';
     var html=$(modalBody).html();
-    var optOld=$(modalBody).val();
+    var optOld=$(modalBody).val() || 'fender';
     var optNew;
     console.log('PIEZA ANT:'+oldPieza);
     $(modalBody).before('<div id="loaderBody3" class="loader"></div>');

@@ -1,0 +1,25 @@
+{% extends'core/base.html' %}
+{% block cover %}
+<div class="mylogin card">
+    <form id="texturaForm" class="form" action = "{{ url_for('editor.nuevoPrecio') }}" method = "POST">
+        <h2>Introduzca datos sobre el nuevo precio</h2>
+        <div class="form-group">
+            <label for="material" class="mymodal-label">Material o Marca</label>
+            <input type="text" name="material" class="form-control" value="" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="precio" class="mymodal-label">Precio</label>
+            <input type="text" name="precio" class="form-control" value="" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="partes3Dlist" class="mymodal-label">Parte3D</label><br>
+            <select name="partes3Dlist" form="texturaForm">
+                {% for parte in partes %}
+                    <option value="{{ parte.id }}">{{ parte.pieza+' '+parte.nombre+' '+ parte.modelo}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar Precio</button>
+    </form>
+</div><br>
+{% endblock %}

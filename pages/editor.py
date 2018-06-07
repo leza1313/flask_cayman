@@ -36,6 +36,16 @@ def nuevoModelo():
     modelos=ModelosModel.query.all()
     return render_template('nuevomodelo.html',mytitle='Nuevo Modelo',modelos=modelos)
 
+@editor.route("/borrar/modelo/<string:nombre>", methods=['GET','POST'])
+@login_required
+def borrarModelo(nombre):
+    myModelo=ModelosModel.find_by_nombre(nombre)
+    if myModelo:
+        myModelo.delete_from_db()
+        flash('Exito: modelo borrado correctamente')
+        return redirect(url_for('editor.html'))
+    flash('Error: No se ha conseguido eliminar el modelo')
+    return redirect(url_for('editor.html'))
 
 @editor.route("/upload/json", methods=['GET','POST'])
 @login_required
@@ -74,6 +84,16 @@ def nuevoJSON():
     modelos=ModelosModel.query.all()
     return render_template('uploadJSON.html',mytitle='Nuevo JSON',modelos=modelos)
 
+@editor.route("/borrar/json/<string:id>", methods=['GET','POST'])
+@login_required
+def borrarJSON(id):
+    myJSON=Partes3DModel.find_by_id(id)
+    if myJSON:
+        myJSON.delete_from_db()
+        flash('Exito: JSON borrado correctamente')
+        return redirect(url_for('editor.html'))
+    flash('Error: No se ha conseguido eliminar el JSON')
+    return redirect(url_for('editor.html'))
 
 @editor.route("/upload/textura", methods=['GET','POST'])
 @login_required
@@ -107,11 +127,58 @@ def nuevoTextura():
     modelos=ModelosModel.query.all()
     return render_template('uploadTextura.html',mytitle='Nueva Textura',partes=partes, modelos=modelos)
 
+@editor.route("/borrar/textura/<string:id>", methods=['GET','POST'])
+@login_required
+def borrarTextura(id):
+    myTextura=Opciones3DModel.find_by_id(id)
+    if myTextura:
+        myTextura.delete_from_db()
+        flash('Exito: textura borrado correctamente')
+        return redirect(url_for('editor.html'))
+    flash('Error: No se ha conseguido eliminar la textura')
+    return redirect(url_for('editor.html'))
+
+@editor.route("/upload/precio", methods=['GET','POST'])
+@login_required
+def nuevoPrecio():
+    if request.method == 'POST':
+
+        print(request.form)
+
+        material=request.form['material']
+        precio=request.form['precio']
+        parte3D=request.form['partes3Dlist']
+
+        mytextura=Precios3DModel(parte3D,material,precio)
+        mytextura.insert_to_db()
+        flash('Exito: Se ha anadido correctamente la textura')
+        return render_template('uploadTextura.html')
+
+    partes=Partes3DModel.query.all()
+    modelos=ModelosModel.query.all()
+    return render_template('uploadPrecio.html',mytitle='Nueva Textura',partes=partes, modelos=modelos)
+
+@editor.route("/borrar/precio/<string:id>", methods=['GET','POST'])
+@login_required
+def borrarPrecio(id):
+    myPrecio=Precios3DModel.find_by_id(id)
+    if myPrecio:
+        myPrecio.delete_from_db()
+        flash('Exito: Precio borrado correctamente')
+        return redirect(url_for('editor.html'))
+    flash('Error: No se ha conseguido eliminar el precio')
+    return redirect(url_for('editor.html'))
+
 @editor.route("/editor")
 def html():
     title = 'Taller Custom'
     if current_user.is_authenticated:
-        return render_template('editor-admin.html')
+        partes = Partes3DModel.query.all()
+        modelos = ModelosModel.query.all()
+        texturas = Opciones3DModel.query.all()
+        precios = Precios3DModel.query.all()
+        return render_template('editor-admin.html',mytitle='Editar Taller',partes=partes, modelos=modelos,
+                               texturas=texturas,precios=precios)
     else:
         #opcionesCuerpo, es un array con las opciones que tiene esa pieza en concreto
         opcionesCuerpo=[]

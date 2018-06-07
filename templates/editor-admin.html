@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% block cover %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <br>
 <div class="container">
        <div class="row">
@@ -48,6 +49,136 @@
                        </div>
                    </div>
                </div>
+               <div class="row">
+                   <!-- Cuarta carta-->
+                   <div id='bloque-carta' class="card polaroid">
+                       <div class="card-header">
+                           <a class="card-link" href="{{ url_for('editor.nuevoPrecio') }}">
+                               <h4 class="card-title2">Precio</h4>
+                           </a>
+                       </div>
+                       <div class="card-body">
+                           <p class="card-text">Formulario para subir al servidor, nuevo precio y material</p>
+                       </div>
+                       <div class="card-footer">
+                           <a href="{{ url_for('editor.nuevoPrecio') }}" class="btn btn-primary mybutton">Subir Precio</a>
+                       </div>
+                   </div>
+               </div>
+           <div id="tablaModelos" class="mytable table-responsive">
+           <h4>Modelos</h4>
+               <table class="table table-sm table-hover table-bordered table-light">
+                   <thead>
+                       <tr>
+                           <th>Modelos</th>
+                           <th>Borrar</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                        {% for modelo in modelos %}
+                            <tr>
+                                <td>{{ modelo.modelo }}</td>
+                                <td>
+                                    <a data-toggle="confirmation" href="{{ url_for('editor.borrarModelo',nombre=modelo.modelo) }}">
+                                        <i class="material-icons myicon">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+           <div id="tablaJSON" class="mytable table-responsive">
+              <h4>JSON</h4>
+               <table class="table table-sm table-hover table-bordered table-light">
+                   <thead>
+                       <tr>
+                           <th>ID</th>
+                           <th>Nombre</th>
+                           <th>Pieza</th>
+                           <th>Modelo</th>
+                           <th>Posicion</th>
+                           <th>Ruta JSON</th>
+                           <th>Foto</th>
+                           <th>Borrar</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                        {% for parte in partes %}
+                            <tr>
+                                <td>{{ parte.id }}</td>
+                                <td>{{ parte.nombre }}</td>
+                                <td>{{ parte.pieza }}</td>
+                                <td>{{ parte.modelo }}</td>
+                                <td>{{ parte.x }}, {{ parte.y }}, {{ parte.z }}</td>
+                                <td>{{ parte.rutaJSON }}</td>
+                                <td>{{ parte.foto }}</td>
+                                <td>
+                                    <a data-toggle="confirmation" href="{{ url_for('editor.borrarJSON',id=parte.id) }}">
+                                        <i class="material-icons myicon">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+           <div id="tablaTexturas" class="mytable table-responsive">
+              <h4>Texturas</h4>
+               <table class="table table-sm table-hover table-bordered table-light">
+                   <thead>
+                       <tr>
+                           <th>Nombre</th>
+                           <th>Parte</th>
+                           <th>Ruta textura</th>
+                           <th>Foto</th>
+                           <th>Borrar</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                        {% for textura in texturas %}
+                            <tr>
+                                <td>{{ textura.nombre }}</td>
+                                <td>{{ textura.parte3D }}</td>
+                                <td>{{ textura.rutaTextura }}</td>
+                                <td>{{ textura.foto }}</td>
+                                <td>
+                                    <a data-toggle="confirmation" href="{{ url_for('editor.borrarTextura',id=textura.id) }}">
+                                        <i class="material-icons myicon">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+           <div id="tablaPrecios" class="mytable table-responsive">
+           <h4>Precios</h4>
+               <table class="table table-sm table-hover table-bordered table-light">
+                   <thead>
+                       <tr>
+                           <th>Parte</th>
+                           <th>Material</th>
+                           <th>Precio</th>
+                           <th>Borrar</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                        {% for precio in precios %}
+                            <tr>
+                                <td>{{ precio.parte3D }}</td>
+                                <td>{{ precio.material }}</td>
+                                <td>{{ precio.precio }}€</td>
+                                <td>
+                                    <a data-toggle="confirmation" href="{{ url_for('editor.borrarPrecio',id=precio.id) }}">
+                                        <i class="material-icons myicon">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                   </tbody>
+               </table>
+           </div>
            </div>
        </div>
     <br>
