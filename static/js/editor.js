@@ -337,11 +337,10 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
     //hace falta poner el event.preventDefault()
     //y pasarselo a la funcion tmbn
     event.preventDefault();
-    $(modalName).modal('hide');
+    $(modalname).modal('hide');
     obj[parte].borrar();
-    var index = myPartes3D.findIndex(x => x.id==pieza);
-    console.log(index);
     $.when(ajax1()).done(function (a1) {
+        var index = myPartes3D.findIndex(x => x.id==pieza);
         cargarJSON(myPartes3D[index].nombre, myPartes3D[index].rutaJSON,
             myOpciones3D[0].nombre, myOpciones3D[0].rutaTextura, parte,
             position, myPartes3D[index].id, modalname);
@@ -389,6 +388,7 @@ function cambiarTextura(event,obj,parte,color,nuevo,modalName){
     }else{
         obj[parte].material= material2;
         if (parte==0){
+            hacerGloss(obj[parte].material);
             miacabado='brillo';
         }else
         if (parte==7){
@@ -515,12 +515,13 @@ animate();
 var opciones3D;
 
 var partes3D;
-$.when(ajaxP1()).done(function (a1) {
+var partes3Ddefecto;
+$.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
     var myposicion;
 
-    for (var i=0;i<partes3D.length;i++){
-        myposicion= {'x':partes3D[i].x,'y':partes3D[i].y,'z':partes3D[i].z};
-        cargarJSON(partes3D[i].nombre, partes3D[i].rutaJSON, '', '', i, myposicion, partes3D[i].id, '#modal' + partes3D[i].pieza + '0');
+    for (var i=0;i<partes3Ddefecto.length;i++){
+        myposicion= {'x':partes3Ddefecto[i].x,'y':partes3Ddefecto[i].y,'z':partes3Ddefecto[i].z};
+        cargarJSON(partes3Ddefecto[i].nombre, partes3Ddefecto[i].rutaJSON, '', '', i, myposicion, partes3Ddefecto[i].id, '#modal' + partes3Ddefecto[i].pieza + '0');
 
     }
 });
@@ -530,13 +531,26 @@ function ajaxP1() {
         dataType: "json",    // Work with the response
         crossdomain: true,
         success: function (response) {
-            partes3D = response;
+            partes3Ddefecto = response;
         },
         error: function (response) {
             console.log('ERROR');
         }
     });
 }
+function ajaxP2(){
+        return $.ajax({
+            url: urlBase+"partes3D/",
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                partes3D = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
 
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
