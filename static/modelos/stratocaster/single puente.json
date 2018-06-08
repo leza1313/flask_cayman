@@ -10,7 +10,7 @@
         "shading":"phong",
         "mapDiffuseWrap":["repeat","repeat"],
         "specularCoef":50,
-        "mapDiffuse":"pastilla puente tele.PNG",
+        "mapDiffuse":"texturas/single puente-mat2.png",
         "visible":true,
         "colorDiffuse":[0.64,0.64,0.64],
         "mapDiffuseAnisotropy":1,

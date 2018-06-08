@@ -19,7 +19,7 @@
         "DbgColor":15658734,
         "visible":true,
         "DbgName":"Material.001",
-        "mapDiffuse":"mastil.PNG",
+        "mapDiffuse":"texturas/mastil-arce.png",
         "depthWrite":true,
         "colorEmissive":[0,0,0],
         "mapDiffuseRepeat":[1,1],

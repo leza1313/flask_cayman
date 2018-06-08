@@ -10,7 +10,7 @@
         "shading":"phong",
         "mapDiffuseWrap":["repeat","repeat"],
         "specularCoef":50,
-        "mapDiffuse":"cejuela.PNG",
+        "mapDiffuse":"texturas/cejuela.png",
         "visible":true,
         "colorDiffuse":[0.64,0.64,0.64],
         "mapDiffuseAnisotropy":1,

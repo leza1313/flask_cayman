@@ -21,7 +21,7 @@
         "DbgIndex":0,
         "doubleSided":false,
         "visible":true,
-        "mapDiffuse":"volumen.PNG",
+        "mapDiffuse":"texturas/volumen-mat.jpg",
         "colorEmissive":[0,0,0],
         "wireframe":false
     }],

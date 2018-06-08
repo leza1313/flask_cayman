@@ -141,7 +141,7 @@
         var guitarobj,golpeadorobj,mastilobj;
         //Importar el modelo STL
         var loader = new THREE.JSONLoader();
-        loader.load( 'static/modelos/stratocaster/humbucker.json',
+        loader.load( 'static/modelos/stratocaster/cuerpo.json',
 
             // onLoad callback
             // Here the loaded data is assumed to be an object
@@ -155,7 +155,7 @@
                     //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
                 });
                  var material1 = new THREE.MeshPhongMaterial({color: 0xffaa00});
-                var object = new THREE.Mesh( geometry, material );
+                var object = new THREE.Mesh( geometry, materials[0] );
                 object.name='mast';
                 object.position.set( 30.52, 12.46, 0);
                 object.scale.set( 0.05, 0.05, 0.05);

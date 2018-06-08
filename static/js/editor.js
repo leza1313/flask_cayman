@@ -209,186 +209,17 @@ function rotateAll(migroup) {
     migroup.rotation.y -= SPEED*2;
 }
 
-/*
-// Define a class like this
-function Person(name, gender){
-
-   // Add object properties like this
-   this.name = name;
-   this.gender = gender;
-}
-
-// Add methods like this.  All Person objects will be able to invoke this
-Person.prototype.speak = function(){
-    alert("Howdy, my name is" + this.name);
-};
-
-// Instantiate new objects with 'new'
-var person = new Person("Bob", "M");
-
-// Invoke methods like this
-//person.speak(); // alerts "Howdy, my name is Bob"
-//*/
-
 function myposition(x,y,z){
     this.x=x;
     this.y=y;
     this.z=z;
 }
 
-/*
-function myguitarrastl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
-    this.cuerpo=cuerpo;
-    this.golpeador=golpeador;
-    this.mastil=mastil;
-    this.p_mastil=p_mastil;
-    this.p_medio=p_medio;
-    this.p_puente=p_puente
-    this.puente=puente;
-    this.per_tono=per_tono;
-    this.per_tono2=per_tono2;
-    this.per_volumen=per_volumen;
-}
-function mypastillas(mastil,medio,puente){
-    this.mastil=mastil;
-    this.medio=medio;
-    this.puente=puente;
-}
-function myperillas(tono,tono2,volumen){
-    this.tono=tono;
-    this.tono2=tono2;
-    this.volumen=volumen;
-}
-
-function mypositionstl(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
-    this.cuerpo=cuerpo;
-    this.golpeador=golpeador;
-    this.mastil=mastil;
-    this.p_mastil=p_mastil;
-    this.p_medio=p_medio;
-    this.p_puente=p_puente
-    this.puente=puente;
-    this.per_tono=per_tono;
-    this.per_tono2=per_tono2;
-    this.per_volumen=per_volumen;
-}
-
-peri = new myperillas('static/modelos/stratocaster/TONO_1.STL',
-    'static/modelos/stratocaster/TONO_2.STL',
-    'static/modelos/stratocaster/VOLUMEN.STL');
-
-pasti = new mypastillas('static/modelos/stratocaster/PASTILLA_MASTIL.STL',
-    'static/modelos/stratocaster/PASTILLA_MEDIO.STL',
-    'static/modelos/stratocaster/PASTILLA_PUENTE.STL');
-//telecaster/CUERPO TELECASTER
-//stratocaster/CUERPO
-guitarra = new myguitarrastl('static/modelos/stratocaster/CUERPO.STL',
-    'static/modelos/stratocaster/GOLPEADOR.STL',
-    'static/modelos/stratocaster/MASTIL.STL',
-    pasti.mastil,pasti.medio,pasti.puente,
-    'static/modelos/stratocaster/PUENTE.STL',
-    peri.tono,peri.tono2,peri.volumen);
-
-posicionstl= new mypositionstl( //Cuerpo
-                                new myposition(5, 10, -20.75),
-                                //Golpeador
-                                new myposition(4.95, 4.778, 3),
-                                //Mastil
-                                new myposition(30.8, 2.88, 2.09),
-                                //Pastillas
-                                new myposition(4.9,3.2, 2.65),
-                                new myposition(4.9,3.2, 2.65),
-                                new myposition(4.9,3.2, 2.65),
-                                //Puente
-                                new myposition(5,3.1, 0.97),
-                                //Perillas
-                                new myposition(4.943,-1.033, 3.067),
-                                new myposition(4.943,-1.033, 3.067),
-                                new myposition(4.943,-1.033, 3.067)
-);
-*/
 miguitarra=[];
 piezasguitarra=[];
-/*
-function Miguitarra(cuerpo,golpeador,mastil,p_mastil,p_medio,p_puente,puente,per_tono,per_tono2,per_volumen){
-    this.cuerpo=cuerpo;
-    this.golpeador=golpeador;
-    this.mastil=mastil;
-    this.p_mastil=p_mastil;
-    this.p_medio=p_medio;
-    this.p_puente=p_puente
-    this.puente=puente;
-    this.per_tono=per_tono;
-    this.per_tono2=per_tono2;
-    this.per_volumen=per_volumen;
-}
-prueba = new Miguitarra();*/
-/*
-//Estos metodos no consiguen hacer que cargue/devuelva los objetos dentro del js.
-//Desde afuera (funciones llamadas desde html) es igual utilizar el set o get Cuerpo que prueba.cuerpo
-Miguitarra.prototype.setCuerpo = function(micuerpo){
-    this.cuerpo=micuerpo;
-};
-Miguitarra.prototype.getCuerpo = function(){
-    console.log(this.cuerpo);
-    return this.cuerpo;
-};*/
-
-materiales=[];
-materiales[0] = new THREE.MeshPhongMaterial( { color: 0xffaa00} );
-materiales[1] = new THREE.MeshPhongMaterial( { color: 0x00aaff} );
-materiales[2] = new THREE.MeshPhongMaterial( { color: 0x00ff6c} );
-materiales[3] = new THREE.MeshPhongMaterial( { color: 0xd8ff00} );
-materiales[4] = new THREE.MeshPhongMaterial( { color: 0x588600} );
-materiales[5] = new THREE.MeshPhongMaterial( { color: 0x001cf7} );
-materiales[6] = new THREE.MeshPhongMaterial( { color: 0xa900f4} );
-materiales[7] = new THREE.MeshPhongMaterial( { color: 0xf400e1} );
-materiales[8] = new THREE.MeshPhongMaterial( { color: 0xf40067} );
-materiales[9] = new THREE.MeshPhongMaterial( { color: 0xf40000} );
-
-modalName=[];
-modalName[0]='#modalModelo';
-modalName[1]='#modalGolpeador';
-modalName[2]='#modalMastil';
-modalName[3]='#modalDiapason';
-modalName[4]='#modalPastilla_Mastil';
-modalName[5]='#modalPastilla_Medio';
-modalName[6]='#modalPastilla_Puente';
-modalName[7]='#modalPuente';
-modalName[8]='#modalTono_1';
-modalName[9]='#modalTono_2';
-modalName[10]='#modalVolumen';
-modalName[11]='#modalTapa';
-modalName[12]='#modalChapa';
-modalName[13]='#modalJack';
 
 var loader = new THREE.STLLoader(loadingManager);
 var loaderJSON = new THREE.JSONLoader(loadingManager);
-
-/*
-function cargarSTL(mystl,myMaterial,sufix,position,modalName) {
-
-    loader.load(mystl, function (geometry) {
-        var myObject = new THREE.Mesh(geometry, myMaterial);
-        myObject.scale.set(0.05, 0.05, 0.05);
-        myObject.position.set(position.x, position.y, position.z);
-        myObject.rotation.set(THREE.Math.degToRad(90), THREE.Math.degToRad(-90), THREE.Math.degToRad(0));
-
-        myObject.callback = function () {
-            $(modalName).modal();
-        }
-        myObject.borrar = function () {
-            scene.remove(myObject);
-        }
-        //Si intento mostrar el objeto desde JS fuera de la funcion no funciona
-        //Sin embargo, al llamar a otras funciones de JS desde HTML si que reconoce el objeto.
-        scene.add(myObject);
-        miguitarra[sufix] = myObject;
-        //Si de aqui guardo por cada iteracion la pieza correspondiente en el objeto de clase Miguitarra
-        // Desde afuera(el html) puedo llamar a funciones pasando como argumento el objeto.cuerpo (prueba.cuerpo)
-        //prueba.cuerpo=myObject;
-    });
-}*/
 
 var miacabado;
 function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName){
@@ -398,15 +229,16 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
 
         //TODO load the 1st option for that part in "opcionesPartes3D" db
         function onLoad( geometry, materials ) {
-            var material = new THREE.MeshPhongMaterial({ transparent: false,
+            /*var material = new THREE.MeshPhongMaterial({ transparent: false,
                 map: THREE.ImageUtils.loadTexture(myMaterial),
                 shininess: 20,//con esto parece que refleja, pero como que ciega un poco
                 specular: 0x444444,//con esto parece que refleja
-                name: color,
+                name: 'pieza'+sufix,
                 color: 0xbbbbbb,
                 //roughness: 0.5,//esto es para MeshStandardMaterial, agranda o achica el foco
                 //metalness: 0.8//esto es para MeshStandardMaterial, cantidad de luz que devuelve
-            });
+            });*/
+            var material = materials[0];
             var object = new THREE.Mesh( geometry, material );
             object.name=nombre;
             //object.position.set( 22.52, 12.46, 0);
@@ -431,23 +263,61 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
                 hacerGloss(material);
                 actualizarDropMaderaCuerpo(piezasguitarra[0]);
             }else
+            if (sufix==1){
+                hacerMate(material);
+            }else
             if (sufix==2){
                 actualizarDropMaderaMastil(piezasguitarra[2]);
+                hacerMate(material);
             }else
             //If the second request finish the last one, it makes de AJAX without knowing the id of the
             // diapason, so it ends with the dropDiapason empty.MOVED TO-> after cargarJSON() for 1st time
             // Now it only loads the dropDowns with the last item involved in wood selection. the Diapason
             if (sufix==3){
                 actualizarDropMaderaDiapason(piezasguitarra[3]);
+                hacerMate(material);
             }else
             if (sufix==4){
                 actualizarDropPastillaMastil(piezasguitarra[4],oldPieza);
+                hacerMate(material);
             }else
             if (sufix==5){
                 actualizarDropPastillaMedio(piezasguitarra[5],oldPieza);
+                hacerMate(material);
             }else
             if (sufix==6){
                 actualizarDropPastillaPuente(piezasguitarra[6],oldPieza);
+                hacerMate(material);
+            }else
+            if (sufix==7){
+                hacerGloss(material);
+            }else
+            if (sufix==8){
+                hacerMate(material);
+            }else
+            if (sufix==9){
+                hacerMate(material);
+            }else
+            if (sufix==10){
+                hacerMate(material);
+            }else
+            if (sufix==11){
+                hacerMate(material);
+            }else
+            if (sufix==12){
+                hacerGloss(material);
+            }else
+            if (sufix==13){
+                hacerGloss(material);
+            }else
+            if (sufix==14){
+                hacerGloss(material);
+            }else
+            if (sufix==15){
+                hacerMate(material);
+            }else
+            if (sufix==16){
+                hacerMate(material);
             }
         },
 
@@ -462,14 +332,7 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
     });
 }
 var counter=0;
-/*
-for(var index in guitarra) {
-    var attr = guitarra[index];
-    if (counter!=0){
-    cargarSTL(attr,materiales[counter],counter,posicionstl[index],modalName[counter]);}
-    counter++;
-}*/
-//cargarJSON('static/modelos/prueba/strat cuerpo.json',materiales[0],0,posicionstl.cuerpo,'#modalCuerpo0');
+
 function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modalname,obj){
     //hace falta poner el event.preventDefault()
     //y pasarselo a la funcion tmbn
@@ -498,7 +361,6 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
     }
 }
 
-//cambiarTextura(event, miguitarra,1,'static/modelos/stratocaster/texturas/golpeador2.jpg','#modalGolpeador0')
 function cambiarTextura(event,obj,parte,color,nuevo,modalName){
     event.preventDefault();
     $(modalName).modal('hide');
@@ -526,8 +388,23 @@ function cambiarTextura(event,obj,parte,color,nuevo,modalName){
         }
     }else{
         obj[parte].material= material2;
-        if (parte==0){miacabado='brillo';}
+        if (parte==0){
+            miacabado='brillo';
+        }else
+        if (parte==7){
+            hacerGloss(obj[parte].material);
+        }else
+        if (parte==12){
+            hacerGloss(obj[parte].material);
+        }else
+        if (parte==13){
+            hacerGloss(obj[parte].material);
+        }else
+        if (parte==14){
+            hacerGloss(obj[parte].material);
+        }
     }
+
 }
 
 function iluminar(parte){
@@ -614,15 +491,9 @@ var animate = function () {
 		    texto=1;
         }
 
-
-		//loadingScreen.sphere.rotation.x += 0.005;
-        //loadingScreen.sphere.rotation.y += 0.005;
         t += 0.05;
         loadingScreen.sphere.position.x = 2*Math.cos(t) + 0;
         loadingScreen.sphere.position.y = 2*Math.sin(t) + 0;
-		//loadingScreen.sphere.position.x -= 0.05;
-		//if( loadingScreen.sphere.position.x < -10 ) loadingScreen.sphere.position.x = 10;
-		//loadingScreen.sphere.position.y = Math.sin(loadingScreen.sphere.position.x);
 
 		renderer.render(loadingScreen.scene, loadingScreen.camera);
 		return; // Stop the function here.
@@ -644,39 +515,18 @@ animate();
 var opciones3D;
 
 var partes3D;
-$.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
-    var myposicion= {'x':partes3D[0].x,'y':partes3D[0].y,'z':partes3D[0].z};
-    var myposicionPastillaMastil= {'x':partes3D[4].x,'y':partes3D[4].y,'z':partes3D[4].z};
-    var myposicionTono2= {'x':partes3D[9].x,'y':partes3D[9].y,'z':partes3D[9].z};
-    var myposicionPuente= {'x':partes3D[7].x,'y':partes3D[7].y,'z':partes3D[7].z};
-    var myposicionGolp= {'x':partes3D[1].x,'y':partes3D[1].y,'z':partes3D[1].z};
-    var myposicionPastillaPuente= {'x':partes3D[6].x,'y':partes3D[6].y,'z':partes3D[6].z};
-    var myposicionClavijero= {'x':partes3D[15].x,'y':partes3D[15].y,'z':partes3D[15].z};
-    var myposicionCejuela= {'x':partes3D[16].x,'y':partes3D[16].y,'z':partes3D[16].z};
-    var myposicionSwitch= {'x':partes3D[17].x,'y':partes3D[17].y,'z':partes3D[17].z};
+$.when(ajaxP1()).done(function (a1) {
+    var myposicion;
 
+    for (var i=0;i<partes3D.length;i++){
+        myposicion= {'x':partes3D[i].x,'y':partes3D[i].y,'z':partes3D[i].z};
+        cargarJSON(partes3D[i].nombre, partes3D[i].rutaJSON, '', '', i, myposicion, partes3D[i].id, '#modal' + partes3D[i].pieza + '0');
 
-    cargarJSON(partes3D[0].nombre,partes3D[0].rutaJSON,opciones3D[0].nombre,opciones3D[0].rutaTextura,0,myposicion,partes3D[0].id,'#modalCuerpo0');
-    cargarJSON(partes3D[1].nombre,partes3D[1].rutaJSON,opciones3D[2].nombre,opciones3D[2].rutaTextura,1,myposicionGolp,partes3D[1].id,'#modalGolpeador0');
-    cargarJSON(partes3D[2].nombre,partes3D[2].rutaJSON,opciones3D[3].nombre,opciones3D[3].rutaTextura,2,myposicion,partes3D[2].id,'#modalMastil0');
-    cargarJSON(partes3D[3].nombre,partes3D[3].rutaJSON,opciones3D[7].nombre,opciones3D[7].rutaTextura,3,myposicion,partes3D[3].id,'#modalDiapason0');
-    cargarJSON(partes3D[4].nombre,partes3D[4].rutaJSON,opciones3D[6].nombre,opciones3D[6].rutaTextura,4,myposicionPastillaMastil,partes3D[4].id,'#modalPastillaMastil0');
-    cargarJSON(partes3D[5].nombre,partes3D[5].rutaJSON,opciones3D[9].nombre,opciones3D[9].rutaTextura,5,myposicion,partes3D[5].id,'#modalPastillaMedio0');
-    cargarJSON(partes3D[6].nombre,partes3D[6].rutaJSON,opciones3D[9].nombre,opciones3D[9].rutaTextura,6,myposicionPastillaPuente,partes3D[6].id,'#modalPastillaPuente0');
-    cargarJSON(partes3D[7].nombre,partes3D[7].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,7,myposicionPuente,partes3D[7].id,'#modalPuente0');
-    cargarJSON(partes3D[8].nombre,partes3D[8].rutaJSON,opciones3D[14].nombre,opciones3D[14].rutaTextura,8,myposicion,partes3D[8].id,'#modalTono10');
-    cargarJSON(partes3D[9].nombre,partes3D[9].rutaJSON,opciones3D[16].nombre,opciones3D[16].rutaTextura,9,myposicionTono2,partes3D[9].id,'#modalTono20');
-    cargarJSON(partes3D[10].nombre,partes3D[10].rutaJSON,opciones3D[18].nombre,opciones3D[18].rutaTextura,10,myposicion,partes3D[10].id,'#modalVolumen0');
-    cargarJSON(partes3D[11].nombre,partes3D[11].rutaJSON,opciones3D[20].nombre,opciones3D[20].rutaTextura,11,myposicion,partes3D[11].id,'#modalTapa0');
-    cargarJSON(partes3D[12].nombre,partes3D[12].rutaJSON,opciones3D[22].nombre,opciones3D[22].rutaTextura,12,myposicion,partes3D[12].id,'#modalChapa0');
-    cargarJSON(partes3D[13].nombre,partes3D[13].rutaJSON,opciones3D[23].nombre,opciones3D[23].rutaTextura,13,myposicion,partes3D[13].id,'#modalJack0');
-    cargarJSON(partes3D[15].nombre,partes3D[15].rutaJSON,opciones3D[12].nombre,opciones3D[12].rutaTextura,14,myposicionClavijero,partes3D[15].id,'#modalClavijero0');
-    cargarJSON(partes3D[16].nombre,partes3D[16].rutaJSON,opciones3D[27].nombre,opciones3D[27].rutaTextura,15,myposicionCejuela,partes3D[16].id,'#modalCejuela0');
-    cargarJSON(partes3D[17].nombre,partes3D[17].rutaJSON,opciones3D[28].nombre,opciones3D[28].rutaTextura,16,myposicionSwitch,partes3D[17].id,'#modalSwitch0');
+    }
 });
 function ajaxP1() {
     return $.ajax({
-        url: urlBase+"partes3D/",
+        url: urlBase+"piezasModelo/stratocaster",
         dataType: "json",    // Work with the response
         crossdomain: true,
         success: function (response) {
@@ -687,20 +537,6 @@ function ajaxP1() {
         }
     });
 }
-function ajaxP2() {
-    return  $.ajax({
-            url: urlBase+"todasOpciones3D/",
-            dataType: "json",    // Work with the response
-            crossdomain: true,
-            success: function (response) {
-                opciones3D = response;
-            },
-            error: function (response) {
-                console.log('ERROR');
-            }
-        });
-}
-
 
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
@@ -853,7 +689,6 @@ function actualizarDropPastillaMastil(partePastillaMastil,oldPieza){
     var html=$(modalBody).html();
     var optOld=$(modalBody).val() || 'fender';
     var optNew;
-    console.log('PIEZA ANT:'+oldPieza);
     $(modalBody).before('<div id="loaderBody3" class="loader"></div>');
     $(modalBody).hide();
     $.when(ajax1()).done(function (a1) {

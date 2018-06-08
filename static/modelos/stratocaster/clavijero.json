@@ -10,7 +10,7 @@
         "shading":"phong",
         "mapDiffuseWrap":["repeat","repeat"],
         "specularCoef":50,
-        "mapDiffuse":"clavijero.PNG",
+        "mapDiffuse":"texturas/clavijero-plata.jpg",
         "visible":true,
         "colorDiffuse":[0.64,0.64,0.64],
         "mapDiffuseAnisotropy":1,
