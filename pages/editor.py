@@ -79,7 +79,7 @@ def nuevoJSON():
         myparte=Partes3DModel(nombre,pieza,modelo,x,y,z,jsonPath,fotoPath)
         myparte.insert_to_db()
         flash('Exito: Se ha anadido correctamente el modelo')
-        return render_template('uploadJSON.html')
+        return redirect(url_for('editor.nuevoJSON'))
 
     modelos=ModelosModel.query.all()
     return render_template('uploadJSON.html',mytitle='Nuevo JSON',modelos=modelos)
@@ -121,7 +121,7 @@ def nuevoTextura():
         mytextura=Opciones3DModel(nombre,texturaPath,fotoPath,parte3D)
         mytextura.insert_to_db()
         flash('Exito: Se ha anadido correctamente la textura')
-        return render_template('uploadTextura.html')
+        return redirect(url_for('editor.nuevoTextura'))
 
     partes=Partes3DModel.query.all()
     modelos=ModelosModel.query.all()
@@ -152,7 +152,7 @@ def nuevoPrecio():
         mytextura=Precios3DModel(parte3D,material,precio)
         mytextura.insert_to_db()
         flash('Exito: Se ha anadido correctamente la textura')
-        return render_template('uploadTextura.html')
+        return redirect(url_for('editor.nuevoPrecio'))
 
     partes=Partes3DModel.query.all()
     modelos=ModelosModel.query.all()

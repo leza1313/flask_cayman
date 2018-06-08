@@ -222,7 +222,7 @@ var loader = new THREE.STLLoader(loadingManager);
 var loaderJSON = new THREE.JSONLoader(loadingManager);
 
 var miacabado;
-function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName){
+function cargarJSON(nombre,mystl,sufix,position,pieza,modalName){
 
 
     loaderJSON.load(mystl,
@@ -333,7 +333,7 @@ function cargarJSON(nombre,mystl,color,myMaterial,sufix,position,pieza,modalName
 }
 var counter=0;
 
-function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modalname,obj){
+function cambiarParte(event,myPartes3D,parte,pieza,position,modalname,obj){
     //hace falta poner el event.preventDefault()
     //y pasarselo a la funcion tmbn
     event.preventDefault();
@@ -342,8 +342,7 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
     $.when(ajax1()).done(function (a1) {
         var index = myPartes3D.findIndex(x => x.id==pieza);
         cargarJSON(myPartes3D[index].nombre, myPartes3D[index].rutaJSON,
-            myOpciones3D[0].nombre, myOpciones3D[0].rutaTextura, parte,
-            position, myPartes3D[index].id, modalname);
+            parte, position, myPartes3D[index].id, modalname);
     });
     function ajax1(){
         return $.ajax({
@@ -357,6 +356,15 @@ function cambiarModelo(event,myPartes3D,myOpciones3D,parte,pieza,position,modaln
                 console.log('ERROR');
             }
         });
+    }
+}
+function cambiarModelo(event,modelo) {
+    quitarGuitarra();
+    cargarModeloDefecto(modelo);
+}
+function quitarGuitarra() {
+    for (var i=0;i<=16;i++){
+        miguitarra[i].borrar();
     }
 }
 
@@ -516,29 +524,30 @@ var opciones3D;
 
 var partes3D;
 var partes3Ddefecto;
-$.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
-    var myposicion;
+function cargarModeloDefecto(modelo){
+    $.when(ajaxP1(),ajaxP2()).done(function (a1,a2) {
+        var myposicion;
 
-    for (var i=0;i<partes3Ddefecto.length;i++){
-        myposicion= {'x':partes3Ddefecto[i].x,'y':partes3Ddefecto[i].y,'z':partes3Ddefecto[i].z};
-        cargarJSON(partes3Ddefecto[i].nombre, partes3Ddefecto[i].rutaJSON, '', '', i, myposicion, partes3Ddefecto[i].id, '#modal' + partes3Ddefecto[i].pieza + '0');
+        for (var i=0;i<partes3Ddefecto.length;i++){
+            myposicion= {'x':partes3Ddefecto[i].x,'y':partes3Ddefecto[i].y,'z':partes3Ddefecto[i].z};
+            cargarJSON(partes3Ddefecto[i].nombre, partes3Ddefecto[i].rutaJSON, i, myposicion, partes3Ddefecto[i].id, '#modal' + partes3Ddefecto[i].pieza + '0');
 
-    }
-});
-function ajaxP1() {
-    return $.ajax({
-        url: urlBase+"piezasModelo/stratocaster",
-        dataType: "json",    // Work with the response
-        crossdomain: true,
-        success: function (response) {
-            partes3Ddefecto = response;
-        },
-        error: function (response) {
-            console.log('ERROR');
         }
     });
-}
-function ajaxP2(){
+    function ajaxP1() {
+        return $.ajax({
+            url: urlBase+"piezasModelo/"+modelo,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                partes3Ddefecto = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
+    function ajaxP2(){
         return $.ajax({
             url: urlBase+"partes3D/",
             dataType: "json",    // Work with the response
@@ -551,7 +560,8 @@ function ajaxP2(){
             }
         });
     }
-
+}
+cargarModeloDefecto('stratocaster');
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
     precio=$('#precio').html()-restarPrecio+sumarPrecio;
@@ -610,12 +620,16 @@ function actualizarDropMaderaCuerpo(parteCuerpo){
         $(modalBody).html(html);
     });
     function ajax1(){
+        console.log('a')
+        //TODO aqui da el fallo de JSON.parse
         //Loading...
         return $.ajax({
             url: urlBase+"todosPrecio3D/"+parteCuerpo,
             dataType: "json",    // Work with the response
             crossdomain: true,
             success: function (response) {
+                console.log(response)
+                console.log('b')
                 preciosCuerpo = response;
             },
             error: function (response) {
