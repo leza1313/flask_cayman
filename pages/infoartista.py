@@ -16,16 +16,31 @@ def html(name):
 @infoartista.route('/editarartista/<string:nombre>', methods=['POST'])
 @login_required
 def editar(nombre):
+    print(request.form)
     producto = ArtistasModel.query.filter_by(nombre=nombre).first()
     producto.nombre=request.form['nombre']
     producto.descripcion=request.form['descrip']
     if request.form['myfoto'].__str__() is not '':
         producto.fotopal=request.form['myfoto']
     producto.actualizar()
+    if 'alt1' not in request.form:
+        flash('Exito: Se ha actualizado el artista correctamente')
+        return redirect(url_for('infoartista.html',name=producto.nombre))
     id = ArtistasModel.find_by_name(nombre).id
     fotos = int((len(request.form)-2)/2)
-    for index in range(1, fotos+1):
+    for index in range(1, fotos):
+        print(index)
         mifoto = FotosArtistasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
         mifoto.insert_to_db()
     flash('Exito: Se ha actualizado el artista correctamente')
-    return redirect(url_for('infoartista.html', nombre=nombre))
+    return redirect(url_for('infoartista.html', name=producto.nombre))
+
+@infoartista.route('/borrarinfoartistafoto/<string:nombre>/<string:id>')
+@login_required
+def borrar(nombre, id):
+    url = 'https://ucarecdn.com/'+id+'/'
+    mifoto = FotosArtistasModel.find_by_name(url)
+    if mifoto:
+        mifoto.delete_from_db()
+        flash('Exito: Se ha borrado la foto del artista correctamente')
+    return redirect(url_for('infoartista.html', name=nombre))

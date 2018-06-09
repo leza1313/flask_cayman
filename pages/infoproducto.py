@@ -37,12 +37,12 @@ def editar(tipo,nombre):
         if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
-        if 'alt1' not in request.args:
+        if 'alt1' not in request.form:
             flash('Exito: Se ha actualizado el bajo correctamente')
             return redirect(url_for('infoproducto.html', tipo='bajo', nombre=producto.nombre))
         id = BajosModel.find_by_name(nombre).id
-        fotos = int((len(request.form)-2)/2)
-        for index in range(1, fotos+1):
+        fotos = int((len(request.form)-9)/2)
+        for index in range(1, fotos):
             if request.form['myfoto'+index.__str__()] is '':
                 flash('Error: Es necesario seleccionar una imagen')
                 return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
@@ -66,17 +66,21 @@ def editar(tipo,nombre):
         if request.form['myfoto'].__str__() is not '':
             producto.fotopal=request.form['myfoto']
         producto.actualizar()
-        if 'alt1' not in request.args:
+        if 'alt1' not in request.form:
             flash('Exito: Se ha actualizado la guitarra correctamente')
             return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
         id = GuitarrasModel.find_by_name(nombre).id
-        fotos = int((len(request.form)-2)/2)
-        for index in range(1, fotos+1):
+        fotos = int((len(request.form)-9)/2)
+        for index in range(1, fotos):
+            print(index)
             if request.form['myfoto'+index.__str__()] is '':
                 flash('Error: Es necesario seleccionar una imagen')
                 return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
+            print('a')
             mifoto = FotosGuitarrasModel(request.form['alt' + index.__str__()],request.form['myfoto' + index.__str__()],id)
+            print('b')
             mifoto.insert_to_db()
+            print('c')
 
         flash('Exito: Se ha actualizado la guitarra correctamente')
         return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))

@@ -20,7 +20,8 @@ var nombre = document.URL.split('/')[4]
 
 for (i = 0; i < foto.length; i++) {
     var id=src[i].src.split('/')[3];//
-    //console.log(id);
+    console.log(src);
+    console.log(id);
     var aTag3 = document.createElement('a');
     //Cargar clase del enlace
     aTag3.setAttribute('class','enlaces-fotos-info');
