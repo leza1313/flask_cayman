@@ -1,4 +1,22 @@
 {% extends "core/base.html" %}
 {% block cover %}
-<h1>Pago correcto</h1>
+    <br>
+    <br>
+<div id='bloque-carta' class="card polaroid  col-md-6">
+   <div class="card-header">
+       <h4 class="" style="font-family: 'Lato', sans-serif;font-size: 26px;color: #49a9b9;">Compra finalizada</h4>
+   </div>
+   <div class="card-body">
+       <img src="{{ url_for('static',filename='img/manos.jpg') }}" alt="" width="400">
+       <br>
+       <p class="card-text">
+           Gracias por confiar en nosotros, nos pondremos en contacto contigo
+           para determinar detalles como método y fecha de entrega.
+       </p>
+   </div>
+   <div class="card-footer">
+       <a href="{{ url_for('index') }}" class="btn btn-primary mybutton">Volver a Inicio</a>
+   </div>
+</div>
+    <br>
 {% endblock %}

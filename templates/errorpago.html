@@ -1,4 +1,23 @@
 {% extends "core/base.html" %}
 {% block cover %}
-<h1>Pago cancelado</h1>
+    <br>
+    <br>
+<div id='bloque-carta' class="card polaroid  col-md-6">
+   <div class="card-header">
+       <h4 class="" style="font-family: 'Lato', sans-serif;font-size: 26px;color: #49a9b9;">
+           Compra Cancelada</h4>
+   </div>
+   <div class="card-body">
+       <br>
+       <p class="card-text">
+           Esperamos que sigas confiando en nosotros para tus futuras compras.
+           <br>
+           Si tienes cualquier duda consúltanos lo que quieras <a href="{{ url_for('contacto') }}">aquí mismo</a>
+       </p>
+   </div>
+   <div class="card-footer">
+       <a href="{{ url_for('index') }}" class="btn btn-primary mybutton">Volver a Inicio</a>
+   </div>
+</div>
+    <br>
 {% endblock %}
