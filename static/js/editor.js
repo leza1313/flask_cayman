@@ -371,6 +371,7 @@ function quitarGuitarra() {
 function cambiarTextura(event,obj,parte,color,nuevo,modalName){
     event.preventDefault();
     $(modalName).modal('hide');
+    console.log(nuevo)
     //var urlMatViejo=urlBase + "precio3D/" + piezasguitarra[parte] + "/" + obj[parte].material.name;
     var material2 = new THREE.MeshPhongMaterial({ transparent: false,
         map: THREE.ImageUtils.loadTexture(nuevo),

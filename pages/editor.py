@@ -191,16 +191,18 @@ def html():
         opcionesTono1=[]
         opcionesTono2=[]
         opcionesVolumen=[]
-        #opcionesClavijero=[]
+        opcionesClavijero=[]
         opcionesDiapason=[]
         opcionesTapa=[]
         opcionesChapa=[]
         opcionesJack=[]
+        opcionesCejuela=[]
+        opcionesSwitch=[]
 
 
         #cuerpos, es un array con todos los cuerpos disponibles
         cuerpos=Partes3DModel.find_by_pieza('Cuerpo')
-        print(cuerpos)
+        #print(cuerpos)
         golpeadores=Partes3DModel.find_by_pieza('Golpeador')
         mastiles=Partes3DModel.find_by_pieza('Mastil')
         pastillasMastil=Partes3DModel.find_by_pieza('PastillaMastil')
@@ -210,11 +212,14 @@ def html():
         tonos1=Partes3DModel.find_by_pieza('Tono1')
         tonos2=Partes3DModel.find_by_pieza('Tono2')
         volumenes=Partes3DModel.find_by_pieza('Volumen')
-        #clavijeros=Partes3DModel.find_by_pieza('Clavijero')
+        clavijeros=Partes3DModel.find_by_pieza('Clavijero')
         diapasones=Partes3DModel.find_by_pieza('Diapason')
         tapas=Partes3DModel.find_by_pieza('Tapa')
         chapas=Partes3DModel.find_by_pieza('Chapa')
         jacks=Partes3DModel.find_by_pieza('Jack')
+        cejuelas=Partes3DModel.find_by_pieza('Cejuela')
+        switches=Partes3DModel.find_by_pieza('Switch')
+
 
         opcionesModelo1=[]
         for index, item in enumerate(cuerpos):
@@ -304,6 +309,25 @@ def html():
             opcionesJack.append(Opciones3DModel.find_by_parte(item.id))
             aux = myOpciones(item.rutaJSON, item.foto)
             opcionesJack1.append(aux)
+
+        opcionesCejuela1 = []
+        for index, item in enumerate(cejuelas):
+            opcionesCejuela.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesCejuela1.append(aux)
+
+        opcionesClavijero1 = []
+        for index, item in enumerate(clavijeros):
+            opcionesClavijero.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesClavijero1.append(aux)
+
+        opcionesSwitch1 = []
+        for index, item in enumerate(switches):
+            opcionesSwitch.append(Opciones3DModel.find_by_parte(item.id))
+            aux = myOpciones(item.rutaJSON, item.foto)
+            opcionesSwitch1.append(aux)
+
 
         ########################################
         ##LISTA DE LOS MODELOS CON SUS OPCIONES#
@@ -397,6 +421,26 @@ def html():
                 myModal('modalJack' + index.__str__(), 'Escoge  Jack', opcionesJack1,
                         opcionesJack1[index]))
 
+        listaCejuelas = []
+        for index, item in enumerate(cejuelas):
+            listaCejuelas.append(
+                myModal('modalCejuela' + index.__str__(), 'Escoge  Cejuela', opcionesCejuela1,
+                        opcionesCejuela1[index]))
+
+        listaClavijeros=[]
+        for index, item in enumerate(clavijeros):
+            listaClavijeros.append(
+                myModal('modalClavijero' + index.__str__(), 'Escoge  Clavijero', opcionesClavijero1,
+                        opcionesClavijero1[index]))
+        listaSwitches=[]
+        print(switches)
+        for index, item in enumerate(switches):
+            print(index)
+            print(opcionesSwitch1)
+            listaSwitches.append(
+                myModal('modalSwitch' + index.__str__(), 'Escoge  Switch', opcionesSwitch1,
+                        opcionesSwitch1[index]))
+
         lista = [
             listaCuerpos,
             listaGolpeadores,
@@ -411,7 +455,11 @@ def html():
             listaVolumenes,
             listaTapas,
             listaChapas,
-            listaJacks
+            listaJacks,
+            listaCejuelas,
+            listaClavijeros,
+            listaSwitches,
+
         ]
         #print(lista[0][0].opcionesModelo[1].modelo)
         return render_template('loader.html', mytitle=title, lista=lista, cuerpos=cuerpos,
