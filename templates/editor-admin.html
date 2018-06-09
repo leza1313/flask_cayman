@@ -4,7 +4,7 @@
 <br>
 <div class="container">
        <div class="row">
-           <div class="card-deck">
+               <div class="col-sm-4">
                    <!-- Primera carta-->
                    <div id='bloque-carta' class="card polaroid">
                        <div class="card-header">
@@ -19,6 +19,8 @@
                            <a href="{{ url_for('editor.nuevoModelo') }}" class="btn btn-primary mybutton">Crear Nuevo Modelo</a>
                        </div>
                    </div>
+               </div>
+               <div class="col-sm-4">
                    <!-- Segunda carta-->
                    <div id='bloque-carta' class="card polaroid">
                        <div class="card-header">
@@ -33,8 +35,9 @@
                            <a href="{{ url_for('editor.nuevoJSON') }}" class="btn btn-primary mybutton">Subir JSON</a>
                        </div>
                    </div>
-
+               </div>
                    <!-- Tercera carta-->
+               <div class="col-sm-4">
                    <div id='bloque-carta' class="card polaroid">
                        <div class="card-header">
                            <a class="card-link" href="{{ url_for('editor.nuevoTextura') }}">
@@ -48,23 +51,26 @@
                            <a href="{{ url_for('editor.nuevoTextura') }}" class="btn btn-primary mybutton">Subir Textura</a>
                        </div>
                    </div>
-               </div>
-               <div class="row">
-                   <!-- Cuarta carta-->
-                   <div id='bloque-carta' class="card polaroid">
-                       <div class="card-header">
-                           <a class="card-link" href="{{ url_for('editor.nuevoPrecio') }}">
-                               <h4 class="card-title2">Precio</h4>
-                           </a>
-                       </div>
-                       <div class="card-body">
-                           <p class="card-text">Formulario para subir al servidor, nuevo precio y material</p>
-                       </div>
-                       <div class="card-footer">
-                           <a href="{{ url_for('editor.nuevoPrecio') }}" class="btn btn-primary mybutton">Subir Precio</a>
-                       </div>
+           </div>
+       </div>
+       <div class="row">
+           <!-- Cuarta carta-->
+           <div class="col-sm-4">
+               <div id='bloque-carta' class="card polaroid">
+                   <div class="card-header">
+                       <a class="card-link" href="{{ url_for('editor.nuevoPrecio') }}">
+                           <h4 class="card-title2">Precio</h4>
+                       </a>
+                   </div>
+                   <div class="card-body">
+                       <p class="card-text">Formulario para subir al servidor, nuevo precio y material</p>
+                   </div>
+                   <div class="card-footer">
+                       <a href="{{ url_for('editor.nuevoPrecio') }}" class="btn btn-primary mybutton">Subir Precio</a>
                    </div>
                </div>
+           </div>
+       </div>
            <div id="tablaModelos" class="mytable table-responsive">
            <h4>Modelos</h4>
                <table class="table table-sm table-hover table-bordered table-light">
@@ -178,7 +184,6 @@
                         {% endfor %}
                    </tbody>
                </table>
-           </div>
            </div>
        </div>
     <br>

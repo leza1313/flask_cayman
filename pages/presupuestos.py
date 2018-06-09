@@ -7,20 +7,21 @@ from models.presupuestos import PresupuestosModel
 
 import datetime
 
-@login_required
+
 @presupuestos.route("/presupuestos", methods=['GET'])
+@login_required
 def html():
     mypresupuestos= PresupuestosModel.query.all()
     return render_template('presupuestos.html',mytitle='Presupuestos', mypresupuestos=mypresupuestos)
 
-@login_required
 @presupuestos.route("/presupuestos/<string:id>", methods=['GET'])
+@login_required
 def info(id):
     mypresupuesto = PresupuestosModel.find_by_id(id)
     return render_template('presupuestoInfo.html',mytitle='Info Presupuesto', mypresupuesto=mypresupuesto)
 
-@login_required
 @presupuestos.route("/presupuestos/borrar/<string:id>", methods=['GET'])
+@login_required
 def borrar(id):
     mypresupuesto = PresupuestosModel.find_by_id(id)
     if mypresupuesto:
