@@ -38,6 +38,15 @@ class TodosPrecio3D(Resource):
     def get(self, parte3D):
         return [opcion.json() for opcion in Precios3DModel.find_by_parte(parte3D)]
 
+class PastillasModelo(Resource):
+
+    def get(self, modelo,past):
+
+        pastillas=Partes3DModel.query.filter_by(pieza=past)
+        pastMod=pastillas.filter(Partes3DModel.modelo==modelo).all()
+        return [opcion.json() for opcion in pastMod]
+
+
 class ModeloDefecto(Resource):
     """0,'#modalCuerpo0'
     1,'#modalGolpeador0'

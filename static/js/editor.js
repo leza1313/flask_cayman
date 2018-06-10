@@ -361,6 +361,9 @@ function cambiarParte(event,myPartes3D,parte,pieza,position,modalname,obj){
 function cambiarModelo(event,modelo) {
     quitarGuitarra();
     cargarModeloDefecto(modelo);
+    actualizarModalPastillas(4,modelo);
+    actualizarModalPastillas(5,modelo);
+    actualizarModalPastillas(6,modelo);
 }
 function quitarGuitarra() {
     for (var i=0;i<=16;i++){
@@ -371,7 +374,6 @@ function quitarGuitarra() {
 function cambiarTextura(event,obj,parte,color,nuevo,modalName){
     event.preventDefault();
     $(modalName).modal('hide');
-    console.log(nuevo)
     //var urlMatViejo=urlBase + "precio3D/" + piezasguitarra[parte] + "/" + obj[parte].material.name;
     var material2 = new THREE.MeshPhongMaterial({ transparent: false,
         map: THREE.ImageUtils.loadTexture(nuevo),
@@ -563,6 +565,9 @@ function cargarModeloDefecto(modelo){
     }
 }
 cargarModeloDefecto('stratocaster');
+actualizarModalPastillas(4,'stratocaster');
+actualizarModalPastillas(5,'stratocaster');
+actualizarModalPastillas(6,'stratocaster');
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
     precio=$('#precio').html()-restarPrecio+sumarPrecio;
@@ -576,7 +581,6 @@ function actualizarBody2(parte,pieza,modalname){
         $(modalname+'Body2').show();
         $('#loaderBody2').remove();
         var html='';
-        console.log(parte)
         for (var i=0;i<opciones3D.length;i++) {
             html=html.concat('<a onclick="cambiarTextura(event, miguitarra,'+parte+',');
             html=html.concat("'"+opciones3D[i].nombre+"',");
@@ -621,7 +625,6 @@ function actualizarDropMaderaCuerpo(parteCuerpo){
         $(modalBody).html(html);
     });
     function ajax1(){
-        console.log('a')
         //TODO aqui da el fallo de JSON.parse
         //Loading...
         return $.ajax({
@@ -629,8 +632,6 @@ function actualizarDropMaderaCuerpo(parteCuerpo){
             dataType: "json",    // Work with the response
             crossdomain: true,
             success: function (response) {
-                console.log(response)
-                console.log('b')
                 preciosCuerpo = response;
             },
             error: function (response) {
@@ -1069,6 +1070,58 @@ function cambioPastilla(val,past){
             crossdomain: true,
             success: function (response) {
                 precioNuevo = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
+}
+function actualizarModalPastillas(past,modelo) {
+    var modalname='#pastillas';
+    var modalname2='#modalPastilla'
+    var pastModelo;
+    var pastilla='Pastilla';
+    if (past==4){
+        modalname=modalname.concat('Mastil');
+        modalname2=modalname2.concat('Mastil0');
+        pastilla=pastilla.concat('Mastil');
+    }else if (past==5){
+        modalname=modalname.concat('Medio');
+        modalname2=modalname2.concat('Medio0');
+        pastilla=pastilla.concat('Medio');
+    }else if(past==6){
+        modalname=modalname.concat('Puente');
+        modalname2=modalname2.concat('Puente0');
+        pastilla=pastilla.concat('Puente');
+    }
+    $(modalname).before('<div id="loaderPastillas" class="loader"></div>');
+    $(modalname).hide();
+    //Peticion ajax
+    $.when(ajax1()).done(function (a1) {
+        $(modalname).show();
+        $('#loaderPastillas').remove();
+        var html='';
+        for (var i=0;i<pastModelo.length;i++) {
+            var myPosicion="{'x':"+pastModelo[i].x+",'y':"+pastModelo[i].y+",'z':"+pastModelo[i].z+"}";
+            html=html.concat('<a onclick="cambiarParte(event, partes3D,'+past+',');
+            html=html.concat(""+pastModelo[i].id+",");
+            html=html.concat(myPosicion);
+            html=html.concat(',\''+modalname2+'\',');
+            html=html.concat("miguitarra)");
+            html=html.concat('"><img class=\'myimage\' src=static/img/'+pastModelo[i].foto+' ' );
+            html=html.concat('width=\'200\' height=\'115\'>' );
+            html=html.concat('</a>');
+        }
+        $(modalname).html(html);
+    });
+    function ajax1(){
+        return $.ajax({
+            url: urlBase+"pastModelo/"+modelo+'/'+pastilla,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                pastModelo = response;
             },
             error: function (response) {
                 console.log('ERROR');

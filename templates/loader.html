@@ -117,33 +117,39 @@
                     </div>
                     <div id="" class="modal-body">
                         <h6 id="labelPastillaMastil">Pastilla Mastil</h6>
-                        {% for modelo in  pastillasMastil%}
-                            <!-- Esto cambia bien de modelo, falta corregir cambiar la textura de ese nuevo modelo-->
-                            <a onclick="cambiarParte(event,partes3D,4,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
-                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
-                                     width='200' height="115"></a>
-                        {% endfor %}
+                            <div id="pastillasMastil">
+                                {% for modelo in  pastillasMastil%}
+                                    <!-- Esto cambia bien de modelo, falta corregir cambiar la textura de ese nuevo modelo-->
+                                    <a onclick="cambiarParte(event,partes3D,4,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                        <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                             width='200' height="115"></a>
+                                {% endfor %}
+                            </div>
                         <br>
                         <label for="dropPastillaMastil">Escoge marca de pastilla:</label>
                         <select id="dropPastillaMastil" onchange="cambioPastilla(this.value,4)" onfocus="valViejo(this.value)">
 
                         </select>
                         <h6>Pastilla Medio</h6>
-                        {% for modelo in pastillasMedio %}
-                            <a onclick="cambiarParte(event,partes3D,5,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
-                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
-                                                         data-dismiss='modal' width='200' height="115"></a>
-                        {% endfor %}
+                            <div id="pastillasMedio">
+                                {% for modelo in pastillasMedio %}
+                                    <a onclick="cambiarParte(event,partes3D,5,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                        <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                                 data-dismiss='modal' width='200' height="115"></a>
+                                {% endfor %}
+                            </div>
                         <br>
                         <label for="dropPastillaMedio">Escoge marca de pastilla:</label>
                         <select id="dropPastillaMedio" onchange="cambioPastilla(this.value,5)" onfocus="valViejo(this.value)">
                         </select>
                         <h6>Pastilla Puente</h6>
-                        {% for modelo in  pastillasPuente%}
-                            <a onclick="cambiarParte(event,partes3D,6,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
-                                <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
-                                                         data-dismiss='modal' width='200' height="115"></a>
-                        {% endfor %}
+                            <div id="pastillasPuente">
+                                {% for modelo in  pastillasPuente%}
+                                    <a onclick="cambiarParte(event,partes3D,6,{{ modelo.id }},{'x':{{ modelo.x }},'y':{{ modelo.y }},'z':{{ modelo.z }}},'#modalPastillaMastil0',miguitarra)">
+                                        <img class="myimage" src='static/img/{{ modelo.foto }}' data-toggle=''
+                                                                 data-dismiss='modal' width='200' height="115"></a>
+                                {% endfor %}
+                            </div>
                         <br>
                         <label for="dropPastillaPuente">Escoge marca de pastilla:</label>
                         <select id="dropPastillaPuente" onchange="cambioPastilla(this.value,6)" onfocus="valViejo(this.value)">
