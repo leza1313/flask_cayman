@@ -101,7 +101,7 @@
                 <table class="table table-sm table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Estado</th>
                             <!--<th>pago_id</th>-->
                             <th>FACTURA</th>
                             <th>NUMERO_SERIE</th>
@@ -128,7 +128,11 @@
                         {% else %}
                         <tr>
                         {% endif %}
-                            <td>{{ pedido.id }}</td>
+                            <td>{% if pedido.fecha_salida %}
+                                Entregado
+                                {% else %}
+                                En proceso
+                            {% endif %}</td>
                             <!--<td>{{ pedido.pago_id }}</td>-->
                             <td>{{ pedido.factura }}</td>
                             <td>{{ pedido.numero_serie }}</td>
