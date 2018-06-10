@@ -31,9 +31,12 @@ def paypal_ipn2():
         lastPedido = PedidosModel.find_last()
         if lastPedido:
             serial = lastPedido.numero_serie
+            if serial.__len__() < 7:
+                serial='0101001'
             month = int(serial[0]+serial[1])
             year = int("20"+serial[2]+serial[3])
             num = int(serial[4]+serial[5]+serial[6])
+
 
             today=datetime.date.today()
 
@@ -116,7 +119,6 @@ def paypal_ipn2():
 
         fecha = datetime.datetime.now().__str__()
 
-        #TODO maybe add a new table in the db with reparations and/or notes
         observaciones="Campo para rellenar con observaciones"
 
         pago_id=values['txn_id']
@@ -135,6 +137,8 @@ def paypal_ipn2():
         mypedido = PedidosModel(pago_id,factura,numero_serie,modelo,acabado,pastillas,puente,electronica,clavijero,
                                 nombre,direccion,telefono,email,
                                 precio,fecha,observaciones)
+        #app.logger.warning(mypedido)
+        print(mypedido)
         mypedido.insert_to_db()
 
     else:
