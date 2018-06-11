@@ -49,8 +49,12 @@ class PastillasModelo(Resource):
 class ModeloComponentes(Resource):
 
     def get(self, modelo):
-        defecto=Partes3DModel.query.filter_by(modelo=modelo)
-        return [opcion.json() for opcion in defecto]
+        defecto=Partes3DModel.query.filter_by(modelo=modelo).all()
+        aux=[]
+        for opcion in defecto:
+            if opcion.pieza!='Cuerpo' and opcion.pieza!='PastillaMastil' and opcion.pieza!='PastillaMedio' and opcion.pieza!='PastillaPuente':
+                aux.append(opcion)
+        return [opcion.json() for opcion in aux]
 
 class ModeloDefecto(Resource):
     """0,'#modalCuerpo0'
