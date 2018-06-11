@@ -364,6 +364,7 @@ function cambiarModelo(event,modelo) {
     actualizarModalPastillas(4,modelo);
     actualizarModalPastillas(5,modelo);
     actualizarModalPastillas(6,modelo);
+    actualizarComponentes(modelo);
 }
 function quitarGuitarra() {
     for (var i=0;i<=16;i++){
@@ -568,6 +569,7 @@ cargarModeloDefecto('stratocaster');
 actualizarModalPastillas(4,'stratocaster');
 actualizarModalPastillas(5,'stratocaster');
 actualizarModalPastillas(6,'stratocaster');
+actualizarComponentes('stratocaster');
 
 function actualizarPrecio(restarPrecio,sumarPrecio) {
     precio=$('#precio').html()-restarPrecio+sumarPrecio;
@@ -1128,6 +1130,86 @@ function actualizarModalPastillas(past,modelo) {
             }
         });
     }
+}
+function actualizarComponentes(modelo) {
+    var modalname='#componentesBody';
+    var componentes;
+    var parte;
+    $(modalname).before('<div id="loaderComponentes" class="loader"></div>');
+    $(modalname).hide();
+    //Peticion ajax
+    $.when(ajax1()).done(function (a1) {
+        $(modalname).show();
+        $('#loaderComponentes').remove();
+        var html='';
+        for (var i=0;i<componentes.length;i++) {
+            var myPosicion="{'x':"+componentes[i].x+",'y':"+componentes[i].y+",'z':"+componentes[i].z+"}";
+            parte=pieza2parte(componentes[i].pieza)
+            html=html.concat('<a onclick="cambiarParte(event, partes3D,'+(parte-1) +',');
+            html=html.concat(""+componentes[i].id+",");
+            html=html.concat(myPosicion);
+            html=html.concat(',\'#modal'+componentes[i].pieza+'0\',');
+            html=html.concat("miguitarra)");
+            html=html.concat('"><img class=\'myimage\' src=static/img/'+componentes[i].foto+' ' );
+            html=html.concat(' data-dismiss=\'modal\'width=\'200\' height=\'115\'>' );
+            html=html.concat('</a>');
+        }
+        $(modalname).html(html);
+    });
+    function ajax1(){
+        return $.ajax({
+            url: urlBase+"componentesModelo/"+modelo,
+            dataType: "json",    // Work with the response
+            crossdomain: true,
+            success: function (response) {
+                componentes = response;
+            },
+            error: function (response) {
+                console.log('ERROR');
+            }
+        });
+    }
+}
+function pieza2parte(pieza){
+    var parte;
+    if(pieza=='Cuerpo'){
+        parte=1;
+    }else if(pieza=='Golpeador'){
+        parte=2;
+    }else if(pieza=='Mastil'){
+        parte=3;
+    }else if(pieza=='Diapason'){
+        parte=4;
+    }else if(pieza=='PastillaMastil'){
+        parte=5;
+    }else if(pieza=='PastillaMedio'){
+        parte=6;
+    }else if(pieza=='PastillaPuente'){
+        parte=7;
+    }else if(pieza=='Puente'){
+        parte=8;
+    }else if(pieza=='Tono1'){
+        parte=9;
+    }else if(pieza=='Tono2'){
+        parte=10;
+    }else if(pieza=='Volumen'){
+        parte=11;
+    }else if(pieza=='Tapa'){
+        parte=12;
+    }else if(pieza=='Chapa'){
+        parte=13;
+    }else if(pieza=='Jack'){
+        parte=14;
+    }else if(pieza=='Clavijero'){
+        parte=15;
+    }else if(pieza=='Cejuela'){
+        parte=16;
+    }else if(pieza=='Switch'){
+        parte=17;
+    }else{
+        parte=99;
+    }
+    return parte;
 }
 function cargarForm() {
     var modelo;

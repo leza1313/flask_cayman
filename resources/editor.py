@@ -46,6 +46,11 @@ class PastillasModelo(Resource):
         pastMod=pastillas.filter(Partes3DModel.modelo==modelo).all()
         return [opcion.json() for opcion in pastMod]
 
+class ModeloComponentes(Resource):
+
+    def get(self, modelo):
+        defecto=Partes3DModel.query.filter_by(modelo=modelo)
+        return [opcion.json() for opcion in defecto]
 
 class ModeloDefecto(Resource):
     """0,'#modalCuerpo0'
