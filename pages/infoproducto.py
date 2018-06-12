@@ -86,10 +86,11 @@ def editar(tipo,nombre):
         return redirect(url_for('infoproducto.html', tipo='guitarra', nombre=producto.nombre))
     return redirect(url_for('infoproducto.html', tipo=tipo, nombre=nombre))
 
-@infoproducto.route('/borrarinfoproductofoto/<string:tipo>/<string:nombre>/<string:id>')
+@infoproducto.route('/borrarinfoproductofoto/<string:tipo>/<string:nombre>/<string:id>/<string:crop2>/<string:crop3>')
 @login_required
-def borrar(tipo, nombre, id):
-    url = 'https://ucarecdn.com/'+id+'/'
+def borrar(tipo, nombre, id,crop2,crop3):
+    url = 'https://ucarecdn.com/'+id+'/-/crop/'+crop2+'/'+crop3+'/-/preview/'
+    print(url)
     if tipo=='bajo':
         mifoto = FotosBajosModel.find_by_name(url)
     if tipo=='guitarra':

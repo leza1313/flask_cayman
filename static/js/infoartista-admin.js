@@ -19,14 +19,15 @@ var src = document.getElementsByClassName('mifoto');
 var nombre = document.URL.split('/')[4]
 
 for (i = 0; i < foto.length; i++) {
-    var id=src[i].src.split('/')[3];//
-    console.log(src);
-    console.log(id);
+    var id=src[i].src.split('com/')[1];
+    var crop1=id.split('/')[0];
+    var crop2=id.split('/')[3];
+    var crop3=id.split('/')[4];
     var aTag3 = document.createElement('a');
     //Cargar clase del enlace
     aTag3.setAttribute('class','enlaces-fotos-info');
     aTag3.innerHTML = 'x';
-    aTag3.setAttribute('href','/borrarinfoartistafoto/'+nombre+'/'+id);
+    aTag3.setAttribute('href','/borrarinfoartistafoto/'+nombre+'/'+crop1+'/'+crop2+'/'+crop3);
     aTag3.setAttribute('data-toggle','confirmation');
     //Añade el elemento aTag3 despues de tarjeta[i]
     foto[i].parentNode.insertBefore(aTag3, foto[i].nextSibling);

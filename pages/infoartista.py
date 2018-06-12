@@ -35,10 +35,10 @@ def editar(nombre):
     flash('Exito: Se ha actualizado el artista correctamente')
     return redirect(url_for('infoartista.html', name=producto.nombre))
 
-@infoartista.route('/borrarinfoartistafoto/<string:nombre>/<string:id>')
+@infoartista.route('/borrarinfoartistafoto/<string:nombre>/<string:id>/<string:crop2>/<string:crop3>')
 @login_required
-def borrar(nombre, id):
-    url = 'https://ucarecdn.com/'+id+'/'
+def borrar(nombre, id,crop2,crop3):
+    url = 'https://ucarecdn.com/' + id + '/-/crop/' + crop2 + '/' + crop3 + '/-/preview/'
     mifoto = FotosArtistasModel.find_by_name(url)
     if mifoto:
         mifoto.delete_from_db()
