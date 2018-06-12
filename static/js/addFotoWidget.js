@@ -25,8 +25,7 @@ function addFotoWidget(){
     widget.setAttribute('role','uploadcare-uploader');
     widget.setAttribute('name','myfoto'+cont);
     cont++;
-    widget.setAttribute('data-crop','disabled');
-    widget.setAttribute('data-preview-step','true');
+    widget.setAttribute('data-crop','510x382 minimum');
     widget.setAttribute('data-images-only','true');
     mas.parentNode.insertBefore(widget, mas);
     var br2 = document.createElement('br');
