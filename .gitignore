@@ -2,6 +2,11 @@ config.py
 .idea/*
 venv1/*
 venv/*
+static/modelos/*
+static/img/*
+*.jpg
+*.png
+*.jpeg
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
