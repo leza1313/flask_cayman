@@ -62,12 +62,12 @@
                             <br>
                             <label for="myfoto" class="">Foto Principal: </label>
                             <input type="hidden" role="uploadcare-uploader" name="myfoto"
-                                                  data-crop="350x350 minimum"
+                                                  data-crop="350:350"
                                                   data-images-only="true" />
                         </div>
                         <div class="form-group">
                             {% for fotos in miproducto.fotos %}
-                                <img class="mifoto" src="{{ fotos.url }}-/resize/200x200/" alt="{{ fotos.nombre }}">
+                                <img class="mifoto" src="{{ fotos.url }}-/resize/200x150/" alt="{{ fotos.nombre }}">
                             {% endfor %}
 
                         </div>
@@ -99,8 +99,8 @@
 
                    </div>
                    <div class="foto-min">
-                        {% for foto in miproducto.fotos %}
-                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></div>
+                         {% for foto in miproducto.fotos %}
+                       <div><img src="{{ foto.url }}-/resize/300x225/" alt="{{ foto.nombre }}"></div>
                         {% endfor %}
                    </div>
                 </div>

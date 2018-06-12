@@ -34,7 +34,7 @@
                             <br>
                             <label for="myfoto" class="">Foto Principal: </label>
                             <input type="hidden" role="uploadcare-uploader" name="myfoto"
-                                                  data-crop="350x350 minimum"
+                                                  data-crop="350:350"
                                                   data-images-only="true" required/>
                         </div>
                         <div class="form-group">
@@ -71,7 +71,7 @@
                    </div>
                    <div class="foto-min">
                        {% for foto in myartista.fotos %}
-                       <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></div>
+                       <div><img src="{{ foto.url }}-/resize/300x225/" alt="{{ foto.nombre }}"></div>
                         {% endfor %}
                    </div>
                 </div>
