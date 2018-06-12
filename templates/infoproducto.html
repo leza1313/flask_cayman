@@ -62,8 +62,7 @@
                             <br>
                             <label for="myfoto" class="">Foto Principal: </label>
                             <input type="hidden" role="uploadcare-uploader" name="myfoto"
-                                                  data-crop="disabled"
-                                                  data-preview-step="true"
+                                                  data-crop="350x350 minimum"
                                                   data-images-only="true" />
                         </div>
                         <div class="form-group">
@@ -94,15 +93,13 @@
                 <!-- Carousel, adaptar tamaño imagenes -->
                 <div class="container" id="myproduct-foto">
                    <div class="foto-pal" id="foto-pal">
-                       <div><a href="{{ miproducto.fotopal }}"><img src="{{ miproducto.fotopal }}-/resize/800x600/" alt="{{ miproducto.fotopalalt }}"></a></div>
-                        {% for foto in miproducto.fotos %}
+                       {% for foto in miproducto.fotos %}
                        <div><a href="{{ foto.url }}"><img src="{{ foto.url }}-/resize/800x600/" alt="{{ foto.nombre }}"></a></div>
                         {% endfor %}
 
                    </div>
                    <div class="foto-min">
-                       <div><img src="{{ miproducto.fotopal }}-/resize/300x200/" alt="{{ miproducto.fotopalalt }}"></div>
-                       {% for foto in miproducto.fotos %}
+                        {% for foto in miproducto.fotos %}
                        <div><img src="{{ foto.url }}-/resize/300x200/" alt="{{ foto.nombre }}"></div>
                         {% endfor %}
                    </div>
