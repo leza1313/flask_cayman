@@ -20,7 +20,8 @@ footer{
     padding-left: 1%;
 }
 #quienes-somos{
-    background-color: #1d2124;
+    background: url("../img/image.jpg") bottom no-repeat;
+    background-size: cover;
     color: white;
 }
 #cartas-inicio{
