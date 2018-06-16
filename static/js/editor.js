@@ -166,14 +166,16 @@ isRotate=0;
 
 function rotar(miobjeto){
     enlaces=document.getElementsByClassName('editor-a');
-    for (i = 0; i < 4; i++){
+    for (i = 0; i < 5; i++){
         enlaces[i].setAttribute('data-toggle','hola');
     }
 
     for (var index in miobjeto){
         var pieza = miobjeto[index];
-        pieza.borrar();
-        group.add(pieza);
+        if (pieza!=null){
+            pieza.borrar();
+            group.add(pieza);
+        }
     }
     scene.add(group);
 
@@ -185,14 +187,16 @@ function rotar(miobjeto){
 
 function parar(){
     enlaces=document.getElementsByClassName('editor-a');
-    for (i = 0; i < 4; i++){
+    for (i = 0; i < 5; i++){
         enlaces[i].setAttribute('data-toggle','modal');
     }
     mirotation=group.rotation.y;
     scene.remove(group);
     for (var index in miguitarra){
         var pieza = miguitarra[index];
-        scene.add(pieza);
+        if (pieza != null){
+            scene.add(pieza);
+        }
     }
     isRotate=0;
     document.getElementById( "rotar" ).setAttribute( "onClick", "rotar(miguitarra);" );
@@ -223,7 +227,6 @@ var loaderJSON = new THREE.JSONLoader(loadingManager);
 
 var miacabado;
 function cargarJSON(nombre,mystl,sufix,position,pieza,modalName){
-
 
     loaderJSON.load(mystl,
 
@@ -330,6 +333,10 @@ function cargarJSON(nombre,mystl,sufix,position,pieza,modalName){
         function onError( err ) {
             console.error( 'An error happened' );
     });
+    //If the part to load was null, not existed then remove the drop of the middle pickup
+    if (sufix==5 && mystl==''){
+        actualizarDropPastillaMedio(99,99);
+    }
 }
 var counter=0;
 
@@ -368,7 +375,10 @@ function cambiarModelo(event,modelo) {
 }
 function quitarGuitarra() {
     for (var i=0;i<=16;i++){
-        miguitarra[i].borrar();
+        if (miguitarra[i] != null){
+            miguitarra[i].borrar();
+            miguitarra[i]=null;
+        }
     }
 }
 
@@ -537,6 +547,7 @@ function cargarModeloDefecto(modelo){
             cargarJSON(partes3Ddefecto[i].nombre, partes3Ddefecto[i].rutaJSON, i, myposicion, partes3Ddefecto[i].id, '#modal' + partes3Ddefecto[i].pieza + '0');
 
         }
+        $('#precio').html('1500');
     });
     function ajaxP1() {
         return $.ajax({
