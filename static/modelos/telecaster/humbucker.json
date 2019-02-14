@@ -9,7 +9,7 @@
         "shading":"phong",
         "mapDiffuseAnisotropy":1,
         "depthTest":true,
-        "mapDiffuse":"humbucker.PNG",
+        "mapDiffuse":"texturas/humbucker-negra.jpg",
         "depthWrite":true,
         "specularCoef":50,
         "DbgName":"Material.001",

@@ -1,7 +1,7 @@
 document.getElementById("cover").style.textAlign = "left";
 turn = document.getElementById("turn");
-var urlBase= 'http://localhost:5000/api/';
-//var urlBase= 'https://leza1313.hopto.org/api/';
+//var urlBase= 'http://localhost:5000/api/';
+var urlBase= 'https://leza1313.hopto.org/api/';
 
 var show = function() {
  if (screen.orientation.type == 'portrait'){
